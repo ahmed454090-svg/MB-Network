@@ -2,82 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>FTCF | Professional Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTCF | Premium Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&display=swap');
+        body { background-color: #050505; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden; margin: 0; }
         
-        body { background: #050505; font-family: 'Plus Jakarta Sans', sans-serif; height: 100dvh; margin: 0; overflow: hidden; }
-
-        /* Skeleton Loading */
-        .skeleton { background: linear-gradient(90deg, #111 25%, #1a1a1a 50%, #111 75%); background-size: 200% 100%; animation: loading 1.5s infinite; position: absolute; inset: 0; z-index: 10; }
-        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        .tab-content { display: none; height: 100dvh; width: 100%; position: relative; }
+        .tab-content { display: none; height: 100vh; }
         .tab-content.active { display: block; }
-        iframe { width: 100%; height: 100%; border: none; opacity: 0; transition: opacity 0.5s ease; }
-        iframe.loaded { opacity: 1; }
+        iframe { width: 100%; height: 100%; border: none; }
 
-        /* Minimal Luxury Nav */
-        .luxury-nav {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px);
-            padding: 12px 30px; border-radius: 50px; display: flex; gap: 35px;
-            border: 0.5px solid rgba(255, 255, 255, 0.08); z-index: 50;
+        .glass-nav { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255,255,255,0.08); 
         }
-        .nav-icon { color: #404040; transition: all 0.3s ease; font-size: 16px; }
-        .nav-icon.active { color: #d4af37; transform: translateY(-2px); }
-
-        /* Motto Overlay */
-        .motto { position: fixed; top: 30px; left: 0; width: 100%; text-align: center; color: #d4af37; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.6; pointer-events: none; z-index: 20; }
+        .tab-btn { transition: all 0.3s ease; color: #64748b; }
+        .tab-btn.active-tab { color: #f59e0b !important; transform: translateY(-5px); }
     </style>
 </head>
-<body>
+<body class="text-slate-200">
 
-    <div class="motto">Amanat me khiyant Nahi, Behtreen Nizam he Asal Kamyabi hai</div>
+    <div id="ledger" class="tab-content active"><iframe src="https://ftcf20-hub.github.io/FTCF.com/"></iframe></div>
+    <div id="monthly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Monthly-Status/"></iframe></div>
+    <div id="yearly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Yearly-Record/"></iframe></div>
+    <div id="rules" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Loneportal/"></iframe></div>
 
-    <!-- Tabs -->
-    <div id="ledger" class="tab-content active">
-        <div class="skeleton"></div>
-        <iframe src="https://ftcf20-hub.github.io/FTCF.com/" onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none'"></iframe>
-    </div>
-    <div id="monthly" class="tab-content">
-        <div class="skeleton"></div>
-        <iframe src="https://ftcf20-hub.github.io/Monthly-Status/" onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none'"></iframe>
-    </div>
-    <div id="yearly" class="tab-content">
-        <div class="skeleton"></div>
-        <iframe src="https://ftcf20-hub.github.io/Yearly-Record/" onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none'"></iframe>
-    </div>
-    <div id="rules" class="tab-content">
-        <div class="skeleton"></div>
-        <iframe src="https://ftcf20-hub.github.io/Loneportal/" onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none'"></iframe>
-    </div>
-
-    <!-- Nav -->
-    <nav class="luxury-nav">
-        <button onclick="switchTab('ledger', this)" class="nav-icon active"><i class="fas fa-wallet"></i></button>
-        <button onclick="switchTab('monthly', this)" class="nav-icon"><i class="fas fa-calendar-check"></i></button>
-        <button onclick="switchTab('yearly', this)" class="nav-icon"><i class="fas fa-chart-line"></i></button>
-        <button onclick="switchTab('rules', this)" class="nav-icon"><i class="fas fa-gavel"></i></button>
+    <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 glass-nav rounded-full px-8 py-4 flex gap-8 items-center z-50">
+        <button onclick="switchTab('ledger', this)" class="tab-btn active-tab"><i class="fas fa-wallet text-xl"></i></button>
+        <button onclick="switchTab('monthly', this)" class="tab-btn"><i class="fas fa-calendar-check text-xl"></i></button>
+        <button onclick="switchTab('yearly', this)" class="tab-btn"><i class="fas fa-chart-line text-xl"></i></button>
+        <button onclick="switchTab('rules', this)" class="tab-btn"><i class="fas fa-gavel text-xl"></i></button>
     </nav>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script>
         function switchTab(id, btn) {
-            if (navigator.vibrate) navigator.vibrate(15);
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-icon').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
             document.getElementById(id).classList.add('active');
-            btn.classList.add('active');
-            localStorage.setItem('activeTab', id);
+            btn.classList.add('active-tab');
         }
-
-        // Initialize with saved tab
-        const savedTab = localStorage.getItem('activeTab') || 'ledger';
-        const targetBtn = document.querySelector(`button[onclick*="${savedTab}"]`);
-        if(targetBtn) switchTab(savedTab, targetBtn);
     </script>
 </body>
 </html>
