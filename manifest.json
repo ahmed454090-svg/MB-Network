@@ -1,13 +1,13 @@
 {
   "name": "FTCF Premium",
   "short_name": "FTCF",
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#f59e0b",
   "icons": [
     {
-      "src": "https://i.postimg.cc/Z51LL5bJ/1784352615032.png",
+      "src": "https://i.postimg.cc/fTY6C21N/1784308656105.jpg",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
