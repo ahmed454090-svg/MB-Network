@@ -3,93 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTCF | Premium Portal</title>
+    <title>FTCF | Enterprise Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap');
         body { background-color: #050505; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden; margin: 0; }
         
-        /* Next-Level Luxury Splash Animation */
-        #splash { 
-            position: fixed; inset: 0; background: #050505; z-index: 9999; 
-            display: flex; justify-content: center; align-items: center; 
-            transition: opacity 1s ease-out, visibility 1s; 
-        }
-        .splash-container { text-align: center; }
-        
-        .logo-text { 
-            font-size: 3.5rem; font-weight: 800; color: #f59e0b; 
-            letter-spacing: -0.05em; opacity: 0;
-            animation: revealLogo 1.5s ease-out forwards;
-        }
-        
-        .sub-text { 
-            font-size: 0.7rem; color: #525252; text-transform: uppercase; 
-            letter-spacing: 0.4em; margin-top: 5px; opacity: 0;
-            animation: revealText 1.5s ease-out 0.5s forwards;
-        }
+        /* Splash remains same */
+        #splash { position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 1s; }
+        .logo-text { font-size: 3.5rem; font-weight: 800; color: #f59e0b; opacity: 0; animation: reveal 1.5s ease-out forwards; }
+        @keyframes reveal { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
 
-        @keyframes revealLogo {
-            0% { opacity: 0; transform: translateY(20px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes revealText {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* App UI */
         .tab-content { display: none; height: 100vh; }
         .tab-content.active { display: block; }
         iframe { width: 100%; height: 100%; border: none; }
-
-        .glass-nav { 
-            background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255,255,255,0.08); 
-        }
-        .tab-btn { transition: all 0.3s ease; color: #64748b; }
-        .tab-btn.active-tab { color: #f59e0b !important; transform: translateY(-5px); }
+        
+        .glass-nav { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+        .tab-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); color: #64748b; }
+        .tab-btn.active-tab { color: #f59e0b !important; transform: scale(1.1); }
     </style>
 </head>
 <body class="text-slate-200">
 
-    <!-- Splash Screen -->
-    <div id="splash">
-        <div class="splash-container">
-            <div class="logo-text">FTCF</div>
-            <div class="sub-text">Mughal Brothers Network</div>
-        </div>
-    </div>
+    <div id="splash"><div class="logo-text">FTCF</div></div>
 
-    <div id="ledger" class="tab-content active"><iframe src="https://ftcf20-hub.github.io/FTCF.com/"></iframe></div>
+    <div id="ledger" class="tab-content"><iframe src="https://ftcf20-hub.github.io/FTCF.com/"></iframe></div>
     <div id="monthly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Monthly-Status/"></iframe></div>
     <div id="yearly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Yearly-Record/"></iframe></div>
     <div id="rules" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Loneportal/"></iframe></div>
 
     <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 glass-nav rounded-full px-8 py-4 flex gap-8 items-center z-50">
-        <button onclick="switchTab('ledger', this)" class="tab-btn active-tab"><i class="fas fa-wallet text-xl"></i></button>
+        <button onclick="switchTab('ledger', this)" class="tab-btn"><i class="fas fa-wallet text-xl"></i></button>
         <button onclick="switchTab('monthly', this)" class="tab-btn"><i class="fas fa-calendar-check text-xl"></i></button>
         <button onclick="switchTab('yearly', this)" class="tab-btn"><i class="fas fa-chart-line text-xl"></i></button>
         <button onclick="switchTab('rules', this)" class="tab-btn"><i class="fas fa-gavel text-xl"></i></button>
     </nav>
 
     <script>
-        // Splash Removal Logic (3 seconds)
+        // 1. Splash logic
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splash');
-                splash.style.opacity = '0';
-                setTimeout(() => splash.style.display = 'none', 1000);
-            }, 3000);
+            setTimeout(() => { document.getElementById('splash').style.opacity = '0'; }, 2000);
+            setTimeout(() => { document.getElementById('splash').remove(); }, 3000);
+            
+            // 2. Load Last Active Tab
+            const lastTab = localStorage.getItem('activeTab') || 'ledger';
+            const btn = document.querySelector(`button[onclick*="${lastTab}"]`);
+            switchTab(lastTab, btn);
         });
 
         function switchTab(id, btn) {
+            // Haptic Feedback for Mobile
+            if (navigator.vibrate) navigator.vibrate(20);
+
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+            
             document.getElementById(id).classList.add('active');
             btn.classList.add('active-tab');
+            
+            // Save state
+            localStorage.setItem('activeTab', id);
         }
     </script>
 </body>
