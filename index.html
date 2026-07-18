@@ -11,7 +11,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=JetBrains+Mono:wght@400&display=swap');
         body { background-color: #050505; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; }
         
-        /* Updated Navy Blue & White Luxury Splash */
         #splash { 
             position: fixed; inset: 0; z-index: 9999; 
             background: linear-gradient(135deg, #1e3a8a 0%, #ffffff 100%); 
@@ -29,8 +28,10 @@
         iframe { width: 100%; height: 100%; border: none; }
         
         .luxury-nav { background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .tab-btn { transition: all 0.4s ease; color: #475569; }
-        .tab-btn.active-tab { color: #f59e0b !important; transform: translateY(-5px); }
+        /* Tabs visibility improvement */
+        .tab-btn { transition: all 0.3s ease; color: #94a3b8; opacity: 0.7; }
+        .tab-btn:hover { color: #ffffff; opacity: 1; }
+        .tab-btn.active-tab { color: #f59e0b !important; opacity: 1 !important; transform: translateY(-5px); text-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
         .glass-card { background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
@@ -51,8 +52,8 @@
         <div class="glass-card p-8 rounded-3xl w-full max-w-sm text-center">
             <h2 class="text-white text-xl font-bold mb-4">🏦 Bank Details</h2>
             <div class="bg-black/30 p-4 rounded-xl text-left border border-white/5 mb-6">
-                <p class="text-xs text-slate-500">Account Name: <span class="text-white">Afzaal Ahmed</span></p>
-                <p class="text-xs text-slate-500 mt-2">Account No: <span class="text-white">03422735966</span></p>
+                <p class="text-xs text-slate-500">Account Name: <span class="text-white">FTCF Foundation</span></p>
+                <p class="text-xs text-slate-500 mt-2">Account No: <span class="text-white">XXXX-XXXX-XXXX</span></p>
             </div>
             <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold">Close</button>
         </div>
@@ -84,7 +85,6 @@
     </nav>
 
     <script>
-        // Splash Screen Session Logic
         window.addEventListener('load', () => {
             const splash = document.getElementById('splash');
             if (sessionStorage.getItem('splashShown')) {
