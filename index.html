@@ -10,6 +10,22 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&display=swap');
         body { background-color: #050505; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden; margin: 0; }
         
+        /* Splash Animation Styles */
+        #splash { 
+            position: fixed; inset: 0; background: #050505; z-index: 9999; 
+            display: flex; justify-content: center; align-items: center; 
+            transition: opacity 1s ease-out, visibility 1s; 
+        }
+        .logo-anim { 
+            font-size: 2rem; letter-spacing: 0.2em; color: #f59e0b; 
+            animation: luxuriousFade 3s ease-in-out; 
+        }
+        @keyframes luxuriousFade {
+            0% { opacity: 0; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.1); }
+        }
+
         .tab-content { display: none; height: 100vh; }
         .tab-content.active { display: block; }
         iframe { width: 100%; height: 100%; border: none; }
@@ -25,6 +41,11 @@
 </head>
 <body class="text-slate-200">
 
+    <!-- Splash Screen -->
+    <div id="splash">
+        <div class="logo-anim">FTCF</div>
+    </div>
+
     <div id="ledger" class="tab-content active"><iframe src="https://ftcf20-hub.github.io/FTCF.com/"></iframe></div>
     <div id="monthly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Monthly-Status/"></iframe></div>
     <div id="yearly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Yearly-Record/"></iframe></div>
@@ -38,6 +59,15 @@
     </nav>
 
     <script>
+        // Splash Removal Logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                splash.style.opacity = '0';
+                setTimeout(() => splash.style.display = 'none', 1000);
+            }, 3000);
+        });
+
         function switchTab(id, btn) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
