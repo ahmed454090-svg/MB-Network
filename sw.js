@@ -8,7 +8,7 @@ self.addEventListener('activate', (event) => {
     }));
 });
 
-// Fetch ko khali chhor dein
+// Ye zaroori hai: Request ko default network se aane dein
 self.addEventListener('fetch', (event) => {
-    return;
+    event.respondWith(fetch(event.request));
 });
