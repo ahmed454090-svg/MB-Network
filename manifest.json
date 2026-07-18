@@ -1,7 +1,7 @@
 {
   "name": "FTCF Premium",
   "short_name": "FTCF",
-  "start_url": "/FTCF-Network-/",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#f59e0b",
