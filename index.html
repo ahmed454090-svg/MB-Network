@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cache-Control Meta Tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <link rel="manifest" href="manifest.json">
     <title>FTCF | Professional Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -55,7 +60,6 @@
         <div class="typing-text">Mughal Brothers Network</div>
     </div>
 
-    <!-- Baqi code waisa hi hai jaisa pehle tha -->
     <div class="fixed top-6 right-6 z-[60] flex gap-2">
         <button id="installBtn" class="hidden w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500"><i class="fas fa-download"></i></button>
         <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-blue-400"><i class="fas fa-university"></i></button>
@@ -64,10 +68,10 @@
 
     <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
         <div class="glass-card p-8 rounded-3xl w-full max-w-sm text-center">
-            <h2 class="text-white text-xl font-bold mb-4">🏦HBL Konnect Bank Details</h2>
+            <h2 class="text-white text-xl font-bold mb-4">🏦 Bank Details</h2>
             <div class="bg-black/30 p-4 rounded-xl text-left border border-white/5 mb-6">
-                <p class="text-xs text-slate-500">Account Name: <span class="text-white">Afzaal Ahmed</span></p>
-                <p class="text-xs text-slate-500 mt-2">Account No: <span class="text-white">03422735966</span></p>
+                <p class="text-xs text-slate-500">Account Name: <span class="text-white">FTCF Foundation</span></p>
+                <p class="text-xs text-slate-500 mt-2">Account No: <span class="text-white">XXXX-XXXX-XXXX</span></p>
             </div>
             <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold">Close</button>
         </div>
