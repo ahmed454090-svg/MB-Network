@@ -1,8 +1,1 @@
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        fetch(event.request)
-            .catch(() => {
-                return caches.match(event.request);
-            })
-    );
-});
+importScripts("https://cdn.pushalert.co/sw-90441_3.js");
