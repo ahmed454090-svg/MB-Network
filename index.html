@@ -3,36 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTCF | Enterprise Portal</title>
+    <title>FTCF | Professional Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&family=Courier+Prime&display=swap');
         body { background-color: #050505; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden; margin: 0; }
         
-        /* Splash remains same */
-        #splash { position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 1s; }
-        .logo-text { font-size: 3.5rem; font-weight: 800; color: #f59e0b; opacity: 0; animation: reveal 1.5s ease-out forwards; }
-        @keyframes reveal { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+        /* Blue Splash Animation */
+        #splash { 
+            position: fixed; inset: 0; background: #0f172a; z-index: 9999; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            transition: opacity 1s; 
+        }
+        .circle-logo { 
+            width: 100px; height: 100px; border: 2px solid #f59e0b; 
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-weight: 800; color: #f59e0b; animation: rotate 3s linear infinite;
+        }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .typing-text { 
+            font-family: 'Courier Prime', monospace; color: #94a3b8; margin-top: 20px;
+            overflow: hidden; border-right: .15em solid #f59e0b; white-space: nowrap;
+            letter-spacing: .15em; animation: typing 2s steps(30, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #f59e0b } }
 
         .tab-content { display: none; height: 100vh; }
         .tab-content.active { display: block; }
         iframe { width: 100%; height: 100%; border: none; }
         
         .glass-nav { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
-        .tab-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); color: #64748b; }
+        .tab-btn { transition: all 0.3s ease; color: #64748b; }
         .tab-btn.active-tab { color: #f59e0b !important; transform: scale(1.1); }
+        .glass-card { background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
 <body class="text-slate-200">
 
-    <div id="splash"><div class="logo-text">FTCF</div></div>
+    <!-- Splash Screen -->
+    <div id="splash">
+        <div class="circle-logo">FTCF</div>
+        <div class="typing-text">Mughal Brothers Network</div>
+    </div>
 
+    <!-- WhatsApp & Notification Icons -->
+    <div class="fixed top-6 right-6 z-[60] flex gap-3">
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-green-500 hover:bg-green-500/10 transition-all">
+            <i class="fab fa-whatsapp text-lg"></i>
+        </a>
+        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 text-amber-500 hover:bg-amber-500/10 transition-all">
+            <i class="fas fa-bell"></i>
+        </button>
+    </div>
+
+    <!-- Notice Popup -->
+    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-md">
+        <div class="glass-card p-8 rounded-3xl w-full max-w-sm shadow-2xl">
+            <h2 class="text-white text-xl font-bold mb-4">📢 System Notice</h2>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">Alhamdulillah! App Ready hai Tamam bhaio tasali se check kar k Review Dayn.</p>
+            <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-amber-500 hover:bg-amber-600 rounded-xl text-black font-bold transition-all">Close</button>
+        </div>
+    </div>
+
+    <!-- Tabs -->
     <div id="ledger" class="tab-content"><iframe src="https://ftcf20-hub.github.io/FTCF.com/"></iframe></div>
     <div id="monthly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Monthly-Status/"></iframe></div>
     <div id="yearly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Yearly-Record/"></iframe></div>
     <div id="rules" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Loneportal/"></iframe></div>
 
+    <!-- Nav -->
     <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 glass-nav rounded-full px-8 py-4 flex gap-8 items-center z-50">
         <button onclick="switchTab('ledger', this)" class="tab-btn"><i class="fas fa-wallet text-xl"></i></button>
         <button onclick="switchTab('monthly', this)" class="tab-btn"><i class="fas fa-calendar-check text-xl"></i></button>
@@ -41,28 +83,21 @@
     </nav>
 
     <script>
-        // 1. Splash logic
         window.addEventListener('load', () => {
             setTimeout(() => { document.getElementById('splash').style.opacity = '0'; }, 2000);
             setTimeout(() => { document.getElementById('splash').remove(); }, 3000);
             
-            // 2. Load Last Active Tab
             const lastTab = localStorage.getItem('activeTab') || 'ledger';
             const btn = document.querySelector(`button[onclick*="${lastTab}"]`);
             switchTab(lastTab, btn);
         });
 
         function switchTab(id, btn) {
-            // Haptic Feedback for Mobile
             if (navigator.vibrate) navigator.vibrate(20);
-
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
-            
             document.getElementById(id).classList.add('active');
             btn.classList.add('active-tab');
-            
-            // Save state
             localStorage.setItem('activeTab', id);
         }
     </script>
