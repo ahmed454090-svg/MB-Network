@@ -16,27 +16,29 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=JetBrains+Mono:wght@400;800&display=swap');
         body { background-color: #050505; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; }
         
+        /* Blur Glass Splash Screen */
         #splash { 
             position: fixed; inset: 0; z-index: 9999; 
-            background: linear-gradient(135deg, #1e3a8a 0%, #ffffff 100%); 
+            background: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(20px);
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            transition: opacity 1s ease-in-out; 
+            transition: opacity 0.5s ease-in-out; 
         }
         
         /* Double Circle Animation */
         .circle-container { position: relative; width: 140px; height: 140px; display: flex; justify-content: center; align-items: center; }
         .circle { position: absolute; border: 3px solid transparent; border-radius: 50%; animation: rotate 3s linear infinite; }
-        .circle-1 { width: 100%; height: 100%; border-top: 3px solid #1e3a8a; }
-        .circle-2 { width: 85%; height: 85%; border-bottom: 3px solid #ffffff; animation-direction: reverse; }
+        .circle-1 { width: 100%; height: 100%; border-top: 3px solid #ffffff; }
+        .circle-2 { width: 85%; height: 85%; border-bottom: 3px solid #1e3a8a; animation-direction: reverse; }
         
-        .ftcf-text { font-size: 1.8rem; font-weight: 800; color: #1e3a8a; }
+        .ftcf-text { font-size: 1.8rem; font-weight: 800; color: #ffffff; }
         
         @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         /* Bold Typing Tagline */
-        .typing-text { font-family: 'JetBrains Mono', monospace; color: #1e3a8a; margin-top: 25px; font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; overflow: hidden; border-right: 2px solid #1e3a8a; white-space: nowrap; animation: typing 2.5s steps(30, end), blink 0.75s step-end infinite; }
+        .typing-text { font-family: 'JetBrains Mono', monospace; color: #ffffff; margin-top: 25px; font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; overflow: hidden; border-right: 2px solid #ffffff; white-space: nowrap; animation: typing 2.5s steps(30, end), blink 0.75s step-end infinite; }
         @keyframes typing { from { width: 0 } to { width: 25ch } }
-        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #1e3a8a } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #ffffff } }
         
         .tab-content { display: none; height: 100vh; }
         .tab-content.active { display: block; }
@@ -47,6 +49,14 @@
         .tab-btn:hover { color: #ffffff; opacity: 1; }
         .tab-btn.active-tab { color: #f59e0b !important; opacity: 1 !important; transform: translateY(-5px); text-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
         .glass-card { background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+        
+        /* Red Dot Notification style */
+        .bell-container { position: relative; }
+        .red-dot { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; border: 2px solid #050505; }
+
+        /* Tab Button Scale Effect */
+        .tab-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-btn:active { transform: scale(0.9); }
     </style>
 </head>
 <body class="text-slate-200">
@@ -63,15 +73,18 @@
     <div class="fixed top-6 right-6 z-[60] flex gap-2">
         <button id="installBtn" class="hidden w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500"><i class="fas fa-download"></i></button>
         <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-blue-400"><i class="fas fa-university"></i></button>
-        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500"><i class="fas fa-bell"></i></button>
+        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500 bell-container">
+            <i class="fas fa-bell"></i>
+            <span class="red-dot"></span>
+        </button>
     </div>
 
     <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
         <div class="glass-card p-8 rounded-3xl w-full max-w-sm text-center">
-            <h2 class="text-white text-xl font-bold mb-4">🏦 Bank Details</h2>
+            <h2 class="text-white text-xl font-bold mb-4">🏦 HBL Konnect Bank Details</h2>
             <div class="bg-black/30 p-4 rounded-xl text-left border border-white/5 mb-6">
-                <p class="text-xs text-slate-500">Account Name: <span class="text-white">FTCF Foundation</span></p>
-                <p class="text-xs text-slate-500 mt-2">Account No: <span class="text-white">XXXX-XXXX-XXXX</span></p>
+                <p class="text-xs text-slate-500">Account Name: <span class="text-white">Afzaal Ahmed</span></p>
+                <p class="text-xs text-slate-500 mt-2">Account No: <span class="text-white">0342-2735966</span></p>
             </div>
             <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold">Close</button>
         </div>
@@ -80,7 +93,7 @@
     <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-md">
         <div class="glass-card p-8 rounded-3xl w-full max-w-sm shadow-2xl">
             <h2 class="text-white text-xl font-bold mb-4">📢 System Notice</h2>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6">Alhamdulillah! App Ready hai Tamam bhaio tasali se check kar k Review Dayn.</p>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">Alhamdulillah! ❤️ FTCF K 3 Mah Mukamal Hone Per Ap Sab Ko Mubarak Ho🎉🎊 Ham Back End per Or Improvement Ki Koshish me han.</p>
             <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold transition-all">Close</button>
         </div>
     </div>
@@ -105,24 +118,33 @@
     <script>
         window.addEventListener('load', () => {
             const splash = document.getElementById('splash');
-            if (sessionStorage.getItem('splashShown')) {
-                splash.style.display = 'none';
-            } else {
-                setTimeout(() => {
-                    splash.style.opacity = '0';
-                    setTimeout(() => { splash.remove(); sessionStorage.setItem('splashShown', 'true'); }, 1000);
-                }, 2000);
-            }
+            // Har refresh par 1 second ki animation
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => { splash.style.display = 'none'; }, 500);
+            }, 1000);
+
             const lastTab = localStorage.getItem('activeTab') || 'ledger';
             const btn = document.querySelector(`button[onclick*="${lastTab}"]`);
-            switchTab(lastTab, btn);
+            if(btn) switchTab(lastTab, btn);
         });
 
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').classList.remove('hidden'); });
         document.getElementById('installBtn').addEventListener('click', () => { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then((choiceResult) => { if (choiceResult.outcome === 'accepted') document.getElementById('installBtn').classList.add('hidden'); }); } });
         
-        function switchTab(id, btn) { if (navigator.vibrate) navigator.vibrate(20); document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab')); document.getElementById(id).classList.add('active'); btn.classList.add('active-tab'); localStorage.setItem('activeTab', id); }
+        function switchTab(id, btn) { 
+            if (navigator.vibrate) navigator.vibrate(20); 
+            
+            // Reset tabs
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab')); 
+            
+            // Activate clicked
+            document.getElementById(id).classList.add('active'); 
+            btn.classList.add('active-tab'); 
+            localStorage.setItem('activeTab', id); 
+        }
     </script>
 </body>
 </html>
