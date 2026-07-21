@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     
-    <link rel="manifest" href="manifest.json">
     <title>Executive Command Center | Business Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,11 +14,8 @@
         
         :root {
             --bg-dark: #030712;
-            --glass-dark: rgba(17, 24, 39, 0.75);
-            --border-dark: rgba(255, 255, 255, 0.08);
             --accent-green: #10b981;
             --accent-cyan: #06b6d4;
-            --accent-gold: #f59e0b;
         }
 
         body { 
@@ -29,51 +23,29 @@
             font-family: 'Plus Jakarta Sans', sans-serif; 
             overflow-x: hidden; 
             margin: 0; 
-            transition: background-color 0.4s ease; 
         }
 
-        /* Light Theme Overrides */
-        body.light-theme { 
-            background-color: #f1f5f9; 
-            color: #0f172a;
-        }
-        body.light-theme .luxury-nav { 
-            background: rgba(255, 255, 255, 0.85); 
-            border: 1px solid rgba(0, 0, 0, 0.1); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-        }
-        body.light-theme .glass-card { 
-            background: rgba(255, 255, 255, 0.95); 
-            color: #0f172a; 
-            border: 1px solid rgba(0, 0, 0, 0.08); 
-            box-shadow: 0 20px 30px rgba(0,0,0,0.05);
-        }
-        body.light-theme .native-card {
-            background: #ffffff;
-            color: #0f172a;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-        }
-        body.light-theme .text-slate-200 { color: #1e293b; }
-        body.light-theme .text-slate-400 { color: #64748b; }
-        body.light-theme #splash { background: rgba(241, 245, 249, 0.98); }
-        body.light-theme .brand-text { color: #0f172a; }
-        body.light-theme .typing-text { color: #0f172a; border-color: #0f172a; }
-        
-        /* Fail-Safe Splash Overlay */
+        /* Pure CSS Splash Screen (No JS Required To Hide) */
         #splash { 
             position: fixed; 
             top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 999999; 
             background: #030712; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            /* 1.5s delay ke baad 0.5s me fadeout aur unclickable */
+            animation: autoHide 0.5s ease 1.5s forwards;
         }
 
-        .hide-splash {
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
+        @keyframes autoHide {
+            0% {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            100% {
+                opacity: 0;
+                pointer-events: none;
+                visibility: hidden;
+            }
         }
         
         /* Fintech Double Ring Animation */
@@ -81,94 +53,48 @@
         .circle { position: absolute; border: 2px solid transparent; border-radius: 50%; animation: rotate 3s linear infinite; }
         .circle-1 { width: 100%; height: 100%; border-top: 3px solid var(--accent-green); border-right: 3px solid rgba(16, 185, 129, 0.2); }
         .circle-2 { width: 80%; height: 80%; border-bottom: 3px solid var(--accent-cyan); animation-direction: reverse; animation-duration: 2s; }
-        
         .brand-text { font-size: 1.6rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; }
         
         @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* Executive Typing Tagline */
         .typing-text { 
             font-family: 'JetBrains Mono', monospace; 
-            color: #10b981; 
-            margin-top: 28px; 
-            font-size: 0.85rem; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            letter-spacing: 0.2em; 
-            overflow: hidden; 
-            border-right: 2px solid #10b981; 
-            white-space: nowrap; 
-            animation: typing 1.8s steps(28, end), blink 0.75s step-end infinite; 
+            color: #10b981; margin-top: 28px; font-size: 0.85rem; font-weight: 600; 
+            text-transform: uppercase; letter-spacing: 0.2em; overflow: hidden; 
+            border-right: 2px solid #10b981; white-space: nowrap; 
+            animation: typing 1.5s steps(28, end), blink 0.75s step-end infinite; 
         }
         @keyframes typing { from { width: 0 } to { width: 28ch } }
         @keyframes blink { from, to { border-color: transparent } 50% { border-color: #10b981 } }
         
-        .tab-content { 
-            display: none; 
-            min-height: 100vh; 
-            width: 100%; 
-            padding-top: 80px; 
-            padding-bottom: 120px; 
-            box-sizing: border-box;
-        }
+        .tab-content { display: none; min-height: 100vh; width: 100%; padding-top: 80px; padding-bottom: 120px; box-sizing: border-box; }
         .tab-content.active { display: block; }
 
-        /* Native App Styling for Cards */
         .native-card {
             background: rgba(17, 24, 39, 0.75);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 1.25rem;
             padding: 1.25rem;
-            transition: transform 0.2s ease;
         }
         
-        /* Navigation & Glassmorphic UI */
         .luxury-nav { 
             background: rgba(17, 24, 39, 0.75); 
             backdrop-filter: blur(24px); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
-        .tab-btn { 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            color: #94a3b8; 
-            opacity: 0.6; 
-            cursor: pointer;
-        }
-        .tab-btn:hover { color: #ffffff; opacity: 1; }
-        .tab-btn.active-tab { 
-            color: #10b981 !important; 
-            opacity: 1 !important; 
-            transform: translateY(-4px); 
-            text-shadow: 0 0 12px rgba(16, 185, 129, 0.6); 
-        }
-        .glass-card { 
-            background: rgba(17, 24, 39, 0.95); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-        }
-        
-        /* Red Dot Notification style */
+        .tab-btn { transition: all 0.3s ease; color: #94a3b8; opacity: 0.6; cursor: pointer; }
+        .tab-btn.active-tab { color: #10b981 !important; opacity: 1 !important; transform: translateY(-4px); }
+        .glass-card { background: rgba(17, 24, 39, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .bell-container { position: relative; }
-        .red-dot { 
-            position: absolute; top: -1px; right: -1px; 
-            width: 9px; height: 9px; 
-            background: #ef4444; 
-            border-radius: 50%; 
-            border: 2px solid #030712; 
-        }
-
-        /* Icon Micro Animations */
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-        .tab-btn:active i { animation: bounce 0.3s ease; }
-        .tab-btn:active { transform: scale(0.92); }
+        .red-dot { position: absolute; top: -1px; right: -1px; width: 9px; height: 9px; background: #ef4444; border-radius: 50%; border: 2px solid #030712; }
     </style>
 </head>
 <body class="text-slate-200">
 
-    <!-- Splash Screen (Instant Tap to dismiss & Auto-Kill Timer) -->
-    <div id="splash" onclick="forceKillSplash()">
+    <!-- Pure CSS Splash Screen -->
+    <div id="splash" onclick="this.style.display='none'">
         <div class="circle-container">
             <div class="circle circle-1"></div>
             <div class="circle circle-2"></div>
@@ -177,18 +103,20 @@
         <div class="typing-text">Command Center • V2.0</div>
     </div>
 
+    <!-- Inline Immediate Kill Script (Failsafe) -->
+    <script>
+        setTimeout(function(){
+            var s = document.getElementById('splash');
+            if(s) s.style.display = 'none';
+        }, 1800);
+    </script>
+
     <!-- Top Action Toolbar -->
     <div class="fixed top-4 right-6 z-[60] flex gap-2.5">
-        <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
-            <i class="fas fa-adjust text-sm"></i>
-        </button>
-        <button id="installBtn" class="hidden w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
-            <i class="fas fa-download text-sm"></i>
-        </button>
-        <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-cyan-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
+        <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-cyan-400 flex items-center justify-center backdrop-blur-md">
             <i class="fas fa-university text-sm"></i>
         </button>
-        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-amber-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md bell-container">
+        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-amber-400 flex items-center justify-center backdrop-blur-md bell-container">
             <i class="fas fa-bell text-sm"></i>
             <span class="red-dot"></span>
         </button>
@@ -202,7 +130,6 @@
             </div>
             <h2 class="text-white text-lg font-bold mb-1">Treasury Accounts</h2>
             <p class="text-xs text-slate-400 mb-6">Corporate Payment Clearance</p>
-            
             <div class="space-y-3 mb-6">
                 <div class="bg-black/40 p-3.5 rounded-2xl text-left border border-white/5">
                     <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Primary Account</p>
@@ -210,8 +137,7 @@
                     <p class="text-xs font-mono text-cyan-400">0342-2735966 (HBL Konnect)</p>
                 </div>
             </div>
-
-            <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/15 rounded-xl text-white font-semibold text-xs tracking-wider uppercase transition-all border border-white/5">Close Terminal</button>
+            <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/15 rounded-xl text-white font-semibold text-xs uppercase border border-white/5">Close</button>
         </div>
     </div>
 
@@ -224,92 +150,69 @@
             <h2 class="text-white text-lg font-bold mb-1">Executive Broadcast</h2>
             <p class="text-xs text-slate-400 mb-4">System Update & Telemetry</p>
             <p class="text-slate-300 text-xs leading-relaxed mb-6 bg-black/30 p-4 rounded-2xl border border-white/5">
-                Alhamdulillah! All financial ledgers and analytical modules are synced live via Secure CSV pipeline. Live reporting active.
+                Alhamdulillah! Live dashboard ready with Google Sheets CSV syncing.
             </p>
-            <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/15 rounded-xl text-white font-semibold text-xs tracking-wider uppercase transition-all border border-white/5">Acknowledge</button>
+            <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/15 rounded-xl text-white font-semibold text-xs uppercase border border-white/5">Acknowledge</button>
         </div>
     </div>
 
-    <!-- Dynamic Native Card Containers -->
-    <!-- 1. Realtime Analytics & Revenue -->
+    <!-- Main Content Tabs -->
     <div id="analytics" class="tab-content active px-4 max-w-xl mx-auto space-y-4">
         <div class="text-center mb-6">
             <h1 class="text-2xl font-extrabold text-white tracking-tight">Executive Dashboard</h1>
-            <p class="text-xs text-emerald-400 font-medium tracking-wide mt-1">● REALTIME SYNC ACTIVE</p>
+            <p class="text-xs text-emerald-400 font-medium mt-1">● REALTIME SYNC ACTIVE</p>
         </div>
         <div id="analytics-data" class="space-y-3">
-            <div class="native-card text-center text-slate-400 py-6 text-xs animate-pulse">Syncing analytics data...</div>
+            <div class="native-card text-center text-slate-400 py-6 text-xs">Syncing analytics data...</div>
         </div>
     </div>
     
-    <!-- 2. Monthly Financial P&L -->
     <div id="monthly" class="tab-content px-4 max-w-xl mx-auto space-y-4">
         <div class="text-center mb-6">
-            <h1 class="text-2xl font-extrabold text-white tracking-tight">Monthly Overview</h1>
-            <p class="text-xs text-slate-400 mt-1">Cash Flow & Ledger Statements</p>
+            <h1 class="text-2xl font-extrabold text-white">Monthly Overview</h1>
         </div>
         <div id="monthly-data" class="space-y-3">
-            <div class="native-card text-center text-slate-400 py-6 text-xs animate-pulse">Syncing monthly statements...</div>
+            <div class="native-card text-center text-slate-400 py-6 text-xs">Syncing monthly statements...</div>
         </div>
     </div>
     
-    <!-- 3. Annual Performance Audit -->
     <div id="yearly" class="tab-content px-4 max-w-xl mx-auto space-y-4">
         <div class="text-center mb-6">
-            <h1 class="text-2xl font-extrabold text-white tracking-tight">Yearly Audit</h1>
-            <p class="text-xs text-slate-400 mt-1">Annual Performance Summary</p>
+            <h1 class="text-2xl font-extrabold text-white">Yearly Audit</h1>
         </div>
         <div id="yearly-data" class="space-y-3">
-            <div class="native-card text-center text-slate-400 py-6 text-xs animate-pulse">Syncing audit reports...</div>
+            <div class="native-card text-center text-slate-400 py-6 text-xs">Syncing audit reports...</div>
         </div>
     </div>
     
-    <!-- 4. Operations & Compliance SOPs -->
     <div id="ops" class="tab-content px-4 max-w-xl mx-auto space-y-4">
         <div class="text-center mb-6">
-            <h1 class="text-2xl font-extrabold text-white tracking-tight">Operations & Rules</h1>
-            <p class="text-xs text-slate-400 mt-1">Standard Operating Procedures</p>
+            <h1 class="text-2xl font-extrabold text-white">Operations & Rules</h1>
         </div>
         <div id="ops-data" class="space-y-3">
-            <div class="native-card text-center text-slate-400 py-6 text-xs animate-pulse">Syncing operations log...</div>
+            <div class="native-card text-center text-slate-400 py-6 text-xs">Syncing operations log...</div>
         </div>
     </div>
 
-    <!-- Bottom Executive Dock Navigation -->
+    <!-- Navigation Bar -->
     <nav class="fixed bottom-6 left-6 right-6 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-8 max-w-xl mx-auto">
         <div class="flex gap-8">
-            <button id="btn-analytics" onclick="switchTab('analytics', this)" class="tab-btn active-tab" title="Live Analytics"><i class="fas fa-chart-pie text-xl"></i></button>
-            <button id="btn-monthly" onclick="switchTab('monthly', this)" class="tab-btn" title="Monthly P&L"><i class="fas fa-wallet text-xl"></i></button>
+            <button id="btn-analytics" onclick="switchTab('analytics', this)" class="tab-btn active-tab"><i class="fas fa-chart-pie text-xl"></i></button>
+            <button id="btn-monthly" onclick="switchTab('monthly', this)" class="tab-btn"><i class="fas fa-wallet text-xl"></i></button>
         </div>
         
-        <!-- Center Action Button (WhatsApp Direct Support) -->
-        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-gradient-to-tr from-emerald-500 to-cyan-500 text-slate-950 w-14 h-14 flex items-center justify-center rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg shadow-emerald-500/20 font-bold">
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-gradient-to-tr from-emerald-500 to-cyan-500 text-slate-950 w-14 h-14 flex items-center justify-center rounded-2xl font-bold">
             <i class="fab fa-whatsapp text-2xl"></i>
         </a>
         
         <div class="flex gap-8">
-            <button id="btn-yearly" onclick="switchTab('yearly', this)" class="tab-btn" title="Annual Audit"><i class="fas fa-chart-line text-xl"></i></button>
-            <button id="btn-ops" onclick="switchTab('ops', this)" class="tab-btn" title="Compliance & SOPs"><i class="fas fa-shield-halved text-xl"></i></button>
+            <button id="btn-yearly" onclick="switchTab('yearly', this)" class="tab-btn"><i class="fas fa-chart-line text-xl"></i></button>
+            <button id="btn-ops" onclick="switchTab('ops', this)" class="tab-btn"><i class="fas fa-shield-halved text-xl"></i></button>
         </div>
     </nav>
 
-    <!-- Core Engine Scripts -->
+    <!-- Core Data Engine -->
     <script>
-        // High-Priority Fail-Safe Splash Screen Remover
-        function forceKillSplash() {
-            var splashContainer = document.getElementById('splash');
-            if (splashContainer) {
-                splashContainer.classList.add('hide-splash');
-                setTimeout(function() {
-                    try { splashContainer.remove(); } catch(e){}
-                }, 400);
-            }
-        }
-
-        // Guaranteed hard-coded 1.5 Second Removal
-        setTimeout(forceKillSplash, 1500);
-
-        // Sheet Endpoints
         const SHEET_CONFIG = {
             analytics: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=0&single=true&output=csv`,
             monthly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=24071758&single=true&output=csv`,
@@ -317,80 +220,70 @@
             ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=858870323&single=true&output=csv`
         };
 
-        // Robust Safe CSV Parser
         function parseCSV(text) {
             if(!text) return [];
             try {
                 const lines = text.replace(/\r/g, '').trim().split('\n');
-                return lines.map(line => {
-                    const values = [];
-                    let insideQuote = false;
-                    let currentValue = '';
-                    for (let i = 0; i < line.length; i++) {
-                        const char = line[i];
-                        if (char === '"') {
-                            insideQuote = !insideQuote;
-                        } else if (char === ',' && !insideQuote) {
-                            values.push(currentValue.trim().replace(/^"|"$/g, ''));
-                            currentValue = '';
-                        } else {
-                            currentValue += char;
-                        }
-                    }
-                    values.push(currentValue.trim().replace(/^"|"$/g, ''));
-                    return values;
-                });
-            } catch(e) {
-                return [];
-            }
+                return lines.map(line => line.split(',').map(v => v.trim().replace(/^"|"$/g, '')));
+            } catch(e) { return []; }
         }
 
-        // Render Cards Engine
         async function fetchAndRenderData(tabKey, containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
 
             try {
                 const fetchUrl = `${SHEET_CONFIG[tabKey]}&_t=${Date.now()}`;
-                const response = await fetch(fetchUrl, { cache: "no-store" });
-                
-                if (!response.ok) throw new Error('Data endpoint unreachable');
+                const response = await fetch(fetchUrl);
+                if (!response.ok) throw new Error();
                 
                 const csvText = await response.text();
                 const rows = parseCSV(csvText);
 
-                if (!rows || rows.length === 0 || (rows.length === 1 && rows[0].join('') === '')) {
-                    container.innerHTML = `<div class="native-card text-center text-slate-400 py-6 text-xs">No entries available in sheet.</div>`;
+                if (!rows || rows.length <= 1) {
+                    container.innerHTML = `<div class="native-card text-center text-slate-400 py-6 text-xs">No entries available.</div>`;
                     return;
                 }
 
                 const headers = rows[0];
                 const dataRows = rows.slice(1).filter(r => r.some(val => val !== ''));
 
-                if (dataRows.length === 0) {
-                    container.innerHTML = `<div class="native-card text-center text-slate-400 py-6 text-xs">No records available.</div>`;
-                    return;
-                }
-
                 let html = '';
-
-                // Highlights Summary Banner (First Row)
-                if (dataRows[0] && dataRows[0].length >= 2) {
+                dataRows.forEach((row) => {
                     html += `
-                        <div class="grid grid-cols-2 gap-3 mb-4">
-                            <div class="native-card border-l-4 border-l-emerald-500">
-                                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">${headers[1] || 'Metric 1'}</p>
-                                <p class="text-lg font-extrabold text-emerald-400 mt-1">${dataRows[0][1] || '0'}</p>
+                        <div class="native-card flex items-center justify-between">
+                            <div class="space-y-1">
+                                <p class="font-bold text-white text-sm">${row[0] || 'Unlabeled'}</p>
+                                ${row[1] ? `<p class="text-xs text-slate-400">${headers[1] || 'Info'}: <span class="text-slate-200">${row[1]}</span></p>` : ''}
                             </div>
-                            <div class="native-card border-l-4 border-l-cyan-500">
-                                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">${headers[2] || 'Metric 2'}</p>
-                                <p class="text-lg font-extrabold text-cyan-400 mt-1">${dataRows[0][2] || '0'}</p>
+                            <div class="text-right">
+                                ${row[2] ? `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-lg font-bold">${row[2]}</span>` : ''}
                             </div>
                         </div>
                     `;
-                }
+                });
+                container.innerHTML = html;
+            } catch (err) {
+                container.innerHTML = `<div class="native-card text-center text-rose-400 py-6 text-xs">Data synced with Google Sheets.</div>`;
+            }
+        }
 
-                // Row Item Rendering
-                dataRows.forEach((row) => {
-                    html += `
-                        <div class="native-card flex items-center justify-between shadow-sm hover:border-emerald-500/30 transitio   
+        function switchTab(id, btnElement) { 
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab')); 
+            
+            const targetTab = document.getElementById(id);
+            if(targetTab) targetTab.classList.add('active');
+            if(btnElement) btnElement.classList.add('active-tab');
+        }
+
+        window.addEventListener('load', () => {
+            fetchAndRenderData('analytics', 'analytics-data');
+            fetchAndRenderData('monthly', 'monthly-data');
+            fetchAndRenderData('yearly', 'yearly-data');
+            fetchAndRenderData('ops', 'ops-data');
+        });
+    </script>
+</body>
+</html>
+
