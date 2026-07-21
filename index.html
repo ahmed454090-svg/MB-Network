@@ -1,400 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<!-- Executive Operations & HR Action Center -->
+<div class="max-w-7xl mx-auto my-8 px-4">
+  <!-- Section Header -->
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h2 class="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2">
+        <span class="inline-block w-2.5 h-6 bg-gradient-to-b from-blue-600 to-indigo-600 rounded-full"></span>
+        Operations & HR Portal
+      </h2>
+      <p class="text-xs text-gray-500 mt-0.5 ml-4">Real-time attendance, leave requests & SOP task execution</p>
+    </div>
+    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-sm">
+      <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Dynamic Sync
+    </span>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- 1. Daily Attendance Card -->
+    <div class="group relative bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+      
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg shadow-inner">
+            📍
+          </div>
+          <span class="text-[10px] font-semibold tracking-wider uppercase text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Live Check-In</span>
+        </div>
+        
+        <h3 class="font-bold text-gray-800 text-base mb-1">Daily Attendance</h3>
+        <p class="text-xs text-gray-500 mb-5">Mark your daily arrival time to update the sheet instantly.</p>
+        
+        <div class="space-y-3">
+          <div class="relative">
+            <input type="text" id="attName" placeholder="Enter Staff Name" class="w-full text-sm bg-gray-50/80 border border-gray-200 px-4 py-3 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-gray-800 placeholder-gray-400 font-medium">
+          </div>
+        </div>
+      </div>
+
+      <button onclick="markAttendance()" class="w-full mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm py-3 rounded-xl font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2">
+        <span>Check In</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </button>
+    </div>
+
+    <!-- 2. Leave Request Card -->
+    <div class="group relative bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+      
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-lg shadow-inner">
+            📝
+          </div>
+          <span class="text-[10px] font-semibold tracking-wider uppercase text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md">Leave Desk</span>
+        </div>
+        
+        <h3 class="font-bold text-gray-800 text-base mb-1">Leave Request</h3>
+        <p class="text-xs text-gray-500 mb-5">Submit leave applications directly for management approval.</p>
+        
+        <div class="space-y-3">
+          <input type="text" id="leaveName" placeholder="Staff Name" class="w-full text-sm bg-gray-50/80 border border-gray-200 px-4 py-2.5 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all text-gray-800 placeholder-gray-400 font-medium">
+          <input type="text" id="leaveReason" placeholder="Reason for leave" class="w-full text-sm bg-gray-50/80 border border-gray-200 px-4 py-2.5 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all text-gray-800 placeholder-gray-400 font-medium">
+        </div>
+      </div>
+
+      <button onclick="applyLeave()" class="w-full mt-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white text-sm py-3 rounded-xl font-semibold shadow-md shadow-amber-500/20 hover:shadow-lg hover:shadow-amber-500/30 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2">
+        <span>Submit Request</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+      </button>
+    </div>
+
+    <!-- 3. SOP / Task Tracker Card -->
+    <div class="group relative bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+      
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg shadow-inner">
+            ⚡
+          </div>
+          <span class="text-[10px] font-semibold tracking-wider uppercase text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">Execution</span>
+        </div>
+        
+        <h3 class="font-bold text-gray-800 text-base mb-1">Task Execution</h3>
+        <p class="text-xs text-gray-500 mb-5">Mark assigned SOPs or daily tasks as completed.</p>
+        
+        <div class="space-y-3">
+          <div class="relative">
+            <input type="text" id="taskId" placeholder="Task ID (e.g. TSK-01)" class="w-full text-sm bg-gray-50/80 border border-gray-200 px-4 py-3 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-gray-800 placeholder-gray-400 font-medium">
+          </div>
+        </div>
+      </div>
+
+      <button onclick="completeTask()" class="w-full mt-6 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-sm py-3 rounded-xl font-semibold shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2">
+        <span>Mark Complete</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // SCRIPT URL AUR LOGIC MEIN KOI CHANGE NAHI KIYA GAYA
+  const SCRIPT_URL = "YOUR_DEPLOYED_WEB_APP_URL_HERE";
+
+  async function markAttendance() {
+    const name = document.getElementById('attName').value;
+    if(!name) return alert('Name enter karein');
     
-    <title>Executive Command Center | Business Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;800&display=swap');
-        
-        :root {
-            --bg-dark: #030712;
-            --accent-green: #10b981;
-            --accent-cyan: #06b6d4;
-        }
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'attendance', name: name })
+    });
+    alert('Attendance lag gayi hai!');
+    document.getElementById('attName').value = '';
+  }
 
-        body { 
-            background-color: var(--bg-dark); 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            overflow-x: hidden; 
-            margin: 0; 
-        }
+  async function applyLeave() {
+    const name = document.getElementById('leaveName').value;
+    const reason = document.getElementById('leaveReason').value;
+    if(!name || !reason) return alert('Dono fields fill karein');
 
-        /* Pure CSS Splash Screen */
-        #splash { 
-            position: fixed; 
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 999999; 
-            background: #030712; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            animation: autoHide 0.5s ease 1.5s forwards;
-        }
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'leave', name: name, reason: reason })
+    });
+    alert('Leave request submit ho gayi hai!');
+    document.getElementById('leaveName').value = '';
+    document.getElementById('leaveReason').value = '';
+  }
 
-        @keyframes autoHide {
-            0% { opacity: 1; pointer-events: auto; }
-            100% { opacity: 0; pointer-events: none; visibility: hidden; }
-        }
-        
-        /* Double Ring Animation */
-        .circle-container { position: relative; width: 150px; height: 150px; display: flex; justify-content: center; align-items: center; }
-        .circle { position: absolute; border: 2px solid transparent; border-radius: 50%; animation: rotate 3s linear infinite; }
-        .circle-1 { width: 100%; height: 100%; border-top: 3px solid var(--accent-green); border-right: 3px solid rgba(16, 185, 129, 0.2); }
-        .circle-2 { width: 80%; height: 80%; border-bottom: 3px solid var(--accent-cyan); animation-direction: reverse; animation-duration: 2s; }
-        .brand-text { font-size: 1.6rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; }
-        
-        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .typing-text { 
-            font-family: 'JetBrains Mono', monospace; 
-            color: #10b981; margin-top: 28px; font-size: 0.85rem; font-weight: 600; 
-            text-transform: uppercase; letter-spacing: 0.2em; overflow: hidden; 
-            border-right: 2px solid #10b981; white-space: nowrap; 
-            animation: typing 1.5s steps(28, end), blink 0.75s step-end infinite; 
-        }
-        @keyframes typing { from { width: 0 } to { width: 28ch } }
-        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #10b981 } }
-        
-        .tab-content { display: none; min-height: 100vh; width: 100%; padding-top: 80px; padding-bottom: 120px; box-sizing: border-box; }
-        .tab-content.active { display: block; }
+  async function completeTask() {
+    const taskId = document.getElementById('taskId').value;
+    if(!taskId) return alert('Task ID enter karein');
 
-        .native-card {
-            background: rgba(17, 24, 39, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.25rem;
-            padding: 1.25rem;
-        }
-        
-        .luxury-nav { 
-            background: rgba(17, 24, 39, 0.75); 
-            backdrop-filter: blur(24px); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-        }
-        .tab-btn { transition: all 0.3s ease; color: #94a3b8; opacity: 0.6; cursor: pointer; }
-        .tab-btn.active-tab { color: #10b981 !important; opacity: 1 !important; transform: translateY(-4px); }
-        .glass-card { background: rgba(17, 24, 39, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .bell-container { position: relative; }
-        .red-dot { position: absolute; top: -1px; right: -1px; width: 9px; height: 9px; background: #ef4444; border-radius: 50%; border: 2px solid #030712; }
-    </style>
-</head>
-<body class="text-slate-200">
-
-    <!-- Pure CSS Splash Screen -->
-    <div id="splash" onclick="this.style.display='none'">
-        <div class="circle-container">
-            <div class="circle circle-1"></div>
-            <div class="circle circle-2"></div>
-            <div class="brand-text">NEXUS</div>
-        </div>
-        <div class="typing-text">Command Center • V2.0</div>
-    </div>
-
-    <!-- Inline Immediate Kill Script -->
-    <script>
-        setTimeout(function(){
-            var s = document.getElementById('splash');
-            if(s) s.style.display = 'none';
-        }, 1800);
-    </script>
-
-    <!-- Top Action Toolbar -->
-    <div class="fixed top-4 right-6 z-[60] flex gap-2.5">
-        <button onclick="exportCurrentTabData()" title="Export CSV" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-emerald-400 flex items-center justify-center backdrop-blur-md transition-all">
-            <i class="fas fa-file-csv text-sm"></i>
-        </button>
-        <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-cyan-400 flex items-center justify-center backdrop-blur-md">
-            <i class="fas fa-university text-sm"></i>
-        </button>
-        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-amber-400 flex items-center justify-center backdrop-blur-md bell-container">
-            <i class="fas fa-bell text-sm"></i>
-            <span class="red-dot"></span>
-        </button>
-    </div>
-
-    <!-- Corporate Banking Details Modal -->
-    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
-        <div class="glass-card p-8 rounded-3xl w-full max-w-sm text-center shadow-2xl relative border border-white/10">
-            <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mx-auto mb-4 border border-cyan-500/20">
-                <i class="fas fa-building-columns text-xl"></i>
-            </div>
-            <h2 class="text-white text-lg font-bold mb-1">Treasury Accounts</h2>
-            <p class="text-xs text-slate-400 mb-6">Corporate Payment Clearance</p>
-            <div class="space-y-3 mb-6">
-                <div class="bg-black/40 p-3.5 rounded-2xl text-left border border-white/5">
-                    <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Primary Account</p>
-                    <p class="text-sm font-semibold text-white mt-0.5">Afzaal Ahmed</p>
-                    <p class="text-xs font-mono text-cyan-400">0342-2735966 (HBL Konnect)</p>
-                </div>
-            </div>
-            <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/15 rounded-xl text-white font-semibold text-xs uppercase border border-white/5">Close</button>
-        </div>
-    </div>
-
-    <!-- Executive Broadcast Notice Modal -->
-    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
-        <div class="glass-card p-8 rounded-3xl w-full max-w-sm shadow-2xl relative border border-white/10">
-            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto mb-4 border border-amber-500/20">
-                <i class="fas fa-bullhorn text-xl"></i>
-            </div>
-            <h2 class="text-white text-lg font-bold mb-1">Executive Broadcast</h2>
-            <p class="text-xs text-slate-400 mb-4">System Update & Telemetry</p>
-            <p class="text-slate-300 text-xs leading-relaxed mb-6 bg-black/30 p-4 rounded-2xl border border-white/5">
-                Alhamdulillah! Live dashboard ready with Google Sheets CSV syncing.
-            </p>
-            <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/15 rounded-xl text-white font-semibold text-xs uppercase border border-white/5">Acknowledge</button>
-        </div>
-    </div>
-
-    <!-- Global Office Search Bar -->
-    <div class="px-4 max-w-xl mx-auto pt-4">
-        <div class="relative">
-            <i class="fas fa-search absolute left-4 top-3.5 text-slate-500 text-xs"></i>
-            <input type="text" id="office-search" onkeyup="filterOfficeData()" placeholder="Quick Search ID, SOP, Department or Amount..." class="w-full bg-slate-900/90 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 transition-all">
-        </div>
-    </div>
-
-    <!-- Main Content Tabs -->
-    <div id="analytics" class="tab-content active px-4 max-w-xl mx-auto space-y-4">
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-extrabold text-white tracking-tight">Executive Dashboard</h1>
-            <p class="text-[11px] text-emerald-400 font-medium mt-1">● REALTIME SYNC ACTIVE</p>
-        </div>
-        <div id="analytics-data" class="space-y-3">
-            <div class="native-card text-center text-slate-400 py-6 text-xs">Syncing analytics data...</div>
-        </div>
-    </div>
-    
-    <div id="monthly" class="tab-content px-4 max-w-xl mx-auto space-y-4">
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-extrabold text-white">Monthly Overview</h1>
-            <p class="text-[11px] text-cyan-400 font-medium mt-1">INCOME & EXPENSE RECORDS</p>
-        </div>
-        <div id="monthly-data" class="space-y-3">
-            <div class="native-card text-center text-slate-400 py-6 text-xs">Syncing monthly statements...</div>
-        </div>
-    </div>
-    
-    <div id="yearly" class="tab-content px-4 max-w-xl mx-auto space-y-4">
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-extrabold text-white">Yearly Audit</h1>
-            <p class="text-[11px] text-amber-400 font-medium mt-1">TARGETS & YOY PERFORMANCE</p>
-        </div>
-        <div id="yearly-data" class="space-y-3">
-            <div class="native-card text-center text-slate-400 py-6 text-xs">Syncing audit reports...</div>
-        </div>
-    </div>
-    
-    <div id="ops" class="tab-content px-4 max-w-xl mx-auto space-y-4">
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-extrabold text-white">Operations & Rules</h1>
-            <p class="text-[11px] text-purple-400 font-medium mt-1">SOPS & OFFICE POLICIES</p>
-        </div>
-        <div id="ops-data" class="space-y-3">
-            <div class="native-card text-center text-slate-400 py-6 text-xs">Syncing operations log...</div>
-        </div>
-    </div>
-
-    <!-- Navigation Bar -->
-    <nav class="fixed bottom-6 left-6 right-6 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-8 max-w-xl mx-auto">
-        <div class="flex gap-8">
-            <button id="btn-analytics" onclick="switchTab('analytics', this)" class="tab-btn active-tab"><i class="fas fa-chart-pie text-xl"></i></button>
-            <button id="btn-monthly" onclick="switchTab('monthly', this)" class="tab-btn"><i class="fas fa-wallet text-xl"></i></button>
-        </div>
-        
-        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-gradient-to-tr from-emerald-500 to-cyan-500 text-slate-950 w-14 h-14 flex items-center justify-center rounded-2xl font-bold">
-            <i class="fab fa-whatsapp text-2xl"></i>
-        </a>
-        
-        <div class="flex gap-8">
-            <button id="btn-yearly" onclick="switchTab('yearly', this)" class="tab-btn"><i class="fas fa-chart-line text-xl"></i></button>
-            <button id="btn-ops" onclick="switchTab('ops', this)" class="tab-btn"><i class="fas fa-shield-halved text-xl"></i></button>
-        </div>
-    </nav>
-
-    <!-- Core Data Engine -->
-    <script>
-        const SHEET_CONFIG = {
-            analytics: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=0&single=true&output=csv`,
-            monthly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=24071758&single=true&output=csv`,
-            yearly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=1472950650&single=true&output=csv`,
-            ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=858870323&single=true&output=csv`
-        };
-
-        let RAW_DATA_STORE = {};
-        let CURRENT_ACTIVE_TAB = 'analytics';
-
-        function parseCSV(text) {
-            if(!text) return [];
-            try {
-                const lines = text.replace(/\r/g, '').trim().split('\n');
-                return lines.map(line => line.split(',').map(v => v.trim().replace(/^"|"$/g, '')));
-            } catch(e) { return []; }
-        }
-
-        async function fetchAndRenderData(tabKey, containerId) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
-
-            try {
-                const fetchUrl = `${SHEET_CONFIG[tabKey]}&_t=${Date.now()}`;
-                const response = await fetch(fetchUrl);
-                if (!response.ok) throw new Error();
-                
-                const csvText = await response.text();
-                const rows = parseCSV(csvText);
-
-                if (!rows || rows.length <= 1) {
-                    container.innerHTML = `<div class="native-card text-center text-slate-400 py-6 text-xs">No entries available.</div>`;
-                    return;
-                }
-
-                RAW_DATA_STORE[tabKey] = rows;
-                const dataRows = rows.slice(1).filter(r => r.some(val => val !== ''));
-
-                // Custom Rendering Rules Based on Office Tab Specs
-                let html = '';
-
-                if (tabKey === 'yearly') {
-                    dataRows.forEach((row) => {
-                        const month = row[0] || 'N/A';
-                        const target = row[1] || '$0';
-                        const revenue = row[2] || '$0';
-                        const growth = row[3] || '0%';
-                        const status = row[4] || 'Pending';
-                        const isPos = !growth.includes('-');
-
-                        html += `
-                            <div class="native-card search-item flex flex-col gap-2 shadow-sm border-l-4 ${isPos ? 'border-l-emerald-500' : 'border-l-rose-500'}">
-                                <div class="flex items-center justify-between border-b border-white/5 pb-2">
-                                    <span class="font-bold text-white text-sm">${month}</span>
-                                    <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded ${status.toLowerCase().includes('cleared') || status.toLowerCase().includes('approved') ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">${status}</span>
-                                </div>
-                                <div class="grid grid-cols-3 gap-2 pt-1 text-center">
-                                    <div class="bg-black/30 p-2 rounded-xl border border-white/5">
-                                        <p class="text-[9px] uppercase font-bold text-slate-400">Target</p>
-                                        <p class="text-xs font-semibold text-slate-200 mt-0.5">${target}</p>
-                                    </div>
-                                    <div class="bg-black/30 p-2 rounded-xl border border-white/5">
-                                        <p class="text-[9px] uppercase font-bold text-slate-400">Revenue</p>
-                                        <p class="text-xs font-bold text-emerald-400 mt-0.5">${revenue}</p>
-                                    </div>
-                                    <div class="bg-black/30 p-2 rounded-xl border border-white/5">
-                                        <p class="text-[9px] uppercase font-bold text-slate-400">Growth</p>
-                                        <p class="text-xs font-bold ${isPos ? 'text-cyan-400' : 'text-rose-400'} mt-0.5">${growth}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    });
-                } else if (tabKey === 'ops') {
-                    dataRows.forEach((row) => {
-                        const code = row[0] || 'SOP';
-                        const dept = row[1] || 'General';
-                        const sopDetails = row[2] || 'No description provided.';
-                        const lead = row[3] || 'Unassigned';
-
-                        html += `
-                            <div class="native-card search-item flex flex-col gap-2 shadow-sm border-l-4 border-l-cyan-500">
-                                <div class="flex items-center justify-between border-b border-white/5 pb-2">
-                                    <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20 font-bold">${code}</span>
-                                    <span class="text-xs text-slate-400 font-medium bg-white/5 px-2.5 py-0.5 rounded-lg border border-white/5">${dept}</span>
-                                </div>
-                                <div class="pt-1">
-                                    <p class="text-xs text-slate-200 leading-relaxed font-medium">${sopDetails}</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-2 border-t border-white/5 text-[11px]">
-                                    <span class="text-slate-500">Responsible Lead:</span>
-                                    <span class="text-emerald-400 font-semibold">${lead}</span>
-                                </div>
-                            </div>
-                        `;
-                    });
-                } else { // Analytics & Monthly Default Layout
-                    dataRows.forEach((row) => {
-                        html += `
-                            <div class="native-card search-item flex flex-col gap-1.5 shadow-sm">
-                                <div class="flex items-center justify-between border-b border-white/5 pb-2">
-                                    <div>
-                                        <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20 font-bold">${row[0] || 'TXN'}</span>
-                                        <span class="text-xs text-slate-400 ml-2">${row[1] || ''}</span>
-                                    </div>
-                                    ${row[5] ? `<span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded ${row[5].toLowerCase().includes('paid') || row[5].toLowerCase().includes('cleared') ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">${row[5]}</span>` : ''}
-                                </div>
-                                <div class="flex items-center justify-between pt-1">
-                                    <div>
-                                        <p class="font-bold text-white text-sm">${row[3] || row[2] || 'Item'}</p>
-                                        ${row[2] ? `<p class="text-[11px] text-slate-400">${row[2]}</p>` : ''}
-                                    </div>
-                                    <div class="text-right">
-                                        ${row[4] ? `<p class="text-base font-extrabold text-emerald-400">${row[4]}</p>` : ''}
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
-
-                container.innerHTML = html;
-            } catch (err) {
-                container.innerHTML = `<div class="native-card text-center text-rose-400 py-6 text-xs">Data synced with Google Sheets.</div>`;
-            }
-        }
-
-        function filterOfficeData() {
-            const query = document.getElementById('office-search').value.toLowerCase();
-            const activeTabContainer = document.getElementById(CURRENT_ACTIVE_TAB);
-            const items = activeTabContainer.getElementsByClassName('search-item');
-
-            Array.from(items).forEach(item => {
-                const text = item.innerText.toLowerCase();
-                if (text.includes(query)) {
-                    item.style.display = "flex";
-                } else {
-                    item.style.display = "none";
-                }
-            });
-        }
-
-        function exportCurrentTabData() {
-            const rows = RAW_DATA_STORE[CURRENT_ACTIVE_TAB];
-            if (!rows) return alert('No data available to export!');
-            
-            let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
-            var encodedUri = encodeURI(csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `${CURRENT_ACTIVE_TAB}_Office_Export.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function switchTab(id, btnElement) { 
-            CURRENT_ACTIVE_TAB = id;
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab')); 
-            
-            const targetTab = document.getElementById(id);
-            if(targetTab) targetTab.classList.add('active');
-            if(btnElement) btnElement.classList.add('active-tab');
-            
-            // Clear search on tab switch
-            document.getElementById('office-search').value = '';
-            filterOfficeData();
-        }
-
-        window.addEventListener('load', () => {
-            fetchAndRenderData('analytics', 'analytics-data');
-            fetchAndRenderData('monthly', 'monthly-data');
-            fetchAndRenderData('yearly', 'yearly-data');
-            fetchAndRenderData('ops', 'ops-data');
-        });
-    </script>
-</body>
-</html>
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'task', taskId: taskId })
+    });
+    alert('Task status "Done" ho gaya!');
+    document.getElementById('taskId').value = '';
+  }
+          </script>
+          
