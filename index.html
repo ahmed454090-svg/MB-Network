@@ -90,13 +90,28 @@
         @keyframes typing { from { width: 0 } to { width: 28ch } }
         @keyframes blink { from, to { border-color: transparent } 50% { border-color: #10b981 } }
         
-        .tab-content { display: none; height: 100vh; width: 100%; }
+        .tab-content { 
+            display: none; 
+            height: 100vh; 
+            width: 100%; 
+            padding-top: 80px; 
+            padding-bottom: 120px; 
+            box-sizing: border-box;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
         .tab-content.active { display: block; }
-        iframe { width: 100%; height: 100%; border: none; }
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            background: #ffffff;
+            border-radius: 12px;
+        }
         
         /* Navigation & Glassmorphic UI */
         .luxury-nav { 
-            background: rgba(17, 24, 39, 0.7); 
+            background: rgba(17, 24, 39, 0.75); 
             backdrop-filter: blur(24px); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
@@ -149,17 +164,17 @@
     </div>
 
     <!-- Top Action Toolbar -->
-    <div class="fixed top-6 right-6 z-[60] flex gap-2.5">
-        <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
+    <div class="fixed top-4 right-6 z-[60] flex gap-2.5">
+        <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
             <i class="fas fa-adjust text-sm"></i>
         </button>
-        <button id="installBtn" class="hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
+        <button id="installBtn" class="hidden w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
             <i class="fas fa-download text-sm"></i>
         </button>
-        <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-cyan-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
+        <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-cyan-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
             <i class="fas fa-university text-sm"></i>
         </button>
-        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-amber-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md bell-container">
+        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-amber-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md bell-container">
             <i class="fas fa-bell text-sm"></i>
             <span class="red-dot"></span>
         </button>
@@ -203,27 +218,27 @@
 
     <!-- Dynamic iFrame Container Modules -->
     <!-- 1. Realtime Analytics & Revenue -->
-    <div id="analytics" class="tab-content active">
+    <div id="analytics" class="tab-content active px-3">
         <iframe id="iframe-analytics" src="about:blank"></iframe>
     </div>
     
     <!-- 2. Monthly Financial P&L -->
-    <div id="monthly" class="tab-content">
+    <div id="monthly" class="tab-content px-3">
         <iframe id="iframe-monthly" src="about:blank"></iframe>
     </div>
     
     <!-- 3. Annual Performance Audit -->
-    <div id="yearly" class="tab-content">
+    <div id="yearly" class="tab-content px-3">
         <iframe id="iframe-yearly" src="about:blank"></iframe>
     </div>
     
     <!-- 4. Operations & Compliance SOPs -->
-    <div id="ops" class="tab-content">
+    <div id="ops" class="tab-content px-3">
         <iframe id="iframe-ops" src="about:blank"></iframe>
     </div>
 
     <!-- Bottom Executive Dock Navigation -->
-    <nav class="fixed bottom-8 left-6 right-6 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-8 max-w-xl mx-auto">
+    <nav class="fixed bottom-6 left-6 right-6 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-8 max-w-xl mx-auto">
         <div class="flex gap-8">
             <button id="btn-analytics" onclick="switchTab('analytics', this)" class="tab-btn active-tab" title="Live Analytics"><i class="fas fa-chart-pie text-xl"></i></button>
             <button id="btn-monthly" onclick="switchTab('monthly', this)" class="tab-btn" title="Monthly P&L"><i class="fas fa-wallet text-xl"></i></button>
@@ -248,7 +263,7 @@
         const timeStamp = new Date().getTime(); // Auto Cache-Buster
 
         const SHEET_CONFIG = {
-            // Sheet Tab 1: Live Analytics (Web Mode for proper visual display)
+            // Sheet Tab 1: Live Analytics
             analytics: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pubhtml?gid=0&single=true&widget=false&chrome=false&cb=${timeStamp}`,
             
             // Sheet Tab 2: Monthly Ledger
@@ -342,5 +357,4 @@
         });
     </script>
 </body>
-            </html>
-            
+</html>
