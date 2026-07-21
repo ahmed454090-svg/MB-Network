@@ -56,18 +56,19 @@
         }
         body.light-theme .text-slate-200 { color: #1e293b; }
         body.light-theme .text-slate-400 { color: #64748b; }
-        body.light-theme #splash { background: rgba(241, 245, 249, 0.95); }
+        body.light-theme #splash { background: rgba(241, 245, 249, 0.98); }
         body.light-theme .brand-text { color: #0f172a; }
         body.light-theme .typing-text { color: #0f172a; border-color: #0f172a; }
         
         /* Blur Glass Splash Screen */
         #splash { 
-            position: fixed; inset: 0; z-index: 9999; 
-            background: rgba(3, 7, 18, 0.95); 
+            position: fixed; 
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 99999; 
+            background: rgba(3, 7, 18, 0.98); 
             backdrop-filter: blur(24px);
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
-            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
         
         /* Fintech Double Ring Animation */
@@ -301,6 +302,19 @@
             ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=858870323&single=true&output=csv&cb=${timeStamp}`
         };
 
+        // Strict 2 Seconds Splash Screen Auto-Destruct
+        setTimeout(() => {
+            const splashEl = document.getElementById('splash');
+            if (splashEl) {
+                splashEl.style.opacity = '0';
+                setTimeout(() => {
+                    if (splashEl.parentNode) {
+                        splashEl.parentNode.removeChild(splashEl);
+                    }
+                }, 400);
+            }
+        }, 2000);
+
         // Simple Safe CSV Parser Engine
         function parseCSV(text) {
             const lines = text.trim().split('\n');
@@ -368,18 +382,4 @@
                             <div class="text-right">
                                 ${row[2] ? `<span class="inline-block bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-lg font-bold">${row[2]}</span>` : ''}
                                 ${row[4] ? `<p class="text-[10px] text-cyan-400 font-mono mt-1">${row[4]}</p>` : ''}
-                            </div>
-                        </div>
-                    `;
-                });
-
-                container.innerHTML = html;
-            } catch (err) {
-                container.innerHTML = `<div class="native-card text-center text-rose-400 py-6 text-xs">Unable to load live data.</div>`;
-            }
-        }
-
-        // Theme Toggle Handler
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-            localStorage.setItem('th        
+                            <
