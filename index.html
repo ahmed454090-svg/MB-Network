@@ -27,7 +27,7 @@
         body { 
             background-color: var(--bg-dark); 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            overflow: hidden; 
+            overflow-x: hidden; 
             margin: 0; 
             transition: background-color 0.4s ease; 
         }
@@ -47,6 +47,12 @@
             color: #0f172a; 
             border: 1px solid rgba(0, 0, 0, 0.08); 
             box-shadow: 0 20px 30px rgba(0,0,0,0.05);
+        }
+        body.light-theme .native-card {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         }
         body.light-theme .text-slate-200 { color: #1e293b; }
         body.light-theme .text-slate-400 { color: #64748b; }
@@ -92,21 +98,22 @@
         
         .tab-content { 
             display: none; 
-            height: 100vh; 
+            min-height: 100vh; 
             width: 100%; 
             padding-top: 80px; 
             padding-bottom: 120px; 
             box-sizing: border-box;
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
         }
         .tab-content.active { display: block; }
-        iframe { 
-            width: 100%; 
-            height: 100%; 
-            border: none; 
-            background: #ffffff;
-            border-radius: 12px;
+
+        /* Native App Styling for Cards */
+        .native-card {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.25rem;
+            padding: 1.25rem;
+            transition: transform 0.2s ease;
         }
         
         /* Navigation & Glassmorphic UI */
@@ -216,25 +223,49 @@
         </div>
     </div>
 
-    <!-- Dynamic iFrame Container Modules -->
+    <!-- Dynamic Native Card Containers -->
     <!-- 1. Realtime Analytics & Revenue -->
-    <div id="analytics" class="tab-content active px-3">
-        <iframe id="iframe-analytics" src="about:blank"></iframe>
+    <div id="analytics" class="tab-content active px-4 max-w-xl mx-auto space-y-4">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-extrabold text-white tracking-tight">Executive Dashboard</h1>
+            <p class="text-xs text-emerald-400 font-medium tracking-wide mt-1">● REALTIME SYNC ACTIVE</p>
+        </div>
+        <div id="analytics-data" class="space-y-3">
+            <p class="text-center text-xs text-slate-500 py-10">Fetching live record cards...</p>
+        </div>
     </div>
     
     <!-- 2. Monthly Financial P&L -->
-    <div id="monthly" class="tab-content px-3">
-        <iframe id="iframe-monthly" src="about:blank"></iframe>
+    <div id="monthly" class="tab-content px-4 max-w-xl mx-auto space-y-4">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-extrabold text-white tracking-tight">Monthly Overview</h1>
+            <p class="text-xs text-slate-400 mt-1">Cash Flow & Ledger Statements</p>
+        </div>
+        <div id="monthly-data" class="space-y-3">
+            <p class="text-center text-xs text-slate-500 py-10">Fetching live record cards...</p>
+        </div>
     </div>
     
     <!-- 3. Annual Performance Audit -->
-    <div id="yearly" class="tab-content px-3">
-        <iframe id="iframe-yearly" src="about:blank"></iframe>
+    <div id="yearly" class="tab-content px-4 max-w-xl mx-auto space-y-4">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-extrabold text-white tracking-tight">Yearly Audit</h1>
+            <p class="text-xs text-slate-400 mt-1">Annual Performance Summary</p>
+        </div>
+        <div id="yearly-data" class="space-y-3">
+            <p class="text-center text-xs text-slate-500 py-10">Fetching live record cards...</p>
+        </div>
     </div>
     
     <!-- 4. Operations & Compliance SOPs -->
-    <div id="ops" class="tab-content px-3">
-        <iframe id="iframe-ops" src="about:blank"></iframe>
+    <div id="ops" class="tab-content px-4 max-w-xl mx-auto space-y-4">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-extrabold text-white tracking-tight">Operations & Rules</h1>
+            <p class="text-xs text-slate-400 mt-1">Standard Operating Procedures</p>
+        </div>
+        <div id="ops-data" class="space-y-3">
+            <p class="text-center text-xs text-slate-500 py-10">Fetching live record cards...</p>
+        </div>
     </div>
 
     <!-- Bottom Executive Dock Navigation -->
@@ -258,103 +289,97 @@
     <!-- Core Engine Scripts -->
     <script>
         // ==========================================
-        // CONFIGURATION: INSTANT AUTO-REFRESH SYNC
+        // CONFIGURATION: CSV DATA STREAM PIPELINE
         // ==========================================
-        const timeStamp = new Date().getTime(); // Auto Cache-Buster
+        const timeStamp = new Date().getTime();
 
         const SHEET_CONFIG = {
-            // Sheet Tab 1: Live Analytics
-            analytics: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pubhtml?gid=0&single=true&widget=false&chrome=false&cb=${timeStamp}`,
-            
-            // Sheet Tab 2: Monthly Ledger
-            monthly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pubhtml?gid=24071758&single=true&widget=false&chrome=false&cb=${timeStamp}`,
-            
-            // Sheet Tab 3: Yearly Audit
-            yearly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pubhtml?gid=1472950650&single=true&widget=false&chrome=false&cb=${timeStamp}`,
-            
-            // Sheet Tab 4: Operations / SOPs
-            ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pubhtml?gid=858870323&single=true&widget=false&chrome=false&cb=${timeStamp}`
+            analytics: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=0&single=true&output=csv&cb=${timeStamp}`,
+            monthly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=24071758&single=true&output=csv&cb=${timeStamp}`,
+            yearly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=1472950650&single=true&output=csv&cb=${timeStamp}`,
+            ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=858870323&single=true&output=csv&cb=${timeStamp}`
         };
+
+        // Simple CSV Parser Engine
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            return lines.map(line => {
+                const values = [];
+                let insideQuote = false;
+                let currentValue = '';
+                for (let char of line) {
+                    if (char === '"') insideQuote = !insideQuote;
+                    else if (char === ',' && !insideQuote) {
+                        values.push(currentValue.trim().replace(/^"|"$/g, ''));
+                        currentValue = '';
+                    } else currentValue += char;
+                }
+                values.push(currentValue.trim().replace(/^"|"$/g, ''));
+                return values;
+            });
+        }
+
+        // Render Native Cards Layout
+        async function fetchAndRenderData(tabKey, containerId) {
+            const container = document.getElementById(containerId);
+            try {
+                const response = await fetch(SHEET_CONFIG[tabKey]);
+                const csvData = await response.text();
+                const rows = parseCSV(csvData);
+
+                if (!rows || rows.length <= 1) {
+                    container.innerHTML = `<div class="native-card text-center text-slate-400 py-6 text-xs">No records found.</div>`;
+                    return;
+                }
+
+                const headers = rows[0];
+                const dataRows = rows.slice(1);
+                let html = '';
+
+                // Summary Big Cards Header
+                if (dataRows.length > 0 && dataRows[0].length >= 3) {
+                    html += `
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div class="native-card border-l-4 border-l-emerald-500">
+                                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">${headers[1] || 'Metric 1'}</p>
+                                <p class="text-lg font-extrabold text-emerald-400 mt-1">${dataRows[0][1] || '0'}</p>
+                            </div>
+                            <div class="native-card border-l-4 border-l-cyan-500">
+                                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">${headers[2] || 'Metric 2'}</p>
+                                <p class="text-lg font-extrabold text-cyan-400 mt-1">${dataRows[0][2] || '0'}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Detailed Row Cards
+                dataRows.forEach((row) => {
+                    if (!row[0] && !row[1]) return; // Skip empty rows
+                    
+                    html += `
+                        <div class="native-card flex items-center justify-between shadow-sm hover:border-emerald-500/30 transition-all">
+                            <div class="space-y-1">
+                                <p class="font-bold text-white text-sm">${row[0] || '-'}</p>
+                                ${row[1] ? `<p class="text-xs text-slate-400">${headers[1] || ''}: <span class="text-slate-200 font-medium">${row[1]}</span></p>` : ''}
+                                ${row[3] ? `<p class="text-[11px] text-slate-500">${row[3]}</p>` : ''}
+                            </div>
+                            <div class="text-right">
+                                ${row[2] ? `<span class="inline-block bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-lg font-bold">${row[2]}</span>` : ''}
+                                ${row[4] ? `<p class="text-[10px] text-cyan-400 font-mono mt-1">${row[4]}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            } catch (err) {
+                container.innerHTML = `<div class="native-card text-center text-rose-400 py-6 text-xs">Error loading live data stream.</div>`;
+            }
+        }
 
         // Theme Toggle Handler
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
             localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
         }
-
-        // Tab Navigation Engine
-        function switchTab(id, btnElement) { 
-            if (navigator.vibrate) navigator.vibrate(15); 
-            
-            // Hide all tabs
-            const allTabs = document.querySelectorAll('.tab-content');
-            allTabs.forEach(t => t.classList.remove('active')); 
-            
-            // Reset all nav buttons
-            const allBtns = document.querySelectorAll('.tab-btn');
-            allBtns.forEach(b => b.classList.remove('active-tab')); 
-            
-            // Activate target tab
-            const targetTab = document.getElementById(id);
-            if(targetTab) {
-                targetTab.classList.add('active'); 
-            }
-
-            // Highlight target button
-            if(btnElement) {
-                btnElement.classList.add('active-tab');
-            } else {
-                const autoBtn = document.getElementById('btn-' + id);
-                if(autoBtn) autoBtn.classList.add('active-tab');
-            }
-            
-            localStorage.setItem('activeTab', id); 
-        }
-
-        // App Initialization
-        window.addEventListener('load', () => {
-            // Restore Theme Preference
-            if(localStorage.getItem('theme') === 'light') {
-                document.body.classList.add('light-theme');
-            }
-            
-            // Inject Sheet URLs into iFrames dynamically
-            document.getElementById('iframe-analytics').src = SHEET_CONFIG.analytics;
-            document.getElementById('iframe-monthly').src = SHEET_CONFIG.monthly;
-            document.getElementById('iframe-yearly').src = SHEET_CONFIG.yearly;
-            document.getElementById('iframe-ops').src = SHEET_CONFIG.ops;
-
-            // Fade-out Splash Screen
-            const splash = document.getElementById('splash');
-            setTimeout(() => {
-                splash.style.opacity = '0';
-                setTimeout(() => { splash.style.display = 'none'; }, 500);
-            }, 1200);
-
-            // Restore Active Tab
-            const savedTab = localStorage.getItem('activeTab') || 'analytics';
-            const initialBtn = document.getElementById('btn-' + savedTab);
-            switchTab(savedTab, initialBtn);
-        });
-
-        // PWA Installation Handler
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => { 
-            e.preventDefault(); 
-            deferredPrompt = e; 
-            document.getElementById('installBtn').classList.remove('hidden'); 
-        });
         
-        document.getElementById('installBtn').addEventListener('click', () => { 
-            if (deferredPrompt) { 
-                deferredPrompt.prompt(); 
-                deferredPrompt.userChoice.then((choiceResult) => { 
-                    if (choiceResult.outcome === 'accepted') {
-                        document.getElementById('installBtn').classList.add('hidden'); 
-                    }
-                }); 
-            } 
-        });
-    </script>
-</body>
-</html>
