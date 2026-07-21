@@ -3,165 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Cache-Control Meta Tags -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
     <link rel="manifest" href="manifest.json">
-    <title>FTCF | Professional Portal</title>
+    <title>Executive Command Center | Business Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=JetBrains+Mono:wght@400;800&display=swap');
-        body { background-color: #050505; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; transition: background-color 0.5s ease; }
-        body.light-theme { background-color: #f8fafc; }
-        body.light-theme .luxury-nav { background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0,0,0,0.1); }
-        body.light-theme .glass-card { background: rgba(255, 255, 255, 0.95); color: #000; border: 1px solid rgba(0,0,0,0.1); }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;800&display=swap');
+        
+        :root {
+            --bg-dark: #030712;
+            --glass-dark: rgba(17, 24, 39, 0.75);
+            --border-dark: rgba(255, 255, 255, 0.08);
+            --accent-green: #10b981;
+            --accent-cyan: #06b6d4;
+            --accent-gold: #f59e0b;
+        }
+
+        body { 
+            background-color: var(--bg-dark); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow: hidden; 
+            margin: 0; 
+            transition: background-color 0.4s ease; 
+        }
+
+        /* Light Theme Overrides */
+        body.light-theme { 
+            background-color: #f1f5f9; 
+            color: #0f172a;
+        }
+        body.light-theme .luxury-nav { 
+            background: rgba(255, 255, 255, 0.85); 
+            border: 1px solid rgba(0, 0, 0, 0.1); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        body.light-theme .glass-card { 
+            background: rgba(255, 255, 255, 0.95); 
+            color: #0f172a; 
+            border: 1px solid rgba(0, 0, 0, 0.08); 
+            box-shadow: 0 20px 30px rgba(0,0,0,0.05);
+        }
         body.light-theme .text-slate-200 { color: #1e293b; }
         body.light-theme .text-slate-400 { color: #64748b; }
-        body.light-theme #splash { background: rgba(248, 250, 252, 0.9); }
-        body.light-theme .ftcf-text { color: #000; }
-        body.light-theme .typing-text { color: #000; border-color: #000; }
+        body.light-theme #splash { background: rgba(241, 245, 249, 0.95); }
+        body.light-theme .brand-text { color: #0f172a; }
+        body.light-theme .typing-text { color: #0f172a; border-color: #0f172a; }
         
         /* Blur Glass Splash Screen */
         #splash { 
             position: fixed; inset: 0; z-index: 9999; 
-            background: rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(20px);
+            background: rgba(3, 7, 18, 0.85); 
+            backdrop-filter: blur(24px);
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            transition: opacity 0.5s ease-in-out; 
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
         }
         
-        /* Double Circle Animation */
-        .circle-container { position: relative; width: 140px; height: 140px; display: flex; justify-content: center; align-items: center; }
-        .circle { position: absolute; border: 3px solid transparent; border-radius: 50%; animation: rotate 3s linear infinite; }
-        .circle-1 { width: 100%; height: 100%; border-top: 3px solid #ffffff; }
-        .circle-2 { width: 85%; height: 85%; border-bottom: 3px solid #1e3a8a; animation-direction: reverse; }
+        /* Fintech Double Ring Animation */
+        .circle-container { position: relative; width: 150px; height: 150px; display: flex; justify-content: center; align-items: center; }
+        .circle { position: absolute; border: 2px solid transparent; border-radius: 50%; animation: rotate 3s linear infinite; }
+        .circle-1 { width: 100%; height: 100%; border-top: 3px solid var(--accent-green); border-right: 3px solid rgba(16, 185, 129, 0.2); }
+        .circle-2 { width: 80%; height: 80%; border-bottom: 3px solid var(--accent-cyan); animation-direction: reverse; animation-duration: 2s; }
         
-        .ftcf-text { font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+        .brand-text { font-size: 1.6rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; }
         
         @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* Bold Typing Tagline */
-        .typing-text { font-family: 'JetBrains Mono', monospace; color: #ffffff; margin-top: 25px; font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; overflow: hidden; border-right: 2px solid #ffffff; white-space: nowrap; animation: typing 2.5s steps(30, end), blink 0.75s step-end infinite; }
-        @keyframes typing { from { width: 0 } to { width: 25ch } }
-        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #ffffff } }
+        /* Executive Typing Tagline */
+        .typing-text { 
+            font-family: 'JetBrains Mono', monospace; 
+            color: #10b981; 
+            margin-top: 28px; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 0.2em; 
+            overflow: hidden; 
+            border-right: 2px solid #10b981; 
+            white-space: nowrap; 
+            animation: typing 2.2s steps(28, end), blink 0.75s step-end infinite; 
+        }
+        @keyframes typing { from { width: 0 } to { width: 28ch } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #10b981 } }
         
-        .tab-content { display: none; height: 100vh; }
+        .tab-content { display: none; height: 100vh; width: 100%; }
         .tab-content.active { display: block; }
         iframe { width: 100%; height: 100%; border: none; }
         
-        .luxury-nav { background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .tab-btn { transition: all 0.3s ease; color: #94a3b8; opacity: 0.7; }
+        /* Navigation & Glassmorphic UI */
+        .luxury-nav { 
+            background: rgba(17, 24, 39, 0.7); 
+            backdrop-filter: blur(24px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .tab-btn { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            color: #94a3b8; 
+            opacity: 0.6; 
+        }
         .tab-btn:hover { color: #ffffff; opacity: 1; }
-        .tab-btn.active-tab { color: #f59e0b !important; opacity: 1 !important; transform: translateY(-5px); text-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
-        .glass-card { background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+        .tab-btn.active-tab { 
+            color: #10b981 !important; 
+            opacity: 1 !important; 
+            transform: translateY(-4px); 
+            text-shadow: 0 0 12px rgba(16, 185, 129, 0.6); 
+        }
+        .glass-card { 
+            background: rgba(17, 24, 39, 0.95); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
         
         /* Red Dot Notification style */
         .bell-container { position: relative; }
-        .red-dot { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; border: 2px solid #050505; }
+        .red-dot { 
+            position: absolute; top: -1px; right: -1px; 
+            width: 9px; height: 9px; 
+            background: #ef4444; 
+            border-radius: 50%; 
+            border: 2px solid #030712; 
+        }
 
-        /* Icon Bounce Animation */
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        .tab-btn:active i { animation: bounce 0.4s ease; }
-
-        /* Tab Button Scale Effect */
-        .tab-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .tab-btn:active { transform: scale(0.9); }
+        /* Icon Micro Animations */
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+        .tab-btn:active i { animation: bounce 0.3s ease; }
+        .tab-btn:active { transform: scale(0.92); }
     </style>
 </head>
 <body class="text-slate-200">
 
+    <!-- Splash Screen -->
     <div id="splash">
         <div class="circle-container">
             <div class="circle circle-1"></div>
             <div class="circle circle-2"></div>
-            <div class="ftcf-text">FTCF</div>
+            <div class="brand-text">NEXUS</div>
         </div>
-        <div class="typing-text">Mughal Brothers Network</div>
+        <div class="typing-text">Command Center • V2.0</div>
     </div>
 
-    <div class="fixed top-6 right-6 z-[60] flex gap-2">
-        <button onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500"><i class="fas fa-adjust"></i></button>
-        <button id="installBtn" class="hidden w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500"><i class="fas fa-download"></i></button>
-        <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-blue-400"><i class="fas fa-university"></i></button>
-        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500 bell-container">
-            <i class="fas fa-bell"></i>
+    <!-- Top Action Toolbar -->
+    <div class="fixed top-6 right-6 z-[60] flex gap-2.5">
+        <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
+            <i class="fas fa-adjust text-sm"></i>
+        </button>
+        <button id="installBtn" class="hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
+            <i class="fas fa-download text-sm"></i>
+        </button>
+        <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-cyan-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md">
+            <i class="fas fa-university text-sm"></i>
+        </button>
+        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-amber-400 hover:bg-white/10 transition-all flex items-center justify-center backdrop-blur-md bell-container">
+            <i class="fas fa-bell text-sm"></i>
             <span class="red-dot"></span>
         </button>
     </div>
 
+    <!-- Corporate Banking Details Modal -->
     <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
-        <div class="glass-card p-8 rounded-3xl w-full max-w-sm text-center">
-            <h2 class="text-white text-xl font-bold mb-4">🏦 HBL Konnect Bank Details</h2>
-            <div class="bg-black/30 p-4 rounded-xl text-left border border-white/5 mb-6">
-                <p class="text-xs text-slate-500">Account Name: <span class="text-white">Afzaal Ahmed</span></p>
-                <p class="text-xs text-slate-500 mt-2">Account No: <span class="text-white">0342-2735966</span></p>
+        <div class="glass-card p-8 rounded-3xl w-full max-w-sm text-center shadow-2xl relative border border-white/10">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mx-auto mb-4 border border-cyan-500/20">
+                <i class="fas fa-building-columns text-xl"></i>
             </div>
-            <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold">Close</button>
+            <h2 class="text-white text-lg font-bold mb-1">Treasury Accounts</h2>
+            <p class="text-xs text-slate-400 mb-6">Corporate Payment Clearance</p>
+            
+            <div class="space-y-3 mb-6">
+                <div class="bg-black/40 p-3.5 rounded-2xl text-left border border-white/5">
+                    <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Primary Account</p>
+                    <p class="text-sm font-semibold text-white mt-0.5">Afzaal Ahmed</p>
+                    <p class="text-xs font-mono text-cyan-400">0342-2735966 (HBL Konnect)</p>
+                </div>
+            </div>
+
+            <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/15 rounded-xl text-white font-semibold text-xs tracking-wider uppercase transition-all border border-white/5">Close Terminal</button>
         </div>
     </div>
 
-    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-md">
-        <div class="glass-card p-8 rounded-3xl w-full max-w-sm shadow-2xl">
-            <h2 class="text-white text-xl font-bold mb-4">📢 System Notice</h2>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6">Alhamdulillah! ❤️ FTCF K 3 Mah Mukamal Hone Per Ap Sab Ko Mubarak Ho🎉🎊 Ham Back End per Or Improvement Ki Koshish me han.</p>
-            <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold transition-all">Close</button>
+    <!-- Executive Broadcast Notice Modal -->
+    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
+        <div class="glass-card p-8 rounded-3xl w-full max-w-sm shadow-2xl relative border border-white/10">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto mb-4 border border-amber-500/20">
+                <i class="fas fa-bullhorn text-xl"></i>
+            </div>
+            <h2 class="text-white text-lg font-bold mb-1">Executive Broadcast</h2>
+            <p class="text-xs text-slate-400 mb-4">System Update & Telemetry</p>
+            <p class="text-slate-300 text-xs leading-relaxed mb-6 bg-black/30 p-4 rounded-2xl border border-white/5">
+                Alhamdulillah! All financial ledgers and analytical modules are synced live via Secure CSV pipeline. Live reporting active.
+            </p>
+            <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/15 rounded-xl text-white font-semibold text-xs tracking-wider uppercase transition-all border border-white/5">Acknowledge</button>
         </div>
     </div>
 
-    <div id="ledger" class="tab-content"><iframe src="https://ftcf20-hub.github.io/FTCF.com/"></iframe></div>
-    <div id="monthly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Monthly-Status/"></iframe></div>
-    <div id="yearly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Yearly-Record/"></iframe></div>
-    <div id="rules" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Loneportal/"></iframe></div>
+    <!-- Dynamic iFrame Container Modules -->
+    <!-- 1. Realtime Analytics & Revenue -->
+    <div id="analytics" class="tab-content">
+        <iframe id="iframe-analytics" src="about:blank"></iframe>
+    </div>
+    
+    <!-- 2. Monthly Financial P&L -->
+    <div id="monthly" class="tab-content">
+        <iframe id="iframe-monthly" src="about:blank"></iframe>
+    </div>
+    
+    <!-- 3. Annual Performance Audit -->
+    <div id="yearly" class="tab-content">
+        <iframe id="iframe-yearly" src="about:blank"></iframe>
+    </div>
+    
+    <!-- 4. Operations & Compliance SOPs -->
+    <div id="ops" class="tab-content">
+        <iframe id="iframe-ops" src="about:blank"></iframe>
+    </div>
 
-    <nav class="fixed bottom-8 left-6 right-6 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-8 shadow-2xl border border-white/10">
+    <!-- Bottom Executive Dock Navigation -->
+    <nav class="fixed bottom-8 left-6 right-6 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-8 max-w-xl mx-auto">
         <div class="flex gap-8">
-            <button onclick="switchTab('ledger', this)" class="tab-btn"><i class="fas fa-wallet text-xl"></i></button>
-            <button onclick="switchTab('monthly', this)" class="tab-btn"><i class="fas fa-calendar-check text-xl"></i></button>
+            <button onclick="switchTab('analytics', this)" class="tab-btn" title="Live Analytics"><i class="fas fa-chart-pie text-xl"></i></button>
+            <button onclick="switchTab('monthly', this)" class="tab-btn" title="Monthly P&L"><i class="fas fa-wallet text-xl"></i></button>
         </div>
-        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-white text-black w-14 h-14 flex items-center justify-center rounded-xl hover:bg-amber-500 transition-all"><i class="fab fa-whatsapp text-2xl"></i></a>
+        
+        <!-- Center Action Button (WhatsApp Direct Support) -->
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-gradient-to-tr from-emerald-500 to-cyan-500 text-slate-950 w-14 h-14 flex items-center justify-center rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg shadow-emerald-500/20 font-bold">
+            <i class="fab fa-whatsapp text-2xl"></i>
+        </a>
+        
         <div class="flex gap-8">
-            <button onclick="switchTab('yearly', this)" class="tab-btn"><i class="fas fa-chart-line text-xl"></i></button>
-            <button onclick="switchTab('rules', this)" class="tab-btn"><i class="fas fa-gavel text-xl"></i></button>
+            <button onclick="switchTab('yearly', this)" class="tab-btn" title="Annual Audit"><i class="fas fa-chart-line text-xl"></i></button>
+            <button onclick="switchTab('ops', this)" class="tab-btn" title="Compliance & SOPs"><i class="fas fa-shield-halved text-xl"></i></button>
         </div>
     </nav>
 
+    <!-- Core Engine Scripts -->
     <script>
+        // ==========================================
+        // CONFIGURATION: PASTE YOUR CSV LINKS HERE
+        // ==========================================
+        const SHEET_CONFIG = {
+            // Sheet Tab 1: Live Analytics
+            analytics: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_YOUR_SHEET_ID_HERE/pubhtml?gid=0&single=true&widget=true&headers=false",
+            
+            // Sheet Tab 2: Monthly Ledger
+            monthly: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_YOUR_SHEET_ID_HERE/pubhtml?gid=112233&single=true&widget=true&headers=false",
+            
+            // Sheet Tab 3: Yearly Audit
+            yearly: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_YOUR_SHEET_ID_HERE/pubhtml?gid=445566&single=true&widget=true&headers=false",
+            
+            // Sheet Tab 4: Operations / SOPs (Or external URL)
+            ops: "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_YOUR_SHEET_ID_HERE/pubhtml?gid=778899&single=true&widget=true&headers=false"
+        };
+
+        // Theme Toggle Handler
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
             localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
         }
 
+        // App Initialization
         window.addEventListener('load', () => {
-            if(localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme');
+            // Restore Theme Preference
+            if(localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
             
+            // Inject Sheet URLs into iFrames dynamically
+            document.getElementById('iframe-analytics').src = SHEET_CONFIG.analytics;
+            document.getElementById('iframe-monthly').src = SHEET_CONFIG.monthly;
+            document.getElementById('iframe-yearly').src = SHEET_CONFIG.yearly;
+            document.getElementById('iframe-ops').src = SHEET_CONFIG.ops;
+
+            // Fade-out Splash Screen
             const splash = document.getElementById('splash');
             setTimeout(() => {
                 splash.style.opacity = '0';
                 setTimeout(() => { splash.style.display = 'none'; }, 500);
-            }, 1000);
+            }, 1200);
 
-            const lastTab = localStorage.getItem('activeTab') || 'ledger';
+            // Active Tab State Restoration
+            const lastTab = localStorage.getItem('activeTab') || 'analytics';
             const btn = document.querySelector(`button[onclick*="${lastTab}"]`);
-            if(btn) switchTab(lastTab, btn);
+            if(btn) {
+                switchTab(lastTab, btn);
+            } else {
+                switchTab('analytics', document.querySelector('.tab-btn'));
+            }
         });
 
+        // PWA Installation Handler
         let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').classList.remove('hidden'); });
-        document.getElementById('installBtn').addEventListener('click', () => { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then((choiceResult) => { if (choiceResult.outcome === 'accepted') document.getElementById('installBtn').classList.add('hidden'); }); } });
+        window.addEventListener('beforeinstallprompt', (e) => { 
+            e.preventDefault(); 
+            deferredPrompt = e; 
+            document.getElementById('installBtn').classList.remove('hidden'); 
+        });
         
+        document.getElementById('installBtn').addEventListener('click', () => { 
+            if (deferredPrompt) { 
+                deferredPrompt.prompt(); 
+                deferredPrompt.userChoice.then((choiceResult) => { 
+                    if (choiceResult.outcome === 'accepted') {
+                        document.getElementById('installBtn').classList.add('hidden'); 
+                    }
+                }); 
+            } 
+        });
+        
+        // Tab Navigation & Haptic Engine
         function switchTab(id, btn) { 
-            if (navigator.vibrate) navigator.vibrate(20); 
+            if (navigator.vibrate) navigator.vibrate(15); 
             
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab')); 
             
-            document.getElementById(id).classList.add('active'); 
-            btn.classList.add('active-tab'); 
-            localStorage.setItem('activeTab', id); 
+            const selectedTab = document.getElementById(id);
+            if(selectedTab) {
+                selectedTab.classList.add('active'); 
+                if(btn) btn.classList.add('active-tab'); 
+                localStorage.setItem('activeTab', id); 
+            }
         }
     </script>
 </body>
-</html>
+    </html>
+    
