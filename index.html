@@ -105,6 +105,7 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             color: #94a3b8; 
             opacity: 0.6; 
+            cursor: pointer;
         }
         .tab-btn:hover { color: #ffffff; opacity: 1; }
         .tab-btn.active-tab { 
@@ -202,7 +203,7 @@
 
     <!-- Dynamic iFrame Container Modules -->
     <!-- 1. Realtime Analytics & Revenue -->
-    <div id="analytics" class="tab-content">
+    <div id="analytics" class="tab-content active">
         <iframe id="iframe-analytics" src="about:blank"></iframe>
     </div>
     
@@ -224,8 +225,8 @@
     <!-- Bottom Executive Dock Navigation -->
     <nav class="fixed bottom-8 left-6 right-6 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-8 max-w-xl mx-auto">
         <div class="flex gap-8">
-            <button onclick="switchTab('analytics', this)" class="tab-btn" title="Live Analytics"><i class="fas fa-chart-pie text-xl"></i></button>
-            <button onclick="switchTab('monthly', this)" class="tab-btn" title="Monthly P&L"><i class="fas fa-wallet text-xl"></i></button>
+            <button id="btn-analytics" onclick="switchTab('analytics', this)" class="tab-btn active-tab" title="Live Analytics"><i class="fas fa-chart-pie text-xl"></i></button>
+            <button id="btn-monthly" onclick="switchTab('monthly', this)" class="tab-btn" title="Monthly P&L"><i class="fas fa-wallet text-xl"></i></button>
         </div>
         
         <!-- Center Action Button (WhatsApp Direct Support) -->
@@ -234,8 +235,8 @@
         </a>
         
         <div class="flex gap-8">
-            <button onclick="switchTab('yearly', this)" class="tab-btn" title="Annual Audit"><i class="fas fa-chart-line text-xl"></i></button>
-            <button onclick="switchTab('ops', this)" class="tab-btn" title="Compliance & SOPs"><i class="fas fa-shield-halved text-xl"></i></button>
+            <button id="btn-yearly" onclick="switchTab('yearly', this)" class="tab-btn" title="Annual Audit"><i class="fas fa-chart-line text-xl"></i></button>
+            <button id="btn-ops" onclick="switchTab('ops', this)" class="tab-btn" title="Compliance & SOPs"><i class="fas fa-shield-halved text-xl"></i></button>
         </div>
     </nav>
 
@@ -247,23 +248,52 @@
         const timeStamp = new Date().getTime(); // Auto Cache-Buster
 
         const SHEET_CONFIG = {
-            // Sheet Tab 1: Live Analytics
-            analytics: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=0&single=true&output=csv&cb=${timeStamp}`,
+            // Sheet Tab 1: Live Analytics (Web Mode for proper visual display)
+            analytics: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pubhtml?gid=0&single=true&widget=false&chrome=false&cb=${timeStamp}`,
             
             // Sheet Tab 2: Monthly Ledger
-            monthly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=24071758&single=true&output=csv&cb=${timeStamp}`,
+            monthly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pubhtml?gid=24071758&single=true&widget=false&chrome=false&cb=${timeStamp}`,
             
             // Sheet Tab 3: Yearly Audit
-            yearly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=1472950650&single=true&output=csv&cb=${timeStamp}`,
+            yearly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pubhtml?gid=1472950650&single=true&widget=false&chrome=false&cb=${timeStamp}`,
             
             // Sheet Tab 4: Operations / SOPs
-            ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=858870323&single=true&output=csv&cb=${timeStamp}`
+            ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pubhtml?gid=858870323&single=true&widget=false&chrome=false&cb=${timeStamp}`
         };
 
         // Theme Toggle Handler
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
             localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+        }
+
+        // Tab Navigation Engine
+        function switchTab(id, btnElement) { 
+            if (navigator.vibrate) navigator.vibrate(15); 
+            
+            // Hide all tabs
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(t => t.classList.remove('active')); 
+            
+            // Reset all nav buttons
+            const allBtns = document.querySelectorAll('.tab-btn');
+            allBtns.forEach(b => b.classList.remove('active-tab')); 
+            
+            // Activate target tab
+            const targetTab = document.getElementById(id);
+            if(targetTab) {
+                targetTab.classList.add('active'); 
+            }
+
+            // Highlight target button
+            if(btnElement) {
+                btnElement.classList.add('active-tab');
+            } else {
+                const autoBtn = document.getElementById('btn-' + id);
+                if(autoBtn) autoBtn.classList.add('active-tab');
+            }
+            
+            localStorage.setItem('activeTab', id); 
         }
 
         // App Initialization
@@ -286,14 +316,10 @@
                 setTimeout(() => { splash.style.display = 'none'; }, 500);
             }, 1200);
 
-            // Active Tab State Restoration
-            const lastTab = localStorage.getItem('activeTab') || 'analytics';
-            const btn = document.querySelector(`button[onclick*="${lastTab}"]`);
-            if(btn) {
-                switchTab(lastTab, btn);
-            } else {
-                switchTab('analytics', document.querySelector('.tab-btn'));
-            }
+            // Restore Active Tab
+            const savedTab = localStorage.getItem('activeTab') || 'analytics';
+            const initialBtn = document.getElementById('btn-' + savedTab);
+            switchTab(savedTab, initialBtn);
         });
 
         // PWA Installation Handler
@@ -314,22 +340,7 @@
                 }); 
             } 
         });
-        
-        // Tab Navigation & Haptic Engine
-        function switchTab(id, btn) { 
-            if (navigator.vibrate) navigator.vibrate(15); 
-            
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab')); 
-            
-            const selectedTab = document.getElementById(id);
-            if(selectedTab) {
-                selectedTab.classList.add('active'); 
-                if(btn) btn.classList.add('active-tab'); 
-                localStorage.setItem('activeTab', id); 
-            }
-        }
     </script>
 </body>
-                </html>
-                
+            </html>
+            
