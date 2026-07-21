@@ -60,15 +60,20 @@
         body.light-theme .brand-text { color: #0f172a; }
         body.light-theme .typing-text { color: #0f172a; border-color: #0f172a; }
         
-        /* Blur Glass Splash Screen */
+        /* Fail-Safe Splash Overlay */
         #splash { 
             position: fixed; 
             top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 99999; 
-            background: rgba(3, 7, 18, 0.98); 
-            backdrop-filter: blur(24px);
+            z-index: 999999; 
+            background: #030712; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
             transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .hide-splash {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
         }
         
         /* Fintech Double Ring Animation */
@@ -162,8 +167,8 @@
 </head>
 <body class="text-slate-200">
 
-    <!-- Splash Screen -->
-    <div id="splash" onclick="dismissSplash()">
+    <!-- Splash Screen (Instant Tap to dismiss & Auto-Kill Timer) -->
+    <div id="splash" onclick="forceKillSplash()">
         <div class="circle-container">
             <div class="circle circle-1"></div>
             <div class="circle circle-2"></div>
@@ -290,20 +295,19 @@
 
     <!-- Core Engine Scripts -->
     <script>
-        // Dismiss Splash Screen Safely
-        function dismissSplash() {
-            const splashEl = document.getElementById('splash');
-            if (splashEl) {
-                splashEl.style.opacity = '0';
-                splashEl.style.pointerEvents = 'none';
-                setTimeout(() => {
-                    if (splashEl.parentNode) splashEl.parentNode.removeChild(splashEl);
+        // High-Priority Fail-Safe Splash Screen Remover
+        function forceKillSplash() {
+            var splashContainer = document.getElementById('splash');
+            if (splashContainer) {
+                splashContainer.classList.add('hide-splash');
+                setTimeout(function() {
+                    try { splashContainer.remove(); } catch(e){}
                 }, 400);
             }
         }
 
-        // Auto-dismiss splash screen after exactly 2 seconds
-        setTimeout(dismissSplash, 2000);
+        // Guaranteed hard-coded 1.5 Second Removal
+        setTimeout(forceKillSplash, 1500);
 
         // Sheet Endpoints
         const SHEET_CONFIG = {
@@ -313,32 +317,39 @@
             ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=858870323&single=true&output=csv`
         };
 
-        // Robust CSV Line & Quote Parser
+        // Robust Safe CSV Parser
         function parseCSV(text) {
-            const lines = text.replace(/\r/g, '').trim().split('\n');
-            return lines.map(line => {
-                const values = [];
-                let insideQuote = false;
-                let currentValue = '';
-                for (let i = 0; i < line.length; i++) {
-                    const char = line[i];
-                    if (char === '"') {
-                        insideQuote = !insideQuote;
-                    } else if (char === ',' && !insideQuote) {
-                        values.push(currentValue.trim().replace(/^"|"$/g, ''));
-                        currentValue = '';
-                    } else {
-                        currentValue += char;
+            if(!text) return [];
+            try {
+                const lines = text.replace(/\r/g, '').trim().split('\n');
+                return lines.map(line => {
+                    const values = [];
+                    let insideQuote = false;
+                    let currentValue = '';
+                    for (let i = 0; i < line.length; i++) {
+                        const char = line[i];
+                        if (char === '"') {
+                            insideQuote = !insideQuote;
+                        } else if (char === ',' && !insideQuote) {
+                            values.push(currentValue.trim().replace(/^"|"$/g, ''));
+                            currentValue = '';
+                        } else {
+                            currentValue += char;
+                        }
                     }
-                }
-                values.push(currentValue.trim().replace(/^"|"$/g, ''));
-                return values;
-            });
+                    values.push(currentValue.trim().replace(/^"|"$/g, ''));
+                    return values;
+                });
+            } catch(e) {
+                return [];
+            }
         }
 
         // Render Cards Engine
         async function fetchAndRenderData(tabKey, containerId) {
             const container = document.getElementById(containerId);
+            if(!container) return;
+
             try {
                 const fetchUrl = `${SHEET_CONFIG[tabKey]}&_t=${Date.now()}`;
                 const response = await fetch(fetchUrl, { cache: "no-store" });
@@ -382,8 +393,4 @@
                 // Row Item Rendering
                 dataRows.forEach((row) => {
                     html += `
-                        <div class="native-card flex items-center justify-between shadow-sm hover:border-emerald-500/30 transition-all">
-                            <div class="space-y-1">
-                                <p class="font-bold text-white text-sm">${row[0] || 'Unlabeled'}</p>
-                                ${row[1] ? `<p class="text-xs text-slate-400">${headers[1] || 'Info'}: <span class="text-slate-200 font-medium">${row[1]}</span></p>` : ''}
-   
+                        <div class="native-card flex items-center justify-between shadow-sm hover:border-emerald-500/30 transitio   
