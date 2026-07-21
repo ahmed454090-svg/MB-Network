@@ -63,10 +63,11 @@
         /* Blur Glass Splash Screen */
         #splash { 
             position: fixed; inset: 0; z-index: 9999; 
-            background: rgba(3, 7, 18, 0.85); 
+            background: rgba(3, 7, 18, 0.95); 
             backdrop-filter: blur(24px);
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
             transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+            pointer-events: none;
         }
         
         /* Fintech Double Ring Animation */
@@ -300,7 +301,7 @@
             ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=858870323&single=true&output=csv&cb=${timeStamp}`
         };
 
-        // Simple CSV Parser Engine
+        // Simple Safe CSV Parser Engine
         function parseCSV(text) {
             const lines = text.trim().split('\n');
             return lines.map(line => {
@@ -319,11 +320,12 @@
             });
         }
 
-        // Render Native Cards Layout
+        // Render Native Cards Layout Safely
         async function fetchAndRenderData(tabKey, containerId) {
             const container = document.getElementById(containerId);
             try {
                 const response = await fetch(SHEET_CONFIG[tabKey]);
+                if(!response.ok) throw new Error('HTTP Error');
                 const csvData = await response.text();
                 const rows = parseCSV(csvData);
 
@@ -354,7 +356,7 @@
 
                 // Detailed Row Cards
                 dataRows.forEach((row) => {
-                    if (!row[0] && !row[1]) return; // Skip empty rows
+                    if (!row[0] && !row[1]) return;
                     
                     html += `
                         <div class="native-card flex items-center justify-between shadow-sm hover:border-emerald-500/30 transition-all">
@@ -373,13 +375,11 @@
 
                 container.innerHTML = html;
             } catch (err) {
-                container.innerHTML = `<div class="native-card text-center text-rose-400 py-6 text-xs">Error loading live data stream.</div>`;
+                container.innerHTML = `<div class="native-card text-center text-rose-400 py-6 text-xs">Unable to load live data.</div>`;
             }
         }
 
         // Theme Toggle Handler
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
-            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
-        }
-        
+            localStorage.setItem('th        
