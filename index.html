@@ -1,357 +1,310 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    
-    <title>Executive Command Center | Business Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
-        
-        :root {
-            --bg-dark: #030712;
-            --accent-green: #10b981;
-            --accent-cyan: #06b6d4;
-            --accent-amber: #f59e0b;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Analytics - Modern Dashboard Template</title>
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
         }
+      }
+    }
+  </script>
 
-        body { 
-            background-color: var(--bg-dark); 
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
-                radial-gradient(at 50% 100%, rgba(245, 158, 11, 0.05) 0px, transparent 50%);
-            background-attachment: fixed;
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            overflow-x: hidden; 
-            margin: 0; 
-            min-height: 100vh;
-        }
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(16, 185, 129, 0.4); }
+  <!-- ApexCharts CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-        /* Pure CSS Splash Screen */
-        #splash { 
-            position: fixed; 
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 999999; 
-            background: #030712; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            animation: autoHide 0.5s ease 1.5s forwards;
-        }
-
-        @keyframes autoHide {
-            0% { opacity: 1; pointer-events: auto; }
-            100% { opacity: 0; pointer-events: none; visibility: hidden; }
-        }
-        
-        /* Double Ring Animation */
-        .circle-container { position: relative; width: 150px; height: 150px; display: flex; justify-content: center; align-items: center; }
-        .circle { position: absolute; border: 2px solid transparent; border-radius: 50%; animation: rotate 3s linear infinite; }
-        .circle-1 { width: 100%; height: 100%; border-top: 3px solid var(--accent-green); border-right: 3px solid rgba(16, 185, 129, 0.2); filter: drop-shadow(0 0 8px rgba(16,185,129,0.5)); }
-        .circle-2 { width: 80%; height: 80%; border-bottom: 3px solid var(--accent-cyan); animation-direction: reverse; animation-duration: 2s; filter: drop-shadow(0 0 8px rgba(6,182,212,0.5)); }
-        .brand-text { font-size: 1.6rem; font-weight: 800; color: #ffffff; letter-spacing: 0.05em; text-shadow: 0 0 20px rgba(255,255,255,0.3); }
-        
-        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .typing-text { 
-            font-family: 'JetBrains Mono', monospace; 
-            color: #10b981; margin-top: 28px; font-size: 0.85rem; font-weight: 600; 
-            text-transform: uppercase; letter-spacing: 0.2em; overflow: hidden; 
-            border-right: 2px solid #10b981; white-space: nowrap; 
-            animation: typing 1.5s steps(28, end), blink 0.75s step-end infinite; 
-        }
-        @keyframes typing { from { width: 0 } to { width: 28ch } }
-        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #10b981 } }
-        
-        .tab-content { display: none; min-height: 100vh; width: 100%; padding-top: 100px; padding-bottom: 140px; box-sizing: border-box; }
-        .tab-content.active { display: block; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Glass Native Cards */
-        .native-card {
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.25rem;
-            padding: 1.25rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-        }
-
-        .native-card:hover {
-            border-color: rgba(255, 255, 255, 0.18);
-            transform: translateY(-2px);
-            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.7);
-        }
-        
-        .luxury-nav { 
-            background: rgba(10, 15, 30, 0.85); 
-            backdrop-filter: blur(24px); 
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.12); 
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(16, 185, 129, 0.05);
-        }
-        
-        .tab-btn { transition: all 0.3s ease; color: #94a3b8; opacity: 0.6; cursor: pointer; }
-        .tab-btn:hover { opacity: 0.9; color: #ffffff; }
-        .tab-btn.active-tab { color: #10b981 !important; opacity: 1 !important; transform: translateY(-3px); filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4)); }
-        
-        .glass-card { 
-            background: rgba(15, 23, 42, 0.92); 
-            backdrop-filter: blur(25px); 
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.12); 
-        }
-
-        .bell-container { position: relative; }
-        .red-dot { 
-            position: absolute; top: -1px; right: -1px; width: 10px; height: 10px; 
-            background: #ef4444; border-radius: 50%; border: 2px solid #030712; 
-            box-shadow: 0 0 8px #ef4444;
-        }
-
-        .glow-btn {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        .glow-btn:hover {
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-            transform: scale(1.05);
-        }
-    </style>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4b5563;
+      border-radius: 9999px;
+    }
+  </style>
 </head>
-<body class="text-slate-200 antialiased selection:bg-emerald-500 selection:text-black">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans transition-colors duration-200 min-h-screen flex">
 
-    <!-- Pure CSS Splash Screen -->
-    <div id="splash" onclick="this.style.display='none'">
-        <div class="circle-container">
-            <div class="circle circle-1"></div>
-            <div class="circle circle-2"></div>
-            <div class="brand-text">NEXUS</div>
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col justify-between hidden md:flex">
+    <div>
+      <!-- Brand Logo -->
+      <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700 gap-3">
+        <div class="p-2 bg-blue-600 rounded-lg text-white">
+          <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
         </div>
-        <div class="typing-text">Command Center • V2.0</div>
+        <span class="text-xl font-bold tracking-wide">Apex<span class="text-blue-500">Dash</span></span>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="p-4 space-y-1">
+        <a href="#" class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-medium rounded-xl transition">
+          <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+          Overview
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-xl transition">
+          <i data-lucide="wallet" class="w-5 h-5"></i>
+          Transactions
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-xl transition">
+          <i data-lucide="users" class="w-5 h-5"></i>
+          Customers
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-xl transition">
+          <i data-lucide="pie-chart" class="w-5 h-5"></i>
+          Analytics
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-xl transition">
+          <i data-lucide="settings" class="w-5 h-5"></i>
+          Settings
+        </a>
+      </nav>
     </div>
 
-    <!-- Inline Immediate Kill Script -->
-    <script>
-        setTimeout(function(){
-            var s = document.getElementById('splash');
-            if(s) s.style.display = 'none';
-        }, 1800);
-    </script>
-
-    <!-- Header & Action Toolbar -->
-    <header class="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-b from-slate-950/90 via-slate-950/50 to-transparent backdrop-blur-md pb-4 pt-4 px-4">
-        <div class="max-w-xl mx-auto flex items-center justify-between">
-            
-            <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500/20 to-cyan-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-sm shadow-lg shadow-emerald-500/10">
-                    <i class="fas fa-cube"></i>
-                </div>
-                <div>
-                    <h2 class="text-xs font-bold text-white tracking-wider uppercase">Nexus Executive</h2>
-                    <p class="text-[10px] text-slate-400 font-mono">v2.0 Portal</p>
-                </div>
-            </div>
-
-            <!-- Top Action Toolbar Buttons -->
-            <div class="flex gap-2.5">
-                <button onclick="exportCurrentTabData()" title="Export CSV" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-emerald-400 hover:border-emerald-500/40 flex items-center justify-center backdrop-blur-md transition-all shadow-md">
-                    <i class="fas fa-file-csv text-sm"></i>
-                </button>
-                <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/40 flex items-center justify-center backdrop-blur-md transition-all shadow-md">
-                    <i class="fas fa-university text-sm"></i>
-                </button>
-                <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-10 h-10 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-amber-400 hover:border-amber-500/40 flex items-center justify-center backdrop-blur-md transition-all shadow-md bell-container">
-                    <i class="fas fa-bell text-sm"></i>
-                    <span class="red-dot"></span>
-                </button>
-            </div>
+    <!-- User Mini Profile -->
+    <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex items-center gap-3 p-2 bg-gray-100 dark:bg-gray-700/50 rounded-xl">
+        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+          AD
         </div>
-
-        <!-- Global Office Search Bar -->
-        <div class="max-w-xl mx-auto mt-3">
-            <div class="relative">
-                <i class="fas fa-search absolute left-4 top-3 text-slate-400 text-xs"></i>
-                <input type="text" id="office-search" onkeyup="filterOfficeData()" placeholder="Search ID, SOP, Department or Amount..." class="w-full bg-slate-950/80 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/50 transition-all shadow-inner">
-            </div>
+        <div>
+          <h4 class="text-sm font-semibold">Admin Account</h4>
+          <p class="text-xs text-gray-400">pro@apexdash.io</p>
         </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+    <!-- Top Header -->
+    <header class="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <button class="md:hidden text-gray-500 hover:text-gray-700">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+        <h1 class="text-lg font-semibold">Financial Overview</h1>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle -->
+        <button id="themeToggle" class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition">
+          <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+
+        <!-- Notifications -->
+        <button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl relative transition">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-2 right-2 w-2 h-2 bg-blue-500 rounded-full"></span>
+        </button>
+      </div>
     </header>
 
-    <!-- Corporate Banking Details Modal -->
-    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-xl transition-all">
-        <div class="glass-card p-8 rounded-3xl w-full max-w-sm text-center shadow-2xl relative border border-white/15 animate-fadeIn">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-blue-500/20 text-cyan-400 flex items-center justify-center mx-auto mb-4 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
-                <i class="fas fa-building-columns text-2xl"></i>
-            </div>
-            <h2 class="text-white text-xl font-extrabold tracking-tight mb-1">Treasury Accounts</h2>
-            <p class="text-xs text-slate-400 mb-6 font-medium">Corporate Payment Clearance</p>
-            <div class="space-y-3 mb-6">
-                <div class="bg-black/50 p-4 rounded-2xl text-left border border-white/10 hover:border-cyan-500/30 transition-all">
-                    <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Primary Account</p>
-                    <p class="text-sm font-semibold text-white mt-1">Afzaal Ahmed</p>
-                    <p class="text-xs font-mono text-cyan-400 mt-0.5 tracking-wide">0342-2735966 (HBL Konnect)</p>
-                </div>
-            </div>
-            <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold text-xs uppercase border border-white/10 transition-all">Close</button>
-        </div>
-    </div>
+    <!-- Dashboard Content Area -->
+    <main class="flex-1 overflow-y-auto p-6 space-y-6">
 
-    <!-- Executive Broadcast Notice Modal -->
-    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-xl transition-all">
-        <div class="glass-card p-8 rounded-3xl w-full max-w-sm shadow-2xl relative border border-white/15 animate-fadeIn">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-orange-500/20 text-amber-400 flex items-center justify-center mx-auto mb-4 border border-amber-500/30 shadow-lg shadow-amber-500/10">
-                <i class="fas fa-bullhorn text-2xl"></i>
+      <!-- Stats Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Card 1 -->
+        <div class="p-5 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Revenue</span>
+            <div class="p-2 bg-green-100 dark:bg-green-900/30 text-green-600 rounded-xl">
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
             </div>
-            <h2 class="text-white text-xl font-extrabold tracking-tight mb-1 text-center">Executive Broadcast</h2>
-            <p class="text-xs text-slate-400 mb-4 text-center font-medium">System Update & Telemetry</p>
-            <p class="text-slate-300 text-xs leading-relaxed mb-6 bg-black/50 p-4 rounded-2xl border border-white/10">
-                Alhamdulillah! Live dashboard ready with Google Sheets CSV syncing.
-            </p>
-            <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold text-xs uppercase border border-white/10 transition-all">Acknowledge</button>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h2 class="text-2xl font-bold">$48,290.00</h2>
+            <span class="text-xs font-semibold text-green-500 bg-green-500/10 px-2 py-0.5 rounded-md">+14.2%</span>
+          </div>
         </div>
-    </div>
 
-    <!-- MAIN CONTENT TABS -->
-    <main>
-        <!-- Analytics Tab -->
-        <div id="analytics" class="tab-content active px-4 max-w-xl mx-auto space-y-4">
-            <div class="text-center mb-6">
-                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 tracking-wider">● REALTIME SYNC ACTIVE</span>
-                <h1 class="text-2xl font-black text-white tracking-tight mt-2">Executive Dashboard</h1>
+        <!-- Card 2 -->
+        <div class="p-5 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Net Expenses</span>
+            <div class="p-2 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl">
+              <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
             </div>
-            <div id="analytics-data" class="space-y-3">
-                <div class="native-card text-center text-slate-400 py-8 text-xs font-medium">Syncing analytics data...</div>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h2 class="text-2xl font-bold">$12,450.00</h2>
+            <span class="text-xs font-semibold text-red-500 bg-red-500/10 px-2 py-0.5 rounded-md">-3.8%</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-5 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Active Subscriptions</span>
+            <div class="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-xl">
+              <i data-lucide="credit-card" class="w-4 h-4"></i>
             </div>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h2 class="text-2xl font-bold">1,842</h2>
+            <span class="text-xs font-semibold text-green-500 bg-green-500/10 px-2 py-0.5 rounded-md">+8.1%</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="p-5 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Pending Invoices</span>
+            <div class="p-2 bg-amber-100 dark:bg-amber-900/30 text-amber-600 rounded-xl">
+              <i data-lucide="clock" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <h2 class="text-2xl font-bold">$3,120.00</h2>
+            <span class="text-xs font-semibold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-md">5 Pending</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Charts Section Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Main Line Chart (2 Cols) -->
+        <div class="lg:col-span-2 bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-lg">Revenue vs Expenses</h3>
+            <span class="text-xs text-gray-400">Updated 10m ago</span>
+          </div>
+          <div id="mainChart" class="w-full h-72"></div>
+        </div>
+
+        <!-- Donut Chart (1 Col) -->
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-lg">Traffic Source</h3>
+          </div>
+          <div id="donutChart" class="w-full h-72 flex items-center justify-center"></div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions Table -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <h3 class="font-bold text-lg">Recent Transactions</h3>
+          <button class="text-sm font-medium text-blue-500 hover:underline">View All</button>
         </div>
         
-        <!-- Monthly Tab -->
-        <div id="monthly" class="tab-content px-4 max-w-xl mx-auto space-y-4">
-            <div class="text-center mb-6">
-                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 tracking-wider">INCOME & EXPENSE RECORDS</span>
-                <h1 class="text-2xl font-black text-white tracking-tight mt-2">Monthly Overview</h1>
-            </div>
-            <div id="monthly-data" class="space-y-3">
-                <div class="native-card text-center text-slate-400 py-8 text-xs font-medium">Syncing monthly statements...</div>
-            </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-xs text-gray-400 uppercase tracking-wider">
+                <th class="p-4">Client / Service</th>
+                <th class="p-4">Date</th>
+                <th class="p-4">Amount</th>
+                <th class="p-4">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-sm">
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
+                <td class="p-4 font-medium flex items-center gap-3">
+                  <div class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600">
+                    <i data-lucide="globe" class="w-4 h-4"></i>
+                  </div>
+                  Stripe Subscription
+                </td>
+                <td class="p-4 text-gray-400">Jul 28, 2026</td>
+                <td class="p-4 font-semibold text-green-500">+$249.00</td>
+                <td class="p-4"><span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-green-500/10 text-green-500">Completed</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
+                <td class="p-4 font-medium flex items-center gap-3">
+                  <div class="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/40 text-purple-600">
+                    <i data-lucide="server" class="w-4 h-4"></i>
+                  </div>
+                  Vercel Hosting Cloud
+                </td>
+                <td class="p-4 text-gray-400">Jul 26, 2026</td>
+                <td class="p-4 font-semibold text-gray-800 dark:text-gray-200">-$20.00</td>
+                <td class="p-4"><span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-green-500/10 text-green-500">Completed</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
+                <td class="p-4 font-medium flex items-center gap-3">
+                  <div class="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-600">
+                    <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                  </div>
+                  Figma Team Plan
+                </td>
+                <td class="p-4 text-gray-400">Jul 24, 2026</td>
+                <td class="p-4 font-semibold text-gray-800 dark:text-gray-200">-$45.00</td>
+                <td class="p-4"><span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-500">Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        
-        <!-- Yearly Tab -->
-        <div id="yearly" class="tab-content px-4 max-w-xl mx-auto space-y-4">
-            <div class="text-center mb-6">
-                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 tracking-wider">TARGETS & YOY PERFORMANCE</span>
-                <h1 class="text-2xl font-black text-white tracking-tight mt-2">Yearly Audit</h1>
-            </div>
-            <div id="yearly-data" class="space-y-3">
-                <div class="native-card text-center text-slate-400 py-8 text-xs font-medium">Syncing audit reports...</div>
-            </div>
-        </div>
-        
-        <!-- Operations Tab -->
-        <div id="ops" class="tab-content px-4 max-w-xl mx-auto space-y-4">
-            <div class="text-center mb-6">
-                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20 tracking-wider">SOPS & OFFICE POLICIES</span>
-                <h1 class="text-2xl font-black text-white tracking-tight mt-2">Operations & Rules</h1>
-            </div>
-            <div id="ops-data" class="space-y-3">
-                <div class="native-card text-center text-slate-400 py-8 text-xs font-medium">Syncing operations log...</div>
-            </div>
-        </div>
+      </div>
+
     </main>
+  </div>
 
-    <!-- Bottom Luxury Navigation Bar -->
-    <nav class="fixed bottom-6 left-4 right-4 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-6 max-w-xl mx-auto">
-        <div class="flex gap-6 sm:gap-8">
-            <button id="btn-analytics" onclick="switchTab('analytics', this)" class="tab-btn active-tab flex flex-col items-center gap-1">
-                <i class="fas fa-chart-pie text-xl"></i>
-                <span class="text-[9px] font-bold uppercase tracking-wider">Analytics</span>
-            </button>
-            <button id="btn-monthly" onclick="switchTab('monthly', this)" class="tab-btn flex flex-col items-center gap-1">
-                <i class="fas fa-wallet text-xl"></i>
-                <span class="text-[9px] font-bold uppercase tracking-wider">Monthly</span>
-            </button>
-        </div>
-        
-        <!-- WhatsApp Glow Action Button -->
-        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" title="Join WhatsApp Group" class="glow-btn bg-gradient-to-tr from-emerald-500 to-cyan-400 text-slate-950 w-14 h-14 flex items-center justify-center rounded-2xl font-bold shadow-lg shadow-emerald-500/25 border border-white/20">
-            <i class="fab fa-whatsapp text-2xl"></i>
-        </a>
-        
-        <div class="flex gap-6 sm:gap-8">
-            <button id="btn-yearly" onclick="switchTab('yearly', this)" class="tab-btn flex flex-col items-center gap-1">
-                <i class="fas fa-chart-line text-xl"></i>
-                <span class="text-[9px] font-bold uppercase tracking-wider">Yearly</span>
-            </button>
-            <button id="btn-ops" onclick="switchTab('ops', this)" class="tab-btn flex flex-col items-center gap-1">
-                <i class="fas fa-shield-halved text-xl"></i>
-                <span class="text-[9px] font-bold uppercase tracking-wider">Ops</span>
-            </button>
-        </div>
-    </nav>
+  <!-- Scripts -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
 
-    <!-- Core Data Engine -->
-    <script>
-        const SHEET_CONFIG = {
-            analytics: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=0&single=true&output=csv`,
-            monthly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=24071758&single=true&output=csv`,
-            yearly: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=1472950650&single=true&output=csv`,
-            ops: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN-o5TMl9BRjprpNfnLQajL2JoByAGfStpyWR06awdkjp1l6KNHzT_7_NENIhcBLLuEw2hjb7wdGf-/pub?gid=858870323&single=true&output=csv`
-        };
+    // Dark Mode Toggle Logic
+    const themeToggleBtn = document.getElementById('themeToggle');
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
 
-        let RAW_DATA_STORE = {};
-        let CURRENT_ACTIVE_TAB = 'analytics';
+    // Main Area Chart
+    const mainChartOptions = {
+      series: [
+        { name: 'Revenue', data: [31, 40, 28, 51, 42, 109, 100] },
+        { name: 'Expenses', data: [11, 32, 45, 32, 34, 52, 41] }
+      ],
+      chart: { type: 'area', height: '100%', toolbar: { show: false }, background: 'transparent' },
+      colors: ['#3b82f6', '#ef4444'],
+      dataLabels: { enabled: false },
+      stroke: { curve: 'smooth', width: 2 },
+      theme: { mode: 'dark' },
+      grid: { borderColor: '#374151', strokeDashArray: 4 },
+      xaxis: { categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] }
+    };
+    new ApexCharts(document.querySelector("#mainChart"), mainChartOptions).render();
 
-        function switchTab(tabId, btn) {
-            CURRENT_ACTIVE_TAB = tabId;
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active-tab'));
-            
-            const targetTab = document.getElementById(tabId);
-            if(targetTab) targetTab.classList.add('active');
-            if(btn) btn.classList.add('active-tab');
-
-            // Clear search filter when switching tabs
-            const searchInput = document.getElementById('office-search');
-            if(searchInput) {
-                searchInput.value = '';
-                filterOfficeData();
-            }
-        }
-
-        function parseCSV(text) {
-            if(!text) return [];
-            try {
-                const lines = text.replace(/\r/g, '').trim().split('\n');
-                return lines.map(line => {
-                    let result = [];
-                    let insideQuote = false;
-                    let entry = '';
-                    for (let c of line) {
-                        if (c === '"') insideQuote = !insideQuote;
-                        else if (c === ',' && !insideQuote) {
-                            result.push(entry.trim().replace(/^"|"$/g, ''));
-                            entry = '';
-                        } else entry += c;
-                    }
-                    result.push(entry.trim().replace(/^"|"$/g, ''));
-                    return result;
-     
+    // Donut Chart
+    const donutChartOptions = {
+      series: [44, 55, 13],
+      chart: { type: 'donut', height: '100%', background: 'transparent' },
+      labels: ['Direct', 'Social', 'Referral'],
+      colors: ['#3b82f6', '#10b981', '#f59e0b'],
+      legend: { position: 'bottom' },
+      dataLabels: { enabled: false }
+    };
+    new ApexCharts(document.querySelector("#donutChart"), donutChartOptions).render();
+  </script>
+</body>
+</html>
