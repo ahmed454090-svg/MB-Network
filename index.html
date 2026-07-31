@@ -1,310 +1,151 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apex Analytics - Modern Dashboard Template</title>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#eff6ff',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-            }
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cache-Control Meta Tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <link rel="manifest" href="manifest.json">
+    <title>FTCF | Professional Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=JetBrains+Mono:wght@400;800&display=swap');
+        body { background-color: #050505; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; }
+        
+        /* Blur Glass Splash Screen */
+        #splash { 
+            position: fixed; inset: 0; z-index: 9999; 
+            background: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(20px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            transition: opacity 0.5s ease-in-out; 
         }
-      }
-    }
-  </script>
+        
+        /* Double Circle Animation */
+        .circle-container { position: relative; width: 140px; height: 140px; display: flex; justify-content: center; align-items: center; }
+        .circle { position: absolute; border: 3px solid transparent; border-radius: 50%; animation: rotate 3s linear infinite; }
+        .circle-1 { width: 100%; height: 100%; border-top: 3px solid #ffffff; }
+        .circle-2 { width: 85%; height: 85%; border-bottom: 3px solid #1e3a8a; animation-direction: reverse; }
+        
+        .ftcf-text { font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+        
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Bold Typing Tagline */
+        .typing-text { font-family: 'JetBrains Mono', monospace; color: #ffffff; margin-top: 25px; font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; overflow: hidden; border-right: 2px solid #ffffff; white-space: nowrap; animation: typing 2.5s steps(30, end), blink 0.75s step-end infinite; }
+        @keyframes typing { from { width: 0 } to { width: 25ch } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #ffffff } }
+        
+        .tab-content { display: none; height: 100vh; }
+        .tab-content.active { display: block; }
+        iframe { width: 100%; height: 100%; border: none; }
+        
+        .luxury-nav { background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .tab-btn { transition: all 0.3s ease; color: #94a3b8; opacity: 0.7; }
+        .tab-btn:hover { color: #ffffff; opacity: 1; }
+        .tab-btn.active-tab { color: #f59e0b !important; opacity: 1 !important; transform: translateY(-5px); text-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+        .glass-card { background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+        
+        /* Red Dot Notification style */
+        .bell-container { position: relative; }
+        .red-dot { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; border: 2px solid #050505; }
 
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+        /* Icon Bounce Animation */
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        .tab-btn:active i { animation: bounce 0.4s ease; }
 
-  <!-- ApexCharts CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
-  <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #4b5563;
-      border-radius: 9999px;
-    }
-  </style>
+        /* Tab Button Scale Effect */
+        .tab-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-btn:active { transform: scale(0.9); }
+    </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans transition-colors duration-200 min-h-screen flex">
+<body class="text-slate-200">
 
-  <!-- Sidebar -->
-  <aside class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col justify-between hidden md:flex">
-    <div>
-      <!-- Brand Logo -->
-      <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700 gap-3">
-        <div class="p-2 bg-blue-600 rounded-lg text-white">
-          <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+    <div id="splash">
+        <div class="circle-container">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="ftcf-text">FTCF</div>
         </div>
-        <span class="text-xl font-bold tracking-wide">Apex<span class="text-blue-500">Dash</span></span>
-      </div>
-
-      <!-- Navigation -->
-      <nav class="p-4 space-y-1">
-        <a href="#" class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-medium rounded-xl transition">
-          <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-          Overview
-        </a>
-        <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-xl transition">
-          <i data-lucide="wallet" class="w-5 h-5"></i>
-          Transactions
-        </a>
-        <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-xl transition">
-          <i data-lucide="users" class="w-5 h-5"></i>
-          Customers
-        </a>
-        <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-xl transition">
-          <i data-lucide="pie-chart" class="w-5 h-5"></i>
-          Analytics
-        </a>
-        <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-xl transition">
-          <i data-lucide="settings" class="w-5 h-5"></i>
-          Settings
-        </a>
-      </nav>
+        <div class="typing-text">Mughal Brothers Network</div>
     </div>
 
-    <!-- User Mini Profile -->
-    <div class="p-4 border-t border-gray-200 dark:border-gray-700">
-      <div class="flex items-center gap-3 p-2 bg-gray-100 dark:bg-gray-700/50 rounded-xl">
-        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-          AD
-        </div>
-        <div>
-          <h4 class="text-sm font-semibold">Admin Account</h4>
-          <p class="text-xs text-gray-400">pro@apexdash.io</p>
-        </div>
-      </div>
+    <div class="fixed top-6 right-6 z-[60] flex gap-2">
+        <button id="installBtn" class="hidden w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500"><i class="fas fa-download"></i></button>
+        <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-blue-400"><i class="fas fa-university"></i></button>
+        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500 bell-container">
+            <i class="fas fa-bell"></i>
+            <span class="red-dot"></span>
+        </button>
     </div>
-  </aside>
 
-  <!-- Main Content Wrapper -->
-  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
+        <div class="glass-card p-8 rounded-3xl w-full max-w-sm text-center">
+            <h2 class="text-white text-xl font-bold mb-4">🏦 HBL Konnect Bank Details</h2>
+            <div class="bg-black/30 p-4 rounded-xl text-left border border-white/5 mb-6">
+                <p class="text-xs text-slate-500">Account Name: <span class="text-white">Afzaal Ahmed</span></p>
+                <p class="text-xs text-slate-500 mt-2">Account No: <span class="text-white">0342-2735966</span></p>
+            </div>
+            <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold">Close</button>
+        </div>
+    </div>
 
-    <!-- Top Header -->
-    <header class="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <button class="md:hidden text-gray-500 hover:text-gray-700">
-          <i data-lucide="menu" class="w-6 h-6"></i>
-        </button>
-        <h1 class="text-lg font-semibold">Financial Overview</h1>
-      </div>
+    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-md">
+        <div class="glass-card p-8 rounded-3xl w-full max-w-sm shadow-2xl">
+            <h2 class="text-white text-xl font-bold mb-4">📢 System Notice</h2>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">Alhamdulillah! ❤️ FTCF K 3 Mah Mukamal Hone Per Ap Sab Ko Mubarak Ho🎉🎊 Ham Back End per Or Improvement Ki Koshish me han.</p>
+            <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold transition-all">Close</button>
+        </div>
+    </div>
 
-      <div class="flex items-center gap-3">
-        <!-- Theme Toggle -->
-        <button id="themeToggle" class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition">
-          <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
-          <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
-        </button>
+    <div id="ledger" class="tab-content"><iframe src="https://ftcf20-hub.github.io/FTCF.com/"></iframe></div>
+    <div id="monthly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Monthly-Status/"></iframe></div>
+    <div id="yearly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Yearly-Record/"></iframe></div>
+    <div id="rules" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Loneportal/"></iframe></div>
 
-        <!-- Notifications -->
-        <button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl relative transition">
-          <i data-lucide="bell" class="w-5 h-5"></i>
-          <span class="absolute top-2 right-2 w-2 h-2 bg-blue-500 rounded-full"></span>
-        </button>
-      </div>
-    </header>
+    <nav class="fixed bottom-8 left-6 right-6 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-8 shadow-2xl border border-white/10">
+        <div class="flex gap-8">
+            <button onclick="switchTab('ledger', this)" class="tab-btn"><i class="fas fa-wallet text-xl"></i></button>
+            <button onclick="switchTab('monthly', this)" class="tab-btn"><i class="fas fa-calendar-check text-xl"></i></button>
+        </div>
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-white text-black w-14 h-14 flex items-center justify-center rounded-xl hover:bg-amber-500 transition-all"><i class="fab fa-whatsapp text-2xl"></i></a>
+        <div class="flex gap-8">
+            <button onclick="switchTab('yearly', this)" class="tab-btn"><i class="fas fa-chart-line text-xl"></i></button>
+            <button onclick="switchTab('rules', this)" class="tab-btn"><i class="fas fa-gavel text-xl"></i></button>
+        </div>
+    </nav>
 
-    <!-- Dashboard Content Area -->
-    <main class="flex-1 overflow-y-auto p-6 space-y-6">
+    <script>
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash');
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => { splash.style.display = 'none'; }, 500);
+            }, 1000);
 
-      <!-- Stats Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            const lastTab = localStorage.getItem('activeTab') || 'ledger';
+            const btn = document.querySelector(`button[onclick*="${lastTab}"]`);
+            if(btn) switchTab(lastTab, btn);
+        });
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').classList.remove('hidden'); });
+        document.getElementById('installBtn').addEventListener('click', () => { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then((choiceResult) => { if (choiceResult.outcome === 'accepted') document.getElementById('installBtn').classList.add('hidden'); }); } });
         
-        <!-- Card 1 -->
-        <div class="p-5 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Revenue</span>
-            <div class="p-2 bg-green-100 dark:bg-green-900/30 text-green-600 rounded-xl">
-              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-            </div>
-          </div>
-          <div class="flex items-baseline justify-between">
-            <h2 class="text-2xl font-bold">$48,290.00</h2>
-            <span class="text-xs font-semibold text-green-500 bg-green-500/10 px-2 py-0.5 rounded-md">+14.2%</span>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="p-5 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Net Expenses</span>
-            <div class="p-2 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl">
-              <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
-            </div>
-          </div>
-          <div class="flex items-baseline justify-between">
-            <h2 class="text-2xl font-bold">$12,450.00</h2>
-            <span class="text-xs font-semibold text-red-500 bg-red-500/10 px-2 py-0.5 rounded-md">-3.8%</span>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="p-5 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Active Subscriptions</span>
-            <div class="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-xl">
-              <i data-lucide="credit-card" class="w-4 h-4"></i>
-            </div>
-          </div>
-          <div class="flex items-baseline justify-between">
-            <h2 class="text-2xl font-bold">1,842</h2>
-            <span class="text-xs font-semibold text-green-500 bg-green-500/10 px-2 py-0.5 rounded-md">+8.1%</span>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="p-5 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Pending Invoices</span>
-            <div class="p-2 bg-amber-100 dark:bg-amber-900/30 text-amber-600 rounded-xl">
-              <i data-lucide="clock" class="w-4 h-4"></i>
-            </div>
-          </div>
-          <div class="flex items-baseline justify-between">
-            <h2 class="text-2xl font-bold">$3,120.00</h2>
-            <span class="text-xs font-semibold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-md">5 Pending</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Charts Section Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Line Chart (2 Cols) -->
-        <div class="lg:col-span-2 bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-lg">Revenue vs Expenses</h3>
-            <span class="text-xs text-gray-400">Updated 10m ago</span>
-          </div>
-          <div id="mainChart" class="w-full h-72"></div>
-        </div>
-
-        <!-- Donut Chart (1 Col) -->
-        <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-lg">Traffic Source</h3>
-          </div>
-          <div id="donutChart" class="w-full h-72 flex items-center justify-center"></div>
-        </div>
-      </div>
-
-      <!-- Recent Transactions Table -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
-        <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-          <h3 class="font-bold text-lg">Recent Transactions</h3>
-          <button class="text-sm font-medium text-blue-500 hover:underline">View All</button>
-        </div>
-        
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse">
-            <thead>
-              <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-xs text-gray-400 uppercase tracking-wider">
-                <th class="p-4">Client / Service</th>
-                <th class="p-4">Date</th>
-                <th class="p-4">Amount</th>
-                <th class="p-4">Status</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-sm">
-              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
-                <td class="p-4 font-medium flex items-center gap-3">
-                  <div class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600">
-                    <i data-lucide="globe" class="w-4 h-4"></i>
-                  </div>
-                  Stripe Subscription
-                </td>
-                <td class="p-4 text-gray-400">Jul 28, 2026</td>
-                <td class="p-4 font-semibold text-green-500">+$249.00</td>
-                <td class="p-4"><span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-green-500/10 text-green-500">Completed</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
-                <td class="p-4 font-medium flex items-center gap-3">
-                  <div class="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/40 text-purple-600">
-                    <i data-lucide="server" class="w-4 h-4"></i>
-                  </div>
-                  Vercel Hosting Cloud
-                </td>
-                <td class="p-4 text-gray-400">Jul 26, 2026</td>
-                <td class="p-4 font-semibold text-gray-800 dark:text-gray-200">-$20.00</td>
-                <td class="p-4"><span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-green-500/10 text-green-500">Completed</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
-                <td class="p-4 font-medium flex items-center gap-3">
-                  <div class="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-600">
-                    <i data-lucide="shopping-cart" class="w-4 h-4"></i>
-                  </div>
-                  Figma Team Plan
-                </td>
-                <td class="p-4 text-gray-400">Jul 24, 2026</td>
-                <td class="p-4 font-semibold text-gray-800 dark:text-gray-200">-$45.00</td>
-                <td class="p-4"><span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-500">Pending</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </main>
-  </div>
-
-  <!-- Scripts -->
-  <script>
-    // Initialize Lucide Icons
-    lucide.createIcons();
-
-    // Dark Mode Toggle Logic
-    const themeToggleBtn = document.getElementById('themeToggle');
-    themeToggleBtn.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-    });
-
-    // Main Area Chart
-    const mainChartOptions = {
-      series: [
-        { name: 'Revenue', data: [31, 40, 28, 51, 42, 109, 100] },
-        { name: 'Expenses', data: [11, 32, 45, 32, 34, 52, 41] }
-      ],
-      chart: { type: 'area', height: '100%', toolbar: { show: false }, background: 'transparent' },
-      colors: ['#3b82f6', '#ef4444'],
-      dataLabels: { enabled: false },
-      stroke: { curve: 'smooth', width: 2 },
-      theme: { mode: 'dark' },
-      grid: { borderColor: '#374151', strokeDashArray: 4 },
-      xaxis: { categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] }
-    };
-    new ApexCharts(document.querySelector("#mainChart"), mainChartOptions).render();
-
-    // Donut Chart
-    const donutChartOptions = {
-      series: [44, 55, 13],
-      chart: { type: 'donut', height: '100%', background: 'transparent' },
-      labels: ['Direct', 'Social', 'Referral'],
-      colors: ['#3b82f6', '#10b981', '#f59e0b'],
-      legend: { position: 'bottom' },
-      dataLabels: { enabled: false }
-    };
-    new ApexCharts(document.querySelector("#donutChart"), donutChartOptions).render();
-  </script>
+        function switchTab(id, btn) { 
+            if (navigator.vibrate) navigator.vibrate(20); 
+            
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab')); 
+            
+            document.getElementById(id).classList.add('active'); 
+            btn.classList.add('active-tab'); 
+            localStorage.setItem('activeTab', id); 
+        }
+    </script>
 </body>
-</html>
+          </html>
