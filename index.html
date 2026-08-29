@@ -3,155 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Cache-Control Meta Tags -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    
-    <link rel="manifest" href="manifest.json">
-    <title>FTCF | Professional Portal</title>
+    <title>FTCF | Member Ledger</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!-- start webpushr tracking code --> 
-    <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";
-    fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk-alternative'));
-    webpushr('init','BLHqPgm19KQDCENTdEiAuLZ-ODYGrKUfEer7lURQilPupBiugLcccC3gUUqB5snL4XIrkbA2RFd7KFuFwdzu5RQ','https://ahmed454090-svg.github.io/MB-Network/webpushr-sw.js','/MB-Network/');</script>
-    <!-- end webpushr tracking code -->
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=JetBrains+Mono:wght@400;800&display=swap');
-        body { background-color: #050505; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
-        /* Blur Glass Splash Screen */
-        #splash { 
-            position: fixed; inset: 0; z-index: 9999; 
-            background: rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(20px);
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            transition: opacity 0.5s ease-in-out; 
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #090d16; 
+            color: #f8fafc;
+            min-height: 100vh;
         }
-        
-        /* Double Circle Animation */
-        .circle-container { position: relative; width: 140px; height: 140px; display: flex; justify-content: center; align-items: center; }
-        .circle { position: absolute; border: 3px solid transparent; border-radius: 50%; animation: rotate 3s linear infinite; }
-        .circle-1 { width: 100%; height: 100%; border-top: 3px solid #ffffff; }
-        .circle-2 { width: 85%; height: 85%; border-bottom: 3px solid #1e3a8a; animation-direction: reverse; }
-        
-        .ftcf-text { font-size: 1.8rem; font-weight: 800; color: #ffffff; }
-        
-        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        /* Bold Typing Tagline */
-        .typing-text { font-family: 'JetBrains Mono', monospace; color: #ffffff; margin-top: 25px; font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; overflow: hidden; border-right: 2px solid #ffffff; white-space: nowrap; animation: typing 2.5s steps(30, end), blink 0.75s step-end infinite; }
-        @keyframes typing { from { width: 0 } to { width: 25ch } }
-        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #ffffff } }
-        
-        .tab-content { display: none; height: 100vh; }
-        .tab-content.active { display: block; }
-        iframe { width: 100%; height: 100%; border: none; }
-        
-        .luxury-nav { background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .tab-btn { transition: all 0.3s ease; color: #94a3b8; opacity: 0.7; }
-        .tab-btn:hover { color: #ffffff; opacity: 1; }
-        .tab-btn.active-tab { color: #f59e0b !important; opacity: 1 !important; transform: translateY(-5px); text-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
-        .glass-card { background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
-        
-        /* Red Dot Notification style */
-        .bell-container { position: relative; }
-        .red-dot { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; border: 2px solid #050505; }
 
-        /* Icon Bounce Animation */
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        .tab-btn:active i { animation: bounce 0.4s ease; }
+        /* 2026 Modern Glass & Glow Styles */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
 
-        /* Tab Button Scale Effect */
-        .tab-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .tab-btn:active { transform: scale(0.9); }
+        .total-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.03) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .total-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .notice-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.02) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            color: #fef3c7;
+            border-radius: 1.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 15px 30px -10px rgba(245, 158, 11, 0.15);
+        }
+
+        .scroll-container {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #members-list::-webkit-scrollbar { width: 4px; }
+        #members-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        
+        .member-card-glow {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .member-card-glow:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+        }
     </style>
 </head>
-<body class="text-slate-200">
+<body class="pb-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-[#0b1120] to-[#05070d]">
 
-    <div id="splash">
-        <div class="circle-container">
-            <div class="circle circle-1"></div>
-            <div class="circle circle-2"></div>
-            <div class="ftcf-text">FTCF</div>
+    <header class="p-8 pb-20 bg-slate-900/80 backdrop-blur-md border-b border-white/5 text-white rounded-b-[2.5rem] shadow-2xl text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-transparent to-amber-500/10 opacity-50"></div>
+        <div class="relative z-10">
+            <h1 class="text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-slate-400">
+                Family Trust & Care Foundation
+            </h1>
+            <p class="inline-block mt-3 px-3 py-1 rounded-full text-amber-400 font-medium text-xs tracking-wide bg-amber-400/10 border border-amber-400/20 backdrop-blur-md">
+                "Amanat me khiyanat nahi,Behtreen Nizam Asal Kamyabi"
+            </p>
         </div>
-        <div class="typing-text">Mughal Brothers Network</div>
-    </div>
+    </header>
 
-    <div class="fixed top-6 right-6 z-[60] flex gap-2">
-        <button id="installBtn" class="hidden w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500"><i class="fas fa-download"></i></button>
-        <button onclick="document.getElementById('bank-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-blue-400"><i class="fas fa-university"></i></button>
-        <button onclick="document.getElementById('notice-popup').classList.remove('hidden')" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 text-slate-400 hover:text-amber-500 bell-container">
-            <i class="fas fa-bell"></i>
-            <span class="red-dot"></span>
-        </button>
-    </div>
+    <main class="max-w-xl mx-auto px-4 -mt-12 space-y-6 relative z-20">
+        <div class="total-card p-6 rounded-3xl text-center backdrop-blur-xl">
+            <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-400">Total Contribution</p>
+            <h2 id="grand-total" class="text-4xl font-black mt-2 text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-emerald-400 to-teal-200 tracking-tight">Rs. 0</h2>
+            <p id="last-updated" class="text-[9px] font-semibold uppercase tracking-[0.15em] text-emerald-500/80 mt-2"></p>
+        </div>
 
-    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
-        <div class="glass-card p-8 rounded-3xl w-full max-w-sm text-center">
-            <h2 class="text-white text-xl font-bold mb-4">🏦 HBL Konnect Bank Details</h2>
-            <div class="bg-black/30 p-4 rounded-xl text-left border border-white/5 mb-6">
-                <p class="text-xs text-slate-500">Account Name: <span class="text-white">Afzaal Ahmed</span></p>
-                <p class="text-xs text-slate-500 mt-2">Account No: <span class="text-white">0342-2735966</span></p>
+        <section>
+            <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60 mb-3 ml-1 text-slate-400">Members List</h3>
+            <div id="members-list" class="scroll-container grid grid-cols-2 gap-3 max-h-[360px] overflow-y-auto p-3 rounded-3xl backdrop-blur-md"></div>
+        </section>
+
+        <!-- History Modal -->
+        <div id="modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 transition-opacity">
+            <div class="glass-panel p-6 rounded-3xl w-full max-w-sm max-h-[80vh] flex flex-col border border-white/10 shadow-2xl">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+                    <h3 id="modal-name" class="font-bold text-slate-100 text-sm tracking-wide"></h3>
+                    <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+                <div id="history-data" class="space-y-2 overflow-y-auto pr-1"></div>
             </div>
-            <button onclick="document.getElementById('bank-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold">Close</button>
         </div>
-    </div>
 
-    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-md">
-        <div class="glass-card p-8 rounded-3xl w-full max-w-sm shadow-2xl">
-            <h2 class="text-white text-xl font-bold mb-4">📢 System Notice</h2>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6">Alhamdulillah! ❤️ FTCF K 3 Mah Mukamal Hone Per Ap Sab Ko Mubarak Ho🎉🎊 Ham Back End per Or Improvement Ki Koshish me han.</p>
-            <button onclick="document.getElementById('notice-popup').classList.add('hidden')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold transition-all">Close</button>
+        <div class="notice-card mt-2">
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-7 h-7 rounded-full bg-amber-400/20 flex items-center justify-center border border-amber-400/30">
+                    <i class="fas fa-bell text-amber-400 text-xs"></i>
+                </div>
+                <h4 class="font-bold uppercase tracking-widest text-xs text-amber-300">Important Notice</h4>
+            </div>
+            <p class="text-xs leading-relaxed opacity-90 text-amber-100/80 pr-1">
+                تمام بھائیوں سے گزارش ہے کہ ہر مہینے کی 10 تاریخ تک اپنی پیمنٹ جمع کروا دیا کریں، تاکہ نہ سسٹم میں رکاوٹ آئے اور نہ ہی آپ پر بوجھ بڑھے۔ شکریہ۔
+            </p>
         </div>
-    </div>
 
-    <div id="ledger" class="tab-content"><iframe src="https://ftcf20-hub.github.io/FTCF.com/"></iframe></div>
-    <div id="monthly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Monthly-Status/"></iframe></div>
-    <div id="yearly" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Yearly-Record/"></iframe></div>
-    <div id="rules" class="tab-content"><iframe src="https://ftcf20-hub.github.io/Loneportal/"></iframe></div>
-
-    <nav class="fixed bottom-8 left-6 right-6 luxury-nav rounded-2xl flex justify-between items-center z-[999] h-20 px-8 shadow-2xl border border-white/10">
-        <div class="flex gap-8">
-            <button onclick="switchTab('ledger', this)" class="tab-btn"><i class="fas fa-wallet text-xl"></i></button>
-            <button onclick="switchTab('monthly', this)" class="tab-btn"><i class="fas fa-calendar-check text-xl"></i></button>
+        <div class="text-center opacity-40 text-[9px] font-bold uppercase tracking-[0.2em] mt-8 text-slate-500">
+            @FTCF2026 Founder Mughal Brothers
         </div>
-        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-white text-black w-14 h-14 flex items-center justify-center rounded-xl hover:bg-amber-500 transition-all"><i class="fab fa-whatsapp text-2xl"></i></a>
-        <div class="flex gap-8">
-            <button onclick="switchTab('yearly', this)" class="tab-btn"><i class="fas fa-chart-line text-xl"></i></button>
-            <button onclick="switchTab('rules', this)" class="tab-btn"><i class="fas fa-gavel text-xl"></i></button>
-        </div>
-    </nav>
+    </main>
 
     <script>
-        window.addEventListener('load', () => {
-            const splash = document.getElementById('splash');
-            setTimeout(() => {
-                splash.style.opacity = '0';
-                setTimeout(() => { splash.style.display = 'none'; }, 500);
-            }, 1000);
+        // Haptic feedback function
+        function triggerVibrate(ms) {
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate(ms);
+            }
+        }
 
-            const lastTab = localStorage.getItem('activeTab') || 'ledger';
-            const btn = document.querySelector(`button[onclick*="${lastTab}"]`);
-            if(btn) switchTab(lastTab, btn);
+        const mainSheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtsZyNI2Ss1ACTIO7X1zAND4Q-mGhFdKSVcvx8amNxfGsFQfA2A7kBLHJgTJ9DGECqNNZ40iHW7zDc/pub?output=csv';
+        const historySheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtsZyNI2Ss1ACTIO7X1zAND4Q-mGhFdKSVcvx8amNxfGsFQfA2A7kBLHJgTJ9DGECqNNZ40iHW7zDc/pub?gid=2038080316&single=true&output=csv';
+        
+        let historyData = [];
+
+        Promise.all([
+            fetch(mainSheet).then(res => res.text()),
+            fetch(historySheet).then(res => res.text())
+        ]).then(([mainCsv, historyCsv]) => {
+            const main = Papa.parse(mainCsv, {header: true, dynamicTyping: true}).data.filter(m => m.name);
+            historyData = Papa.parse(historyCsv, {header: true, dynamicTyping: true}).data;
+
+            let grandTotal = main.reduce((sum, m) => sum + (m.fund || 0), 0);
+            document.getElementById('grand-total').innerText = "Rs. " + grandTotal.toLocaleString();
+            
+            document.getElementById('last-updated').innerText = "Last Updated: " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            const list = document.getElementById('members-list');
+            main.forEach(m => {
+                const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=1e293b&color=fff`;
+                list.innerHTML += `
+                    <div onclick="triggerVibrate(30); showHistory('${m.name}')" class="member-card-glow bg-slate-900/60 border border-white/5 p-3 rounded-2xl flex items-center gap-3 cursor-pointer backdrop-blur-md group">
+                        <img src="${profilePic}" class="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/20 group-hover:ring-emerald-500/60 transition-all">
+                        <div class="overflow-hidden">
+                            <p class="text-[10px] font-bold text-slate-200 uppercase tracking-wide truncate group-hover:text-emerald-400 transition-colors">${m.name}</p>
+                            <p class="text-[10px] font-black text-emerald-400">Rs. ${m.fund.toLocaleString()}</p>
+                        </div>
+                    </div>
+                `;
+            });
         });
 
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').classList.remove('hidden'); });
-        document.getElementById('installBtn').addEventListener('click', () => { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then((choiceResult) => { if (choiceResult.outcome === 'accepted') document.getElementById('installBtn').classList.add('hidden'); }); } });
-        
-        function switchTab(id, btn) { 
-            if (navigator.vibrate) navigator.vibrate(20); 
+        function showHistory(name) {
+            const memberHistory = historyData.filter(row => {
+                const values = Object.values(row);
+                return values[0] && values[0].toString().trim() === name.trim();
+            });
             
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab')); 
+            const container = document.getElementById('history-data');
+            document.getElementById('modal-name').innerText = name + "'s Record";
             
-            document.getElementById(id).classList.add('active'); 
-            btn.classList.add('active-tab'); 
-            localStorage.setItem('activeTab', id); 
+            if(memberHistory.length > 0) {
+                container.innerHTML = memberHistory.map(row => {
+                    const values = Object.values(row);
+                    return `
+                        <div class="flex justify-between items-center text-xs border-b border-white/5 pb-2 pt-1 text-slate-300">
+                            <span class="opacity-80">${values[1] || 'N/A'}</span>
+                            <span class="font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Rs. ${values[2] ? parseInt(values[2]).toLocaleString() : 0}</span>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                container.innerHTML = '<p class="text-xs text-center text-slate-500 py-4">No records found.</p>';
+            }
+            document.getElementById('modal').classList.remove('hidden');
         }
     </script>
 </body>
