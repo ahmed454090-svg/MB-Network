@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FTCF | Member Ledger</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
@@ -143,47 +143,47 @@
         }
     </style>
 </head>
-<body class="pb-10 relative">
+<body class="pb-8 relative antialiased selection:bg-emerald-100">
 
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
-    <header class="p-8 pb-20 bg-slate-900 text-white rounded-b-[2.5rem] shadow-xl text-center relative z-10">
+    <header class="p-6 sm:p-8 pb-16 sm:pb-20 bg-slate-900 text-white rounded-b-[2rem] sm:rounded-b-[2.5rem] shadow-xl text-center relative z-10">
         <div class="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] font-medium tracking-widest text-slate-300 uppercase">
             <span class="pulse-dot"></span> <span id="weather-status">Live Portal</span>
         </div>
-        <h1 class="text-2xl font-black tracking-tight text-white">
+        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">
             Family Trust & Care Foundation
         </h1>
-        <p class="inline-block mt-3 px-4 py-1.5 rounded-full text-amber-300 font-medium text-xs tracking-wide bg-amber-500/10 border border-amber-400/20 backdrop-blur-xl">
+        <p class="inline-block mt-3 px-3.5 py-1.5 rounded-full text-amber-300 font-medium text-[11px] sm:text-xs tracking-wide bg-amber-500/10 border border-amber-400/20 backdrop-blur-xl max-w-[90%]">
             "Amanat me khiyanat nahi,Behtreen Nizam Asal Kamyabi"
         </p>
     </header>
 
-    <main class="max-w-xl mx-auto px-4 -mt-10 space-y-6 relative z-20">
+    <main class="w-full max-w-md mx-auto px-4 -mt-8 sm:-mt-10 space-y-5 sm:space-y-6 relative z-20">
         
-        <div class="total-card p-6 rounded-3xl text-center backdrop-blur-xl">
+        <div class="total-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl text-center backdrop-blur-xl">
             <div class="flex items-center justify-center gap-2">
                 <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-800 opacity-80">Total Contribution</p>
             </div>
-            <h2 id="grand-total" class="text-4xl font-black mt-2 text-emerald-950 tracking-tight">Rs. 0</h2>
-            <p id="last-updated" class="text-[9px] font-bold uppercase tracking-[0.15em] text-emerald-700 opacity-75 mt-2.5"></p>
+            <h2 id="grand-total" class="text-3xl sm:text-4xl font-black mt-2 text-emerald-950 tracking-tight">Rs. 0</h2>
+            <p id="last-updated" class="text-[9px] font-bold uppercase tracking-[0.15em] text-emerald-700 opacity-75 mt-2"></p>
         </div>
 
         <section>
-            <div class="flex justify-between items-center mb-3 ml-1">
+            <div class="flex justify-between items-center mb-2.5 ml-1">
                 <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Members List</h3>
                 <span class="text-[9px] font-semibold text-slate-400 uppercase tracking-wider">Tap for history</span>
             </div>
-            <div id="members-list" class="scroll-container grid grid-cols-2 gap-3 max-h-[360px] overflow-y-auto p-3 rounded-3xl backdrop-blur-xl"></div>
+            <div id="members-list" class="scroll-container grid grid-cols-2 gap-2.5 sm:gap-3 max-h-[300px] sm:max-h-[360px] overflow-y-auto p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl backdrop-blur-xl"></div>
         </section>
 
         <!-- History Modal -->
-        <div id="modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
-            <div class="glass-card p-6 rounded-3xl w-full max-w-sm max-h-[80vh] flex flex-col border border-slate-200 shadow-2xl relative">
-                <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-200">
-                    <h3 id="modal-name" class="font-bold text-slate-900 text-sm tracking-wide"></h3>
-                    <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:text-slate-900 flex items-center justify-center transition-all hover:bg-slate-200">
+        <div id="modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
+            <div class="glass-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl w-full max-w-xs sm:max-w-sm max-h-[75vh] flex flex-col border border-slate-200 shadow-2xl relative">
+                <div class="flex justify-between items-center mb-3 pb-2.5 border-b border-slate-200">
+                    <h3 id="modal-name" class="font-bold text-slate-900 text-xs sm:text-sm tracking-wide truncate pr-2"></h3>
+                    <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 hover:text-slate-900 flex items-center justify-center shrink-0 transition-all hover:bg-slate-200">
                         <i class="fas fa-times text-xs"></i>
                     </button>
                 </div>
@@ -191,19 +191,19 @@
             </div>
         </div>
 
-        <div class="notice-card p-5 rounded-3xl">
-            <div class="flex items-center gap-2.5 mb-2">
-                <div class="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center border border-amber-500/30">
-                    <i class="fas fa-bell text-amber-800 text-[10px]"></i>
+        <div class="notice-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl">
+            <div class="flex items-center gap-2 mb-1.5">
+                <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-500/20 flex items-center justify-center border border-amber-500/30 shrink-0">
+                    <i class="fas fa-bell text-amber-800 text-[9px] sm:text-[10px]"></i>
                 </div>
                 <h4 class="font-bold uppercase tracking-widest text-xs text-amber-900">Important Notice</h4>
             </div>
-            <p class="text-xs leading-relaxed text-amber-950 opacity-90 pl-1 font-medium">
+            <p class="text-xs leading-relaxed text-amber-950 opacity-90 font-medium dir-rtl text-right">
                 تمام بھائیوں سے گزارش ہے کہ ہر مہینے کی 10 تاریخ تک اپنی پیمنٹ جمع کروا دیا کریں، تاکہ نہ سسٹم میں رکاوٹ آئے اور نہ ہی آپ پر بوجھ بڑھے۔ شکریہ۔
             </p>
         </div>
 
-        <div class="text-center opacity-50 text-[9px] font-bold uppercase tracking-[0.25em] mt-8 text-slate-400">
+        <div class="text-center opacity-50 text-[9px] font-bold uppercase tracking-[0.25em] pt-2 text-slate-400">
             @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
@@ -268,11 +268,11 @@
             main.forEach(m => {
                 const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=f1f5f9&color=0f172a`;
                 list.innerHTML += `
-                    <div onclick="triggerVibrate(30); showHistory('${m.name}')" class="member-item p-3 rounded-2xl flex items-center gap-3 cursor-pointer group">
-                        <img src="${profilePic}" class="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/20 group-hover:ring-emerald-500 transition-all duration-300">
-                        <div class="overflow-hidden">
+                    <div onclick="triggerVibrate(30); showHistory('${m.name}')" class="member-item p-2.5 rounded-xl sm:rounded-2xl flex items-center gap-2.5 cursor-pointer group min-w-0">
+                        <img src="${profilePic}" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-emerald-500/20 group-hover:ring-emerald-500 transition-all duration-300 shrink-0">
+                        <div class="overflow-hidden min-w-0">
                             <p class="text-[10px] font-bold text-slate-800 uppercase tracking-wide truncate group-hover:text-emerald-700 transition-colors">${m.name}</p>
-                            <p class="text-[10px] font-black text-emerald-600 mt-0.5">Rs. ${m.fund.toLocaleString()}</p>
+                            <p class="text-[10px] font-black text-emerald-600 mt-0.5 truncate">Rs. ${m.fund.toLocaleString()}</p>
                         </div>
                     </div>
                 `;
@@ -293,8 +293,8 @@
                     const values = Object.values(row);
                     return `
                         <div class="flex justify-between items-center text-xs border-b border-slate-100 pb-2 pt-1 text-slate-700">
-                            <span class="opacity-80 font-medium">${values[1] || 'N/A'}</span>
-                            <span class="font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">Rs. ${values[2] ? parseInt(values[2]).toLocaleString() : 0}</span>
+                            <span class="opacity-80 font-medium truncate pr-2">${values[1] || 'N/A'}</span>
+                            <span class="font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 shrink-0">Rs. ${values[2] ? parseInt(values[2]).toLocaleString() : 0}</span>
                         </div>
                     `;
                 }).join('');
