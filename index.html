@@ -12,31 +12,26 @@
         
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #030712; 
-            color: #f9fafb;
+            background-color: #f1f5f9; 
+            color: #0f172a;
             min-height: 100vh;
             overflow-x: hidden;
             transition: background-color 0.8s ease;
         }
 
-        /* Weather Theme Dynamic Transitions */
+        /* Weather Theme Dynamic Transitions (Light Accents) */
         .theme-sunny {
-            background-color: #0c0a09 !important;
+            background-color: #fef3c7 !important;
         }
         .theme-sunny .ambient-glow-1 {
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
-        }
-        .theme-sunny .total-card {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(120, 53, 15, 0.2) 100%) !important;
-            border-color: rgba(245, 158, 11, 0.4) !important;
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.15) !important;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, rgba(255,255,255,0) 70%) !important;
         }
 
         .theme-rainy {
-            background-color: #020617 !important;
+            background-color: #e0f2fe !important;
         }
         .theme-rainy .ambient-glow-1 {
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, rgba(255,255,255,0) 70%) !important;
         }
 
         /* Ambient Lighting Mesh Glows */
@@ -47,7 +42,7 @@
             transform: translateX(-50%);
             width: 350px;
             height: 350px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(255,255,255,0) 70%);
             pointer-events: none;
             z-index: 0;
             transition: all 0.8s ease;
@@ -59,25 +54,25 @@
             right: -100px;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(255,255,255,0) 70%);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Ultra Modern Glassmorphism */
+        /* Modern Soft Light Glassmorphism */
         .glass-card {
-            background: rgba(17, 24, 39, 0.5);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
         }
 
-        /* Glowing Total Card */
+        /* Glowing Total Card (Light Emerald) */
         .total-card {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0.2) 100%);
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
             border: 1px solid rgba(16, 185, 129, 0.3);
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
             position: relative;
             overflow: hidden;
             transition: all 0.8s ease;
@@ -87,60 +82,64 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.5), transparent);
         }
 
-        /* Notice Card Premium Amber */
+        /* Notice Card Light Amber */
         .notice-card {
-            background: linear-gradient(145deg, rgba(245, 158, 11, 0.08) 0%, rgba(120, 53, 15, 0.15) 100%);
-            border: 1px solid rgba(245, 158, 11, 0.25);
+            background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.1);
         }
 
         .notice-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 3px; height: 100%;
-            background: #f59e0b;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: #d97706;
         }
 
         /* Custom Scrollbar */
         .scroll-container {
-            background: rgba(15, 23, 42, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(226, 232, 240, 0.8);
         }
 
         #members-list::-webkit-scrollbar { width: 4px; }
-        #members-list::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.6); border-radius: 10px; }
+        #members-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
         /* Card Interactive Hover Effects */
         .member-item {
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
         }
 
         .member-item:hover {
-            transform: translateY(-3px) scale(1.02);
-            border-color: rgba(16, 185, 129, 0.4);
-            box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.2);
-            background: rgba(30, 41, 59, 0.7);
+            transform: translateY(-2px) scale(1.01);
+            border-color: rgba(16, 185, 129, 0.5);
+            box-shadow: 0 12px 20px -5px rgba(15, 23, 42, 0.08), 0 0 12px rgba(16, 185, 129, 0.15);
+            background: #ffffff;
         }
 
         /* Pulse Dot Animation */
         .pulse-dot {
             width: 6px;
             height: 6px;
-            background-color: #10b981;
+            background-color: #059669;
             border-radius: 50%;
-            box-shadow: 0 0 8px #10b981;
+            box-shadow: 0 0 8px #059669;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(5, 150, 105, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
         }
     </style>
 </head>
@@ -149,42 +148,42 @@
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
-    <header class="p-8 pb-20 bg-slate-950/70 backdrop-blur-2xl border-b border-white/10 text-white rounded-b-[2.5rem] shadow-2xl text-center relative z-10">
-        <div class="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-slate-900/80 border border-white/10 text-[10px] font-medium tracking-widest text-slate-400 uppercase">
+    <header class="p-8 pb-20 bg-slate-900 text-white rounded-b-[2.5rem] shadow-xl text-center relative z-10">
+        <div class="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] font-medium tracking-widest text-slate-300 uppercase">
             <span class="pulse-dot"></span> <span id="weather-status">Live Portal</span>
         </div>
-        <h1 class="text-2xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-emerald-400">
+        <h1 class="text-2xl font-black tracking-tight text-white">
             Family Trust & Care Foundation
         </h1>
-        <p class="inline-block mt-3 px-4 py-1.5 rounded-full text-amber-300 font-medium text-xs tracking-wide bg-amber-500/10 border border-amber-500/20 backdrop-blur-xl shadow-lg">
+        <p class="inline-block mt-3 px-4 py-1.5 rounded-full text-amber-300 font-medium text-xs tracking-wide bg-amber-500/10 border border-amber-400/20 backdrop-blur-xl">
             "Amanat me khiyanat nahi,Behtreen Nizam Asal Kamyabi"
         </p>
     </header>
 
     <main class="max-w-xl mx-auto px-4 -mt-10 space-y-6 relative z-20">
         
-        <div class="total-card p-6 rounded-3xl text-center backdrop-blur-2xl">
+        <div class="total-card p-6 rounded-3xl text-center backdrop-blur-xl">
             <div class="flex items-center justify-center gap-2">
-                <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-400">Total Contribution</p>
+                <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-800 opacity-80">Total Contribution</p>
             </div>
-            <h2 id="grand-total" class="text-4xl font-extrabold mt-2 text-transparent bg-clip-text bg-gradient-to-r from-white via-emerald-200 to-emerald-400 tracking-tight drop-shadow-sm">Rs. 0</h2>
-            <p id="last-updated" class="text-[9px] font-bold uppercase tracking-[0.15em] text-emerald-400/70 mt-2.5"></p>
+            <h2 id="grand-total" class="text-4xl font-black mt-2 text-emerald-950 tracking-tight">Rs. 0</h2>
+            <p id="last-updated" class="text-[9px] font-bold uppercase tracking-[0.15em] text-emerald-700 opacity-75 mt-2.5"></p>
         </div>
 
         <section>
             <div class="flex justify-between items-center mb-3 ml-1">
-                <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Members List</h3>
-                <span class="text-[9px] font-semibold text-slate-500 uppercase tracking-wider">Tap for history</span>
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Members List</h3>
+                <span class="text-[9px] font-semibold text-slate-400 uppercase tracking-wider">Tap for history</span>
             </div>
             <div id="members-list" class="scroll-container grid grid-cols-2 gap-3 max-h-[360px] overflow-y-auto p-3 rounded-3xl backdrop-blur-xl"></div>
         </section>
 
         <!-- History Modal -->
-        <div id="modal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
-            <div class="glass-card p-6 rounded-3xl w-full max-w-sm max-h-[80vh] flex flex-col border border-white/10 shadow-2xl relative">
-                <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
-                    <h3 id="modal-name" class="font-bold text-slate-100 text-sm tracking-wide"></h3>
-                    <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-slate-800/80 text-slate-400 hover:text-white flex items-center justify-center transition-all hover:bg-slate-700">
+        <div id="modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
+            <div class="glass-card p-6 rounded-3xl w-full max-w-sm max-h-[80vh] flex flex-col border border-slate-200 shadow-2xl relative">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-200">
+                    <h3 id="modal-name" class="font-bold text-slate-900 text-sm tracking-wide"></h3>
+                    <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:text-slate-900 flex items-center justify-center transition-all hover:bg-slate-200">
                         <i class="fas fa-times text-xs"></i>
                     </button>
                 </div>
@@ -192,19 +191,19 @@
             </div>
         </div>
 
-        <div class="notice-card p-5 rounded-3xl backdrop-blur-xl">
+        <div class="notice-card p-5 rounded-3xl">
             <div class="flex items-center gap-2.5 mb-2">
                 <div class="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center border border-amber-500/30">
-                    <i class="fas fa-bell text-amber-400 text-[10px]"></i>
+                    <i class="fas fa-bell text-amber-800 text-[10px]"></i>
                 </div>
-                <h4 class="font-bold uppercase tracking-widest text-xs text-amber-300">Important Notice</h4>
+                <h4 class="font-bold uppercase tracking-widest text-xs text-amber-900">Important Notice</h4>
             </div>
-            <p class="text-xs leading-relaxed text-amber-100/90 pl-1">
+            <p class="text-xs leading-relaxed text-amber-950 opacity-90 pl-1 font-medium">
                 تمام بھائیوں سے گزارش ہے کہ ہر مہینے کی 10 تاریخ تک اپنی پیمنٹ جمع کروا دیا کریں، تاکہ نہ سسٹم میں رکاوٹ آئے اور نہ ہی آپ پر بوجھ بڑھے۔ شکریہ۔
             </p>
         </div>
 
-        <div class="text-center opacity-40 text-[9px] font-bold uppercase tracking-[0.25em] mt-8 text-slate-500">
+        <div class="text-center opacity-50 text-[9px] font-bold uppercase tracking-[0.25em] mt-8 text-slate-400">
             @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
@@ -267,13 +266,13 @@
 
             const list = document.getElementById('members-list');
             main.forEach(m => {
-                const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=0f172a&color=38bdf8`;
+                const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=f1f5f9&color=0f172a`;
                 list.innerHTML += `
-                    <div onclick="triggerVibrate(30); showHistory('${m.name}')" class="member-item bg-slate-900/50 border border-white/5 p-3 rounded-2xl flex items-center gap-3 cursor-pointer backdrop-blur-xl group">
-                        <img src="${profilePic}" class="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/20 group-hover:ring-emerald-400 transition-all duration-300">
+                    <div onclick="triggerVibrate(30); showHistory('${m.name}')" class="member-item p-3 rounded-2xl flex items-center gap-3 cursor-pointer group">
+                        <img src="${profilePic}" class="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/20 group-hover:ring-emerald-500 transition-all duration-300">
                         <div class="overflow-hidden">
-                            <p class="text-[10px] font-bold text-slate-200 uppercase tracking-wide truncate group-hover:text-emerald-400 transition-colors">${m.name}</p>
-                            <p class="text-[10px] font-black text-emerald-400 mt-0.5">Rs. ${m.fund.toLocaleString()}</p>
+                            <p class="text-[10px] font-bold text-slate-800 uppercase tracking-wide truncate group-hover:text-emerald-700 transition-colors">${m.name}</p>
+                            <p class="text-[10px] font-black text-emerald-600 mt-0.5">Rs. ${m.fund.toLocaleString()}</p>
                         </div>
                     </div>
                 `;
@@ -293,14 +292,14 @@
                 container.innerHTML = memberHistory.map(row => {
                     const values = Object.values(row);
                     return `
-                        <div class="flex justify-between items-center text-xs border-b border-white/5 pb-2 pt-1 text-slate-300">
-                            <span class="opacity-75 font-medium">${values[1] || 'N/A'}</span>
-                            <span class="font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">Rs. ${values[2] ? parseInt(values[2]).toLocaleString() : 0}</span>
+                        <div class="flex justify-between items-center text-xs border-b border-slate-100 pb-2 pt-1 text-slate-700">
+                            <span class="opacity-80 font-medium">${values[1] || 'N/A'}</span>
+                            <span class="font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">Rs. ${values[2] ? parseInt(values[2]).toLocaleString() : 0}</span>
                         </div>
                     `;
                 }).join('');
             } else {
-                container.innerHTML = '<p class="text-xs text-center text-slate-500 py-6">No records found.</p>';
+                container.innerHTML = '<p class="text-xs text-center text-slate-400 py-6">No records found.</p>';
             }
             document.getElementById('modal').classList.remove('hidden');
         }
