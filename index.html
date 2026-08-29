@@ -3,306 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FTCF | Member Ledger</title>
+    <title>FTCF | Secure Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #f1f5f9; 
+            background-color: #f8fafc; 
             color: #0f172a;
             min-height: 100vh;
             overflow-x: hidden;
-            transition: background-color 0.8s ease;
-        }
-
-        /* Weather Theme Dynamic Transitions (Light Accents) */
-        .theme-sunny {
-            background-color: #fef3c7 !important;
-        }
-        .theme-sunny .ambient-glow-1 {
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, rgba(255,255,255,0) 70%) !important;
-        }
-
-        .theme-rainy {
-            background-color: #e0f2fe !important;
-        }
-        .theme-rainy .ambient-glow-1 {
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, rgba(255,255,255,0) 70%) !important;
         }
 
         /* Ambient Lighting Mesh Glows */
         .ambient-glow-1 {
-            position: absolute;
+            position: fixed;
             top: -100px;
             left: 50%;
             transform: translateX(-50%);
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(255,255,255,0) 70%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(255,255,255,0) 70%);
             pointer-events: none;
             z-index: 0;
-            transition: all 0.8s ease;
+            filter: blur(40px);
         }
 
-        .ambient-glow-2 {
+        .bank-gradient { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.25);
+        }
+
+        .bank-gradient::after {
+            content: '';
             position: absolute;
-            top: 250px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(255,255,255,0) 70%);
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.2), transparent 60%);
             pointer-events: none;
-            z-index: 0;
         }
 
-        /* Modern Soft Light Glassmorphism */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
-        }
-
-        /* Glowing Total Card (Light Emerald) */
-        .total-card {
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.8s ease;
-        }
-
-        .total-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.5), transparent);
-        }
-
-        /* Notice Card Light Amber */
-        .notice-card {
-            background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.1);
-        }
-
-        .notice-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: #d97706;
-        }
-
-        /* Custom Scrollbar */
-        .scroll-container {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-        }
-
-        #members-list::-webkit-scrollbar { width: 4px; }
-        #members-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-
-        /* Card Interactive Hover Effects */
-        .member-item {
+        /* Executive Glassmorphism */
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
         }
 
-        .member-item:hover {
-            transform: translateY(-2px) scale(1.01);
-            border-color: rgba(16, 185, 129, 0.5);
-            box-shadow: 0 12px 20px -5px rgba(15, 23, 42, 0.08), 0 0 12px rgba(16, 185, 129, 0.15);
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08);
+            border-color: rgba(16, 185, 129, 0.3);
             background: #ffffff;
         }
 
-        /* Pulse Dot Animation */
+        /* Shimmer Skeleton Loader */
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Live Pulse Dot */
         .pulse-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #059669;
+            width: 7px;
+            height: 7px;
+            background-color: #10b981;
             border-radius: 50%;
-            box-shadow: 0 0 8px #059669;
+            box-shadow: 0 0 8px #10b981;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(5, 150, 105, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
     </style>
 </head>
 <body class="pb-8 relative antialiased selection:bg-emerald-100">
 
     <div class="ambient-glow-1"></div>
-    <div class="ambient-glow-2"></div>
 
-    <header class="p-6 sm:p-8 pb-16 sm:pb-20 bg-slate-900 text-white rounded-b-[2rem] sm:rounded-b-[2.5rem] shadow-xl text-center relative z-10">
-        <div class="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] font-medium tracking-widest text-slate-300 uppercase">
-            <span class="pulse-dot"></span> <span id="weather-status">Live Portal</span>
-        </div>
-        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">
-            Family Trust & Care Foundation
-        </h1>
-        <p class="inline-block mt-3 px-3.5 py-1.5 rounded-full text-amber-300 font-medium text-[11px] sm:text-xs tracking-wide bg-amber-500/10 border border-amber-400/20 backdrop-blur-xl max-w-[90%]">
-            "Amanat me khiyanat nahi,Behtreen Nizam Asal Kamyabi"
-        </p>
-    </header>
+    <main class="w-full max-w-md mx-auto px-4 pt-5 space-y-5 relative z-20">
 
-    <main class="w-full max-w-md mx-auto px-4 -mt-8 sm:-mt-10 space-y-5 sm:space-y-6 relative z-20">
-        
-        <div class="total-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl text-center backdrop-blur-xl">
-            <div class="flex items-center justify-center gap-2">
-                <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-800 opacity-80">Total Contribution</p>
+        <!-- Top App Bar -->
+        <header class="flex justify-between items-center px-1">
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center font-black text-xs shadow-md border border-slate-700">
+                    FT
+                </div>
+                <div>
+                    <h1 class="text-xs font-black uppercase tracking-wider text-slate-800">Family Trust</h1>
+                    <p class="text-[9px] font-bold text-slate-400">Secure Ledger</p>
+                </div>
             </div>
-            <h2 id="grand-total" class="text-3xl sm:text-4xl font-black mt-2 text-emerald-950 tracking-tight">Rs. 0</h2>
-            <p id="last-updated" class="text-[9px] font-bold uppercase tracking-[0.15em] text-emerald-700 opacity-75 mt-2"></p>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-[10px] font-bold text-slate-600">
+                <span class="pulse-dot"></span> <span>Live Sync</span>
+            </div>
+        </header>
+
+        <!-- Executive Hero Banner -->
+        <div class="bank-gradient text-white p-6 rounded-3xl relative">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-[9px] font-black uppercase tracking-[0.25em] text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 backdrop-blur-md">
+                    Rs. 500 / Member
+                </span>
+                <i class="fas fa-shield-halved text-slate-400 text-sm"></i>
+            </div>
+            
+            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Monthly Collection</p>
+            
+            <div class="mt-4 flex justify-between items-end bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-lg">
+                <div>
+                    <p class="text-[9px] uppercase font-bold tracking-widest text-slate-400">Current Period</p>
+                    <p id="month-display" class="font-extrabold text-sm text-slate-100 mt-0.5">
+                        <span class="inline-block h-4 w-20 skeleton rounded"></span>
+                    </p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[9px] uppercase font-bold tracking-widest text-slate-400">Total Fund</p>
+                    <p id="total-collection" class="font-black text-2xl text-emerald-400 tracking-tight mt-0.5">Rs. 0</p>
+                </div>
+            </div>
         </div>
 
-        <section>
-            <div class="flex justify-between items-center mb-2.5 ml-1">
-                <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Members List</h3>
-                <span class="text-[9px] font-semibold text-slate-400 uppercase tracking-wider">Tap for history</span>
+        <!-- KPI Metrics Grid -->
+        <div class="grid grid-cols-2 gap-3">
+            <div class="glass-card p-3.5 rounded-2xl flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs border border-emerald-100 shrink-0">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                    <p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Paid Members</p>
+                    <p id="paid-count" class="text-sm font-extrabold text-slate-800">0</p>
+                </div>
             </div>
-            <div id="members-list" class="scroll-container grid grid-cols-2 gap-2.5 sm:gap-3 max-h-[300px] sm:max-h-[360px] overflow-y-auto p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl backdrop-blur-xl"></div>
+
+            <div class="glass-card p-3.5 rounded-2xl flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-xs border border-rose-100 shrink-0">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                    <p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Pending</p>
+                    <p id="unpaid-count" class="text-sm font-extrabold text-slate-800">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filters -->
+        <section class="space-y-3">
+            <div class="flex justify-between items-center px-1">
+                <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Members Directory</h3>
+                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Live Status</span>
+            </div>
+
+            <div class="relative">
+                <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="searchInput" placeholder="Search member name..." 
+                       class="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-white border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 shadow-sm transition-all">
+            </div>
+
+            <!-- Members List -->
+            <div id="member-list" class="space-y-2.5 max-h-[380px] overflow-y-auto pr-1">
+                <div class="p-4 rounded-2xl bg-white border border-slate-100 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full skeleton shrink-0"></div>
+                        <div class="space-y-1">
+                            <div class="h-3.5 w-28 skeleton rounded"></div>
+                            <div class="h-2.5 w-16 skeleton rounded"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-1 text-right">
+                        <div class="h-3.5 w-16 skeleton rounded"></div>
+                        <div class="h-3 w-12 skeleton rounded ml-auto"></div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- History Modal -->
-        <div id="modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
-            <div class="glass-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl w-full max-w-xs sm:max-w-sm max-h-[75vh] flex flex-col border border-slate-200 shadow-2xl relative">
-                <div class="flex justify-between items-center mb-3 pb-2.5 border-b border-slate-200">
-                    <h3 id="modal-name" class="font-bold text-slate-900 text-xs sm:text-sm tracking-wide truncate pr-2"></h3>
-                    <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 hover:text-slate-900 flex items-center justify-center shrink-0 transition-all hover:bg-slate-200">
-                        <i class="fas fa-times text-xs"></i>
-                    </button>
-                </div>
-                <div id="history-data" class="space-y-2 overflow-y-auto pr-1"></div>
-            </div>
-        </div>
-
-        <div class="notice-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl">
-            <div class="flex items-center gap-2 mb-1.5">
-                <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-500/20 flex items-center justify-center border border-amber-500/30 shrink-0">
-                    <i class="fas fa-bell text-amber-800 text-[9px] sm:text-[10px]"></i>
-                </div>
-                <h4 class="font-bold uppercase tracking-widest text-xs text-amber-900">Important Notice</h4>
-            </div>
-            <p class="text-xs leading-relaxed text-amber-950 opacity-90 font-medium dir-rtl text-right">
-                تمام بھائیوں سے گزارش ہے کہ ہر مہینے کی 10 تاریخ تک اپنی پیمنٹ جمع کروا دیا کریں، تاکہ نہ سسٹم میں رکاوٹ آئے اور نہ ہی آپ پر بوجھ بڑھے۔ شکریہ۔
-            </p>
-        </div>
-
-        <div class="text-center opacity-50 text-[9px] font-bold uppercase tracking-[0.25em] pt-2 text-slate-400">
+        <!-- Footer -->
+        <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-2 text-slate-400">
             @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
 
     <script>
-        // Automatic Weather Detection & Theme Switcher Mode
-        async function autoWeatherTheme() {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    try {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-                        const data = await res.json();
-                        
-                        const code = data.current_weather.weathercode;
-                        const weatherStatusEl = document.getElementById('weather-status');
+        const SHEET_ID = "1hUEigyVt9FcLdeT-2G44mcUMo-r3gSb7AN0XcXilMVw";
+        const BASE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
-                        // Open-Meteo Weather Codes Mapping
-                        if (code === 0 || code === 1) {
-                            document.body.classList.add('theme-sunny');
-                            if (weatherStatusEl) weatherStatusEl.innerText = 'Sunny Mode';
-                        } else if ([51, 53, 55, 61, 63, 65, 80, 81].includes(code)) {
-                            document.body.classList.add('theme-rainy');
-                            if (weatherStatusEl) weatherStatusEl.innerText = 'Rainy Mode';
-                        } else {
-                            if (weatherStatusEl) weatherStatusEl.innerText = 'Live Portal';
-                        }
-                    } catch (e) {
-                        console.log('Weather sync bypassed');
-                    }
-                }, () => {});
-            }
-        }
-        autoWeatherTheme();
+        async function loadDashboardData() {
+            try {
+                // Fetch Month
+                const monthRes = await fetch(`${BASE_URL}&range=H1`);
+                const monthTxt = await monthRes.text();
+                const monthJson = JSON.parse(monthTxt.substring(47).slice(0, -2));
+                document.getElementById('month-display').innerText = monthJson.table.rows[0]?.c[0]?.v || "N/A";
 
-        // Haptic feedback function
-        function triggerVibrate(ms) {
-            if (window.navigator.vibrate) {
-                window.navigator.vibrate(ms);
+                // Fetch Members
+                const dataRes = await fetch(`${BASE_URL}&range=A2:E100`);
+                const dataTxt = await dataRes.text();
+                const dataJson = JSON.parse(dataTxt.substring(47).slice(0, -2));
+                renderMembers(dataJson.table.rows);
+            } catch (err) {
+                document.getElementById('member-list').innerHTML = "<p class='text-center text-xs text-rose-500 font-bold py-6'>Error: Sheet access denied.</p>";
             }
         }
 
-        const mainSheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtsZyNI2Ss1ACTIO7X1zAND4Q-mGhFdKSVcvx8amNxfGsFQfA2A7kBLHJgTJ9DGECqNNZ40iHW7zDc/pub?output=csv';
-        const historySheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtsZyNI2Ss1ACTIO7X1zAND4Q-mGhFdKSVcvx8amNxfGsFQfA2A7kBLHJgTJ9DGECqNNZ40iHW7zDc/pub?gid=2038080316&single=true&output=csv';
-        
-        let historyData = [];
+        function renderMembers(rows) {
+            const list = document.getElementById('member-list');
+            list.innerHTML = '';
+            let total = 0;
+            let paidNum = 0;
+            let unpaidNum = 0;
 
-        Promise.all([
-            fetch(mainSheet).then(res => res.text()),
-            fetch(historySheet).then(res => res.text())
-        ]).then(([mainCsv, historyCsv]) => {
-            const main = Papa.parse(mainCsv, {header: true, dynamicTyping: true}).data.filter(m => m.name);
-            historyData = Papa.parse(historyCsv, {header: true, dynamicTyping: true}).data;
+            rows.forEach(row => {
+                if(!row.c[0]) return;
+                const name = row.c[0].v;
+                const amount = row.c[1]?.v || 0;
+                const status = row.c[2]?.v || "UNPAID";
+                
+                const isPaid = status.toUpperCase() === 'PAID';
+                if(isPaid) {
+                    total += amount;
+                    paidNum++;
+                } else {
+                    unpaidNum++;
+                }
 
-            let grandTotal = main.reduce((sum, m) => sum + (m.fund || 0), 0);
-            document.getElementById('grand-total').innerText = "Rs. " + grandTotal.toLocaleString();
-            
-            document.getElementById('last-updated').innerText = "Last Updated: " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            const list = document.getElementById('members-list');
-            main.forEach(m => {
-                const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=f1f5f9&color=0f172a`;
-                list.innerHTML += `
-                    <div onclick="triggerVibrate(30); showHistory('${m.name}')" class="member-item p-2.5 rounded-xl sm:rounded-2xl flex items-center gap-2.5 cursor-pointer group min-w-0">
-                        <img src="${profilePic}" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-emerald-500/20 group-hover:ring-emerald-500 transition-all duration-300 shrink-0">
-                        <div class="overflow-hidden min-w-0">
-                            <p class="text-[10px] font-bold text-slate-800 uppercase tracking-wide truncate group-hover:text-emerald-700 transition-colors">${m.name}</p>
-                            <p class="text-[10px] font-black text-emerald-600 mt-0.5 truncate">Rs. ${m.fund.toLocaleString()}</p>
+                const card = document.createElement('div');
+                card.className = "glass-card p-3 rounded-2xl flex items-center justify-between border border-slate-100";
+                card.innerHTML = `
+                    <div class="flex items-center gap-3 min-w-0 pr-2">
+                        <div class="w-10 h-10 rounded-full bg-slate-900 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0 shadow-sm border border-slate-800">
+                            ${name.charAt(0)}
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-slate-800 text-xs truncate uppercase tracking-wide">${name}</h4>
+                            <p class="text-[9px] font-semibold text-slate-400 uppercase tracking-wider">Trust Member</p>
                         </div>
                     </div>
+                    <div class="text-right shrink-0">
+                        <p class="font-black text-slate-900 text-xs">Rs. ${amount.toLocaleString()}</p>
+                        <span class="inline-block text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider mt-0.5 ${isPaid ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'}">
+                            ${status}
+                        </span>
+                    </div>
                 `;
+                list.appendChild(card);
+            });
+
+            document.getElementById('total-collection').innerText = `Rs. ${total.toLocaleString()}`;
+            document.getElementById('paid-count').innerText = paidNum;
+            document.getElementById('unpaid-count').innerText = unpaidNum;
+        }
+
+        loadDashboardData();
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('#member-list > div').forEach(card => {
+                const name = card.querySelector('h4').innerText.toLowerCase();
+                card.style.display = name.includes(term) ? 'flex' : 'none';
             });
         });
-
-        function showHistory(name) {
-            const memberHistory = historyData.filter(row => {
-                const values = Object.values(row);
-                return values[0] && values[0].toString().trim() === name.trim();
-            });
-            
-            const container = document.getElementById('history-data');
-            document.getElementById('modal-name').innerText = name + "'s Record";
-            
-            if(memberHistory.length > 0) {
-                container.innerHTML = memberHistory.map(row => {
-                    const values = Object.values(row);
-                    return `
-                        <div class="flex justify-between items-center text-xs border-b border-slate-100 pb-2 pt-1 text-slate-700">
-                            <span class="opacity-80 font-medium truncate pr-2">${values[1] || 'N/A'}</span>
-                            <span class="font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 shrink-0">Rs. ${values[2] ? parseInt(values[2]).toLocaleString() : 0}</span>
-                        </div>
-                    `;
-                }).join('');
-            } else {
-                container.innerHTML = '<p class="text-xs text-center text-slate-400 py-6">No records found.</p>';
-            }
-            document.getElementById('modal').classList.remove('hidden');
-        }
     </script>
 </body>
-</html>
+                        </html>
+    
