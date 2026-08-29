@@ -1,277 +1,271 @@
 <!DOCTYPE html>
-<html lang="ur" dir="ltr">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTCF | Family Trust Dashboard 2026</title>
-    
-    <!-- Google Fonts: Inter & Noto Sans Urdu -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        urdu: ['Noto Sans Urdu', 'sans-serif'],
-                    }
-                }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FTCF | Modern Financial Portal</title>
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              500: '#10b981',
+              600: '#059669',
+              900: '#064e3b',
+              950: '#022c22'
             }
+          }
         }
-    </script>
-    <style>
-        .light-glass {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        .shimmer-box {
-            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-    </style>
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(229, 231, 235, 0.5);
+    }
+  </style>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen pb-12 antialiased">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen pb-12">
 
-    <!-- Header Section (Rich Emerald Gradient Header) -->
-    <header class="bg-gradient-to-br from-emerald-800 via-emerald-700 to-teal-900 pt-7 pb-10 px-4 rounded-b-[2.5rem] shadow-xl text-white relative">
-        <div class="max-w-md mx-auto relative z-10 flex flex-col items-center text-center">
-            
-            <!-- Top Controls Row -->
-            <div class="w-full flex items-center justify-between mb-4">
-                <button onclick="toggleModal('ramzan-modal', true)" class="flex items-center gap-1.5 bg-white/15 hover:bg-white/25 border border-white/20 text-white px-3.5 py-1.5 rounded-full backdrop-blur-md transition-all text-xs font-semibold active:scale-95 shadow-sm">
-                    <span>🌙</span>
-                    <span>Ramzan Vision 2027</span>
-                </button>
-                <span class="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-md bg-emerald-950/40 text-emerald-200 border border-emerald-400/20 uppercase">FTCF LIVE</span>
-            </div>
-
-            <h1 class="text-xl font-extrabold tracking-tight flex items-center gap-2">
-                Family Trust & Care Foundation
-            </h1>
-            <p class="text-xs text-emerald-100/90 font-urdu mt-0.5">مستقبل کی بہتری اور باہمی تعاون کا شفاف ڈیش بورڈ</p>
-
-            <div class="mt-4 inline-flex items-center px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-emerald-100 text-[11px] font-mono tracking-wider">
-                FISCAL YEAR 2026 - 2027
-            </div>
+  <main class="max-w-md mx-auto p-4 space-y-6">
+    
+    <!-- Modern Header -->
+    <header class="flex justify-between items-center py-3 border-b border-slate-200/60">
+        <div>
+          <span class="text-xs font-semibold text-brand-600 tracking-wider uppercase">Portal Dashboard</span>
+          <h1 class="font-extrabold text-2xl text-slate-900 tracking-tight">Rules & Loans</h1>
+        </div>
+        <div class="w-11 h-11 bg-gradient-to-tr from-brand-600 to-emerald-400 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg shadow-brand-500/20 ring-2 ring-white">
+            FTCF
         </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="max-w-md mx-auto px-4 -mt-5 space-y-4 relative z-20">
-
-        <!-- Net Reserve Balance Card (Clean White Hero Card) -->
-        <div id="savings-box" class="bg-white p-5 rounded-3xl shadow-lg border border-slate-200/80 transition-all duration-300">
-            <div class="flex justify-between items-start mb-1">
-                <div>
-                    <p class="text-[11px] font-bold tracking-wider text-slate-500 uppercase">Net Reserve Balance</p>
-                    <p class="text-xs text-slate-400 font-urdu">کل دستیاب فنڈز</p>
-                </div>
-                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-700 border border-emerald-200">
-                    Active
-                </span>
-            </div>
-            
-            <h2 id="net-savings" class="text-3xl font-black tracking-tight text-slate-900 my-1">
-                <span class="inline-block w-36 h-8 shimmer-box rounded-lg"></span>
-            </h2>
-
-            <!-- Progress Bar -->
-            <div class="mt-4 pt-3 border-t border-slate-100">
-                <div class="flex justify-between text-[11px] font-medium text-slate-500 mb-1.5">
-                    <span>Expense Ratio</span>
-                    <span id="expense-percentage" class="font-bold text-slate-700">0%</span>
-                </div>
-                <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-200/50">
-                    <div id="expense-progress-bar" class="h-full bg-emerald-500 transition-all duration-500" style="width: 0%"></div>
-                </div>
+    <!-- Stat Highlights (Glass Cards) -->
+    <section class="grid grid-cols-2 gap-3">
+        <div class="col-span-2 bg-gradient-to-br from-brand-950 via-brand-900 to-emerald-900 p-6 rounded-3xl text-white shadow-xl relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-emerald-300 text-xs font-medium uppercase tracking-widest mb-1">Active Loans</p>
+                <h2 class="font-bold text-4xl text-white">0</h2>
+              </div>
+              <span class="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-1 rounded-full border border-emerald-500/30">Live Status</span>
             </div>
         </div>
 
-        <!-- Quick Summary Stats Grid -->
-        <div class="grid grid-cols-2 gap-3">
-            <!-- Total Income -->
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 border-l-4 border-l-emerald-500">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Income</span>
-                    <span class="text-emerald-600 font-bold text-xs bg-emerald-50 px-1.5 py-0.5 rounded">↓</span>
-                </div>
-                <h3 id="total-balance" class="text-base font-extrabold text-slate-800">
-                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
-                </h3>
-                <p class="text-[10px] text-slate-400 font-urdu mt-0.5">کل آمدن</p>
-            </div>
-
-            <!-- Total Expenses -->
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 border-l-4 border-l-rose-500">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Outflow</span>
-                    <span class="text-rose-600 font-bold text-xs bg-rose-50 px-1.5 py-0.5 rounded">↑</span>
-                </div>
-                <h3 id="total-expenses" class="text-base font-extrabold text-slate-800">
-                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
-                </h3>
-                <p class="text-[10px] text-slate-400 font-urdu mt-0.5">کل اخراجات</p>
-            </div>
+        <div class="glass-card p-4 rounded-2xl shadow-sm border text-left">
+            <p class="text-[11px] text-slate-400 uppercase font-semibold">Inflow</p>
+            <p class="font-bold text-brand-600 text-base mt-1">Rs. 11,500</p>
         </div>
 
-        <!-- Monthly Overview Section -->
-        <div class="pt-2">
-            <div class="flex items-center justify-between mb-3 px-1">
-                <div>
-                    <h3 class="text-sm font-bold text-slate-800 tracking-wide">Monthly Overview</h3>
-                    <p class="text-[10px] text-slate-500 font-urdu">ماہانہ وصولی و اخراجات کا تفصیلی ریکارڈ</p>
-                </div>
-                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-200/60 font-mono">2026 LOG</span>
-            </div>
-
-            <div id="monthly-list" class="space-y-2.5">
-                <!-- Skeleton Shimmers -->
-                <div class="bg-white p-4 rounded-xl border border-slate-200 flex justify-between items-center">
-                    <div class="w-24 h-4 shimmer-box rounded"></div>
-                    <div class="w-16 h-4 shimmer-box rounded"></div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 flex justify-between items-center">
-                    <div class="w-24 h-4 shimmer-box rounded"></div>
-                    <div class="w-16 h-4 shimmer-box rounded"></div>
-                </div>
-            </div>
+        <div class="glass-card p-4 rounded-2xl shadow-sm border text-left">
+            <p class="text-[11px] text-slate-400 uppercase font-semibold">Outflow</p>
+            <p class="font-bold text-rose-500 text-base mt-1">Rs. 0</p>
         </div>
-    </main>
+    </section>
 
-    <!-- Ramzan Modal -->
-    <div id="ramzan-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-6 w-full max-w-sm border border-slate-100 shadow-2xl">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
-                <div>
-                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                        <span>🌙</span> Ramzan Vision 2027
-                    </h3>
-                    <p class="text-[11px] text-emerald-700 font-urdu">رمضان فنڈ اور منصوبہ بندی کی تفصیلات</p>
-                </div>
-                <button onclick="toggleModal('ramzan-modal', false)" class="text-slate-400 hover:text-slate-700 text-lg font-bold">✕</button>
-            </div>
-            
-            <div id="ramzan-content" class="space-y-2.5 max-h-72 overflow-y-auto pr-1 text-xs">
-                <div class="p-4 text-center">
-                    <div class="w-full h-8 shimmer-box rounded-lg mb-2"></div>
-                    <div class="w-full h-8 shimmer-box rounded-lg"></div>
-                </div>
-            </div>
+    <!-- Fund Allocations 2026 Layout -->
+    <section class="space-y-3">
+      <h3 class="font-bold text-sm text-slate-700 tracking-wide uppercase px-1">Fund Allocation Framework</h3>
+      <div class="grid grid-cols-2 gap-2.5">
+        <div class="p-3.5 bg-white rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-ribbon text-purple-600"></i>
+            <span class="text-[9px] bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded-full">Apr 2027</span>
+          </div>
+          <p class="text-xs font-bold text-slate-800">Death Assistance</p>
+          <p class="text-xs text-purple-600 font-bold mt-1">30% Share</p>
+        </div>
+        
+        <div class="p-3.5 bg-white rounded-2xl border border-slate-100 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-notes-medical text-rose-500"></i>
+            <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Active</span>
+          </div>
+          <p class="text-xs font-bold text-slate-800">Medical Aid</p>
+          <p class="text-xs text-rose-500 font-bold mt-1">25% Share</p>
+        </div>
 
-            <button onclick="toggleModal('ramzan-modal', false)" class="mt-5 w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl text-xs transition-all shadow-md active:scale-95">
-                Close Panel
-            </button>
+        <div class="p-3.5 bg-white rounded-2xl border border-slate-100 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-heart text-amber-500"></i>
+            <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Active</span>
+          </div>
+          <p class="text-xs font-bold text-slate-800">Marriage Support</p>
+          <p class="text-xs text-amber-500 font-bold mt-1">25% Share</p>
+        </div>
+
+        <div class="p-3.5 bg-white rounded-2xl border border-slate-100 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-shield-halved text-blue-500"></i>
+            <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Active</span>
+          </div>
+          <p class="text-xs font-bold text-slate-800">Emergency Reserve</p>
+          <p class="text-xs text-blue-500 font-bold mt-1">20% Share</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Vision Drawer -->
+    <div class="space-y-3">
+        <button onclick="toggleMission()" class="w-full bg-slate-900 hover:bg-slate-800 text-white p-3.5 rounded-2xl font-semibold text-sm shadow-md transition-all flex items-center justify-center gap-2">
+            <i class="fas fa-book-open text-emerald-400"></i>
+            <span>Read Full Mission & Vision</span>
+        </button>
+        
+        <div id="missionBox" class="hidden glass-card p-6 rounded-3xl shadow-sm border border-slate-200/80 urdu-text text-right h-80 overflow-y-auto text-slate-700 leading-loose">
+            <p class="text-sm whitespace-pre-line">
+                ہمارا ہدف: فیملی ٹرسٹ نیٹ ورک کو مثالی بنانا
+                ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے، تاکہ لوگ ہمارے اس فلاحی نظام اور بھائی چارے کی مثال دیں اور ہمارا یہ سیٹ اپ دوسروں کے لیے بھی ایک رول ماڈل بن کر ابھرے۔
+
+                یہ ہم سب کی فاؤنڈیشن ہے (ہمارا عہد)
+                یہ فاؤنڈیشن ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن ہے اور ہم سب نے ہی مل کر اسے کامیاب بنانا ہے۔ اس کا سب سے بڑا مقصد یہ ہے کہ کل کو ہمارا کوئی بھی فیملی ممبر کسی بھی مصیبت، پریشانی یا ضرورت کے وقت خود کو اکیلا نہ پائے۔
+
+                ہمارا وژن: خاندان سے آگے، ایک رجسٹرڈ ادارہ
+                ہم اس فاؤنڈیشن کو صرف اپنے خاندان تک محدود نہیں رکھنا چاہتے۔ ہمارا اصل مقصد اور عزم یہ ہے کہ آگے چل کر ہم اسے باقاعدہ ایک رجسٹرڈ آرگنائزیشن (NGO) بنائیں گے۔
+
+                رمضان المبارک کا خصوصی ہدف (صدقات کے ذریعے امداد)
+                ہم نے یہ نیت اور عزم کیا ہے کہ آنے والے رمضان المبارک سے ہی ہم اس فاؤنڈیشن میں اپنے صدقات کی مدد سے فیملیز کی بھرپور مدد کریں گے۔
+            </p>
         </div>
     </div>
 
-    <!-- Script Engine -->
-    <script>
-        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?output=csv";
-        const RAMZAN_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZ93s9o0iygZgHmzA0Z2JG7Wb_efFRi7AdifVoYjv3_nsNM_4OdvnUTyRzn9BdKskJzi43lCYDI4eW/pub?gid=0&single=true&output=csv";
+    <!-- Loan List (Interactive Ledger Table Visual) -->
+    <div class="glass-card p-5 rounded-3xl shadow-sm border border-slate-200/80">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm"><i class="fas fa-list-check text-brand-600"></i> Loan Ledger Records</h3>
+          <span class="text-[10px] text-slate-400 font-medium">Updated Today</span>
+        </div>
+        <div id="loan-list" class="space-y-2 text-xs">
+             <div class="flex justify-between items-center p-2.5 bg-slate-50/80 rounded-xl border border-slate-100">
+               <div>
+                 <span class="font-semibold text-slate-800 block">Member Record #1</span>
+                 <span class="text-[10px] text-slate-400">Status: Complete</span>
+               </div>
+               <span class="font-semibold text-slate-700">Rs. 0</span>
+               <span class="text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full text-[10px] font-bold">PAID</span>
+             </div>
+             <div class="flex justify-between items-center p-2.5 bg-slate-50/80 rounded-xl border border-slate-100">
+               <div>
+                 <span class="font-semibold text-slate-800 block">Member Record #2</span>
+                 <span class="text-[10px] text-slate-400">Status: Complete</span>
+               </div>
+               <span class="font-semibold text-slate-700">Rs. 0</span>
+               <span class="text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full text-[10px] font-bold">PAID</span>
+             </div>
+        </div>
+    </div>
 
-        function toggleModal(modalId, show) {
-            const modal = document.getElementById(modalId);
-            if (show) modal.classList.remove('hidden');
-            else modal.classList.add('hidden');
-        }
+    <!-- Loan Rules (Styled Urdu Accordion Layout) -->
+    <div class="space-y-2.5 urdu-text text-right">
+        <div class="glass-card p-5 rounded-3xl border border-slate-200/80">
+            <h3 class="font-bold text-slate-800 mb-1 text-base">قواعد و ضوابط (Loan Rules)</h3>
+            <p class="text-xs text-slate-600">امانت میں خیانت نہیں، ہمارا سب سے پہلا اصول ہے۔ بہترین نظام ہی اصل کامیابی ہے۔</p>
+        </div>
+        <div class="bg-white p-3.5 rounded-2xl border border-slate-100 text-xs shadow-sm text-slate-700">دیا گیا قرض 6 ماہ میں آسان اقساط میں واپس کرنا ہو گا۔</div>
+        <div class="bg-white p-3.5 rounded-2xl border border-slate-100 text-xs shadow-sm text-slate-700">پہلے لیا ہوا قرض واپس کیے جانے کے بعد نئی قسط جاری کی جائے گی۔</div>
+        <div class="bg-white p-3.5 rounded-2xl border border-slate-100 text-xs shadow-sm text-slate-700">وفات کی صورت میں دی جانے والی رقم قرض نہیں ہو گی۔</div>
+    </div>
 
-        fetch(CSV_URL)
-            .then(res => res.text())
-            .then(data => {
-                const rows = data.split('\n');
-                const list = document.getElementById('monthly-list');
-                let totalB = 0, totalE = 0;
-                let htmlContent = "";
+    <!-- Loan Application Form with Live Calculator -->
+    <div class="glass-card p-6 rounded-3xl shadow-xl border border-slate-200/80">
+        <h3 class="font-bold text-slate-900 mb-1 text-center">Request Financial Assistance</h3>
+        <p class="text-xs text-slate-400 text-center mb-4">Fill in details to submit application via WhatsApp</p>
+        
+        <form id="loanForm" class="space-y-3">
+            <div>
+              <input type="text" id="n" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition" required>
+            </div>
+            
+            <div>
+              <input type="number" id="a" oninput="calculateInstallment(this.value)" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition" required>
+            </div>
 
-                for(let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if(!row.trim()) continue;
-                    
-                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
-                    if(cols[0]) {
-                        const b = parseFloat(cols[1]?.replace(/,/g, '')) || 0;
-                        const e = parseFloat(cols[2]?.replace(/,/g, '')) || 0;
-                        totalB += b;
-                        totalE += e;
+            <!-- Dynamic 6-Month Estimate Box -->
+            <div id="calcBox" class="hidden p-3 bg-emerald-50 rounded-xl border border-emerald-100 text-xs text-emerald-800 flex justify-between items-center">
+              <span>Est. 6-Month Installment:</span>
+              <span id="monthlyAmount" class="font-bold text-sm">Rs. 0 / mo</span>
+            </div>
 
-                        htmlContent += `
-                        <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-200/70 flex justify-between items-center hover:border-emerald-500/40 transition-all">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-bold font-mono text-emerald-700">
-                                    ${i.toString().padStart(2, '0')}
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-xs">${cols[0]}</h4>
-                                    <span class="text-[9px] text-slate-400 font-mono">LOGGED</span>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-emerald-700 font-extrabold text-xs">+Rs. ${b.toLocaleString()}</p>
-                                <p class="text-rose-500 font-bold text-[10px] mt-0.5">-Rs. ${e.toLocaleString()}</p>
-                            </div>
-                        </div>`;
-                    }
-                }
+            <div>
+              <textarea id="r" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition" rows="3" required></textarea>
+            </div>
+            
+            <button type="button" onclick="send(this)" class="w-full bg-brand-600 hover:bg-brand-500 text-white p-4 rounded-2xl font-semibold text-sm transition shadow-lg shadow-brand-600/20 active:scale-[0.98]">
+              Submit Application
+            </button>
+        </form>
+    </div>
+    
+    <!-- Contact Info -->
+    <div class="text-center pt-1">
+        <a href="mailto:ftcf.20@gmail.com" class="text-xs text-slate-500 font-medium inline-flex items-center gap-2 hover:text-brand-600 transition">
+            <i class="fas fa-envelope text-brand-600"></i> ftcf.20@gmail.com
+        </a>
+    </div>
 
-                list.innerHTML = htmlContent || "<p class='text-center text-xs text-slate-500'>No data found.</p>";
-                
-                const netSavings = totalB - totalE;
-                document.getElementById('total-balance').innerText = "Rs. " + totalB.toLocaleString();
-                document.getElementById('total-expenses').innerText = "Rs. " + totalE.toLocaleString();
-                document.getElementById('net-savings').innerText = "Rs. " + netSavings.toLocaleString();
+    <!-- Footer Tag -->
+    <footer class="text-center pt-2">
+      <p class="text-[10px] text-slate-400 tracking-wider">© 2026 FTCF PORTAL — ALL RIGHTS RESERVED</p>
+    </footer>
+  </main>
 
-                const expPercentage = totalB > 0 ? Math.min(Math.round((totalE / totalB) * 100), 100) : 0;
-                document.getElementById('expense-percentage').innerText = expPercentage + "%";
-                document.getElementById('expense-progress-bar').style.width = expPercentage + "%";
+  <script>
+    function toggleMission() {
+      const box = document.getElementById('missionBox');
+      box.classList.toggle('hidden');
+    }
 
-                if (netSavings < 0) {
-                    document.getElementById('savings-box').className = "bg-white p-5 rounded-3xl shadow-lg border-2 border-rose-500";
-                    document.getElementById('expense-progress-bar').className = "h-full bg-rose-500";
-                }
-            })
-            .catch(err => {
-                document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-rose-500">Failed to load live data.</p>`;
-            });
+    function calculateInstallment(val) {
+      const box = document.getElementById('calcBox');
+      const target = document.getElementById('monthlyAmount');
+      if (val && val > 0) {
+        box.classList.remove('hidden');
+        const perMonth = Math.round(val / 6);
+        target.innerText = `Rs. ${perMonth.toLocaleString()} / mo`;
+      } else {
+        box.classList.add('hidden');
+      }
+    }
 
-        fetch(RAMZAN_CSV_URL)
-            .then(res => res.text())
-            .then(data => {
-                const rows = data.split('\n');
-                let html = "";
-                for(let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if(!row.trim()) continue;
-                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
-                    
-                    if(cols[0]) {
-                        let badgeStyle = 'text-emerald-700 border-emerald-200 bg-emerald-50';
-                        if (cols[0].toLowerCase().includes('balance')) badgeStyle = 'text-blue-700 border-blue-200 bg-blue-50';
-                        if (cols[0].toLowerCase().includes('expense') || cols[0].toLowerCase().includes('donate')) badgeStyle = 'text-rose-700 border-rose-200 bg-rose-50';
+    function send(btn) {
+      const n = document.getElementById('n').value;
+      const a = document.getElementById('a').value;
+      const r = document.getElementById('r').value;
+      const date = new Date().toLocaleDateString();
 
-                        html += `
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex justify-between items-center">
-                            <div>
-                                <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">${cols[0]}</p>
-                            </div>
-                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg border ${badgeStyle}">
-                                ${cols[1] || '0'}
-                            </span>
-                        </div>`;
-                    }
-                }
-                document.getElementById('ramzan-content').innerHTML = html || "<p class='text-center text-slate-400'>No details recorded yet.</p>";
-            });
-    </script>
+      if (!n || !a || !r) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const originalText = btn.innerText;
+      btn.innerText = "Processing...";
+      btn.disabled = true;
+
+      const msg = `New Loan Application:%0ADate: ${date}%0AName: ${n}%0AAmount: Rs. ${a}%0AReason: ${r}`;
+      window.open(`https://wa.me/923433052346?text=${msg}`, '_blank');
+
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.disabled = false;
+        document.getElementById('loanForm').reset();
+        document.getElementById('calcBox').classList.add('hidden');
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
