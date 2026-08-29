@@ -16,6 +16,27 @@
             color: #f9fafb;
             min-height: 100vh;
             overflow-x: hidden;
+            transition: background-color 0.8s ease;
+        }
+
+        /* Weather Theme Dynamic Transitions */
+        .theme-sunny {
+            background-color: #0c0a09 !important;
+        }
+        .theme-sunny .ambient-glow-1 {
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
+        }
+        .theme-sunny .total-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(120, 53, 15, 0.2) 100%) !important;
+            border-color: rgba(245, 158, 11, 0.4) !important;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.15) !important;
+        }
+
+        .theme-rainy {
+            background-color: #020617 !important;
+        }
+        .theme-rainy .ambient-glow-1 {
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
         }
 
         /* Ambient Lighting Mesh Glows */
@@ -29,6 +50,7 @@
             background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(0,0,0,0) 70%);
             pointer-events: none;
             z-index: 0;
+            transition: all 0.8s ease;
         }
 
         .ambient-glow-2 {
@@ -58,6 +80,7 @@
             box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
             position: relative;
             overflow: hidden;
+            transition: all 0.8s ease;
         }
 
         .total-card::after {
@@ -128,7 +151,7 @@
 
     <header class="p-8 pb-20 bg-slate-950/70 backdrop-blur-2xl border-b border-white/10 text-white rounded-b-[2.5rem] shadow-2xl text-center relative z-10">
         <div class="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-slate-900/80 border border-white/10 text-[10px] font-medium tracking-widest text-slate-400 uppercase">
-            <span class="pulse-dot"></span> Live Portal
+            <span class="pulse-dot"></span> <span id="weather-status">Live Portal</span>
         </div>
         <h1 class="text-2xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-emerald-400">
             Family Trust & Care Foundation
@@ -187,6 +210,37 @@
     </main>
 
     <script>
+        // Automatic Weather Detection & Theme Switcher Mode
+        async function autoWeatherTheme() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    try {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+                        const data = await res.json();
+                        
+                        const code = data.current_weather.weathercode;
+                        const weatherStatusEl = document.getElementById('weather-status');
+
+                        // Open-Meteo Weather Codes Mapping
+                        if (code === 0 || code === 1) {
+                            document.body.classList.add('theme-sunny');
+                            if (weatherStatusEl) weatherStatusEl.innerText = 'Sunny Mode';
+                        } else if ([51, 53, 55, 61, 63, 65, 80, 81].includes(code)) {
+                            document.body.classList.add('theme-rainy');
+                            if (weatherStatusEl) weatherStatusEl.innerText = 'Rainy Mode';
+                        } else {
+                            if (weatherStatusEl) weatherStatusEl.innerText = 'Live Portal';
+                        }
+                    } catch (e) {
+                        console.log('Weather sync bypassed');
+                    }
+                }, () => {});
+            }
+        }
+        autoWeatherTheme();
+
         // Haptic feedback function
         function triggerVibrate(ms) {
             if (window.navigator.vibrate) {
