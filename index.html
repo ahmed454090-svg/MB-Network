@@ -1,271 +1,275 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FTCF | Modern Financial Portal</title>
-  <!-- Tailwind CSS & FontAwesome -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#ecfdf5',
-              500: '#10b981',
-              600: '#059669',
-              900: '#064e3b',
-              950: '#022c22'
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(229, 231, 235, 0.5);
-    }
-  </style>
-</head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen pb-12">
-
-  <main class="max-w-md mx-auto p-4 space-y-6">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     
-    <!-- Modern Header -->
-    <header class="flex justify-between items-center py-3 border-b border-slate-200/60">
-        <div>
-          <span class="text-xs font-semibold text-brand-600 tracking-wider uppercase">2026-2027</span>
-          <h1 class="font-extrabold text-2xl text-slate-900 tracking-tight">Rules & Loans</h1>
+    <link rel="manifest" href="manifest.json">
+    <title>FTCF | Professional Portal</title>
+    
+    <!-- Tailwind CSS & Lucide Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body { 
+            background-color: #030712; 
+            font-family: 'Inter', sans-serif; 
+            overflow: hidden; 
+            margin: 0; 
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Glassmorphism Styles */
+        .glass-panel { 
+            background: rgba(17, 24, 39, 0.75); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+
+        .tab-content { display: none; height: 100vh; width: 100vw; position: relative; }
+        .tab-content.active { display: block; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* Shimmer Loading Animation */
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .spin-slow { animation: rotate 3s linear infinite; }
+        .spin-reverse { animation: rotate 2.5s linear infinite reverse; }
+    </style>
+</head>
+<body class="text-slate-100 antialiased selection:bg-amber-500 selection:text-black">
+
+    <!-- Offline Status Indicator -->
+    <div id="offline-banner" class="hidden fixed top-0 left-0 right-0 z-[1000] bg-red-600/90 backdrop-blur-md text-white text-xs font-semibold py-1 px-4 text-center border-b border-red-500/30">
+        <i data-lucide="wifi-off" class="w-3.5 h-3.5 inline mr-1 -mt-0.5"></i> Offline Mode: Pre-loaded cache available
+    </div>
+
+    <!-- Modern Splash Screen -->
+    <div id="splash" class="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-2xl flex flex-col justify-center items-center transition-opacity duration-500">
+        <div class="relative w-32 h-32 flex justify-center items-center">
+            <div class="absolute inset-0 border-2 border-transparent border-t-white rounded-full spin-slow"></div>
+            <div class="absolute inset-2 border-2 border-transparent border-b-amber-500 rounded-full spin-reverse"></div>
+            <span class="text-2xl font-extrabold tracking-wider text-white">FTCF</span>
         </div>
-        <div class="w-11 h-11 bg-gradient-to-tr from-brand-600 to-emerald-400 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg shadow-brand-500/20 ring-2 ring-white">
-            FTCF
-        </div>
+        <p class="text-amber-500 font-mono text-xs tracking-[0.3em] mt-6 font-bold uppercase">Mughal Brothers Network</p>
+    </div>
+
+    <!-- Header Controls (Bank & Notice Controls Restored) -->
+    <header class="fixed top-4 right-4 z-[60] flex gap-2 pointer-events-auto">
+        <button id="installBtn" class="hidden w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="download" class="w-4 h-4"></i>
+        </button>
+        <button onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="building-2" class="w-4 h-4"></i>
+        </button>
+        <button onclick="toggleModal('notice-popup', true)" class="relative w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
+        </button>
     </header>
 
-    <!-- Stat Highlights (Glass Cards) -->
-    <section class="grid grid-cols-2 gap-3">
-        <div class="col-span-2 bg-gradient-to-br from-brand-950 via-brand-900 to-emerald-900 p-6 rounded-3xl text-white shadow-xl relative overflow-hidden">
-            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="text-emerald-300 text-xs font-medium uppercase tracking-widest mb-1">Active Loans</p>
-                <h2 class="font-bold text-4xl text-white">0</h2>
-              </div>
-              <span class="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-1 rounded-full border border-emerald-500/30">Live Status</span>
+    <!-- Bank Modal -->
+    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm text-center shadow-2xl border border-white/10">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="building-2" class="w-6 h-6"></i>
             </div>
+            <h2 class="text-white text-base font-bold mb-4">HBL Konnect Details</h2>
+            <div class="bg-black/40 p-4 rounded-2xl text-left border border-white/5 space-y-3 mb-6">
+                <div>
+                    <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account Title</span>
+                    <span class="text-sm text-white font-semibold">Afzaal Ahmed</span>
+                </div>
+                <div class="pt-2 border-t border-white/5 flex justify-between items-center">
+                    <div>
+                        <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account / Mobile</span>
+                        <span class="text-sm text-amber-400 font-mono font-bold">0342-2735966</span>
+                    </div>
+                    <button onclick="copyAccount('03422735966')" class="p-2 text-slate-400 hover:text-amber-400 active:scale-90 transition-all">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            <button onclick="toggleModal('bank-popup', false)" class="w-full py-3 bg-white/10 hover:bg-white/20 active:scale-95 rounded-xl text-white font-medium transition-all text-sm">Close</button>
         </div>
+    </div>
 
-        <div class="glass-card p-4 rounded-2xl shadow-sm border text-left">
-            <p class="text-[11px] text-slate-400 uppercase font-semibold">Inflow</p>
-            <p class="font-bold text-brand-600 text-base mt-1">Rs. 11,500</p>
+    <!-- Notice Modal -->
+    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-white/10">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
+                <i data-lucide="megaphone" class="w-6 h-6"></i>
+            </div>
+            <h2 class="text-white text-base font-bold mb-2">System Notice</h2>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                Alhamdulillah! FTCF portal updates complete ho chuki hain. Safe aur fast browsing ke liye caching ko optimize kiya gaya hai.
+            </p>
+            <button onclick="toggleModal('notice-popup', false)" class="w-full py-3 bg-amber-500 text-black hover:bg-amber-400 active:scale-95 rounded-xl font-semibold transition-all text-sm">Acknowledge</button>
         </div>
+    </div>
 
-        <div class="glass-card p-4 rounded-2xl shadow-sm border text-left">
-            <p class="text-[11px] text-slate-400 uppercase font-semibold">Outflow</p>
-            <p class="font-bold text-rose-500 text-base mt-1">Rs. 0</p>
-        </div>
-    </section>
+    <!-- Tab Contents (Lazy Loaded + Shimmer Placeholder) -->
+    <div id="ledger" class="tab-content" data-src="https://ftcf20-hub.github.io/FTCF.com/"></div>
+    <div id="monthly" class="tab-content" data-src="https://ftcf20-hub.github.io/Monthly-Status/"></div>
+    <div id="yearly" class="tab-content" data-src="https://ftcf20-hub.github.io/Yearly-Record/"></div>
+    <div id="rules" class="tab-content" data-src="https://ftcf20-hub.github.io/Loneportal/"></div>
 
-    <!-- Fund Allocations 2026 Layout -->
-    <section class="space-y-3">
-      <h3 class="font-bold text-sm text-slate-700 tracking-wide uppercase px-1">Fund Allocation Framework</h3>
-      <div class="grid grid-cols-2 gap-2.5">
-        <div class="p-3.5 bg-white rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden">
-          <div class="flex items-center justify-between mb-2">
-            <i class="fas fa-ribbon text-purple-600"></i>
-            <span class="text-[9px] bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded-full">Unlock-Apr 2027</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800">Death Assistance</p>
-          <p class="text-xs text-purple-600 font-bold mt-1">30% Share</p>
-        </div>
-        
-        <div class="p-3.5 bg-white rounded-2xl border border-slate-100 shadow-sm">
-          <div class="flex items-center justify-between mb-2">
-            <i class="fas fa-notes-medical text-rose-500"></i>
-            <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">locked</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800">Medical Aid</p>
-          <p class="text-xs text-rose-500 font-bold mt-1">25% Share</p>
-        </div>
-
-        <div class="p-3.5 bg-white rounded-2xl border border-slate-100 shadow-sm">
-          <div class="flex items-center justify-between mb-2">
-            <i class="fas fa-heart text-amber-500"></i>
-            <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Locked</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800">Marriage Support</p>
-          <p class="text-xs text-amber-500 font-bold mt-1">25% Share</p>
-        </div>
-
-        <div class="p-3.5 bg-white rounded-2xl border border-slate-100 shadow-sm">
-          <div class="flex items-center justify-between mb-2">
-            <i class="fas fa-shield-halved text-blue-500"></i>
-            <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Locked</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800">Emergency Reserve</p>
-          <p class="text-xs text-blue-500 font-bold mt-1">20% Share</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Mission & Vision Drawer -->
-    <div class="space-y-3">
-        <button onclick="toggleMission()" class="w-full bg-slate-900 hover:bg-slate-800 text-white p-3.5 rounded-2xl font-semibold text-sm shadow-md transition-all flex items-center justify-center gap-2">
-            <i class="fas fa-book-open text-emerald-400"></i>
-            <span>Read Full Mission & Vision</span>
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center shadow-2xl border border-white/10 max-w-xs w-full justify-between">
+        <button data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="wallet" class="w-5 h-5"></i>
+        </button>
+        <button data-target="monthly" onclick="switchTab('monthly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="calendar-check-2" class="w-5 h-5"></i>
         </button>
         
-        <div id="missionBox" class="hidden glass-card p-6 rounded-3xl shadow-sm border border-slate-200/80 urdu-text text-right h-80 overflow-y-auto text-slate-700 leading-loose">
-            <p class="text-sm whitespace-pre-line">
-                ہمارا ہدف: فیملی ٹرسٹ نیٹ ورک کو مثالی بنانا
-                ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے، تاکہ لوگ ہمارے اس فلاحی نظام اور بھائی چارے کی مثال دیں اور ہمارا یہ سیٹ اپ دوسروں کے لیے بھی ایک رول ماڈل بن کر ابھرے۔
-
-                یہ ہم سب کی فاؤنڈیشن ہے (ہمارا عہد)
-                یہ فاؤنڈیشن ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن ہے اور ہم سب نے ہی مل کر اسے کامیاب بنانا ہے۔ اس کا سب سے بڑا مقصد یہ ہے کہ کل کو ہمارا کوئی بھی فیملی ممبر کسی بھی مصیبت، پریشانی یا ضرورت کے وقت خود کو اکیلا نہ پائے۔
-
-                ہمارا وژن: خاندان سے آگے، ایک رجسٹرڈ ادارہ
-                ہم اس فاؤنڈیشن کو صرف اپنے خاندان تک محدود نہیں رکھنا چاہتے۔ ہمارا اصل مقصد اور عزم یہ ہے کہ آگے چل کر ہم اسے باقاعدہ ایک رجسٹرڈ آرگنائزیشن (NGO) بنائیں گے۔
-
-                رمضان المبارک کا خصوصی ہدف (صدقات کے ذریعے امداد)
-                ہم نے یہ نیت اور عزم کیا ہے کہ آنے والے رمضان المبارک سے ہی ہم اس فاؤنڈیشن میں اپنے صدقات کی مدد سے فیملیز کی بھرپور مدد کریں گے۔
-            </p>
-        </div>
-    </div>
-
-    <!-- Loan List (Interactive Ledger Table Visual) -->
-    <div class="glass-card p-5 rounded-3xl shadow-sm border border-slate-200/80">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm"><i class="fas fa-list-check text-brand-600"></i> Loan Ledger Records</h3>
-          <span class="text-[10px] text-slate-400 font-medium">Updated Today</span>
-        </div>
-        <div id="loan-list" class="space-y-2 text-xs">
-             <div class="flex justify-between items-center p-2.5 bg-slate-50/80 rounded-xl border border-slate-100">
-               <div>
-                 <span class="font-semibold text-slate-800 block">Member Record #1</span>
-                 <span class="text-[10px] text-slate-400">Status: Complete</span>
-               </div>
-               <span class="font-semibold text-slate-700">Rs. 0</span>
-               <span class="text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full text-[10px] font-bold">PAID</span>
-             </div>
-             <div class="flex justify-between items-center p-2.5 bg-slate-50/80 rounded-xl border border-slate-100">
-               <div>
-                 <span class="font-semibold text-slate-800 block">Member Record #2</span>
-                 <span class="text-[10px] text-slate-400">Status: Complete</span>
-               </div>
-               <span class="font-semibold text-slate-700">Rs. 0</span>
-               <span class="text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full text-[10px] font-bold">PAID</span>
-             </div>
-        </div>
-    </div>
-
-    <!-- Loan Rules (Styled Urdu Accordion Layout) -->
-    <div class="space-y-2.5 urdu-text text-right">
-        <div class="glass-card p-5 rounded-3xl border border-slate-200/80">
-            <h3 class="font-bold text-slate-800 mb-1 text-base">قواعد و ضوابط (Loan Rules)</h3>
-            <p class="text-xs text-slate-600">امانت میں خیانت نہیں، ہمارا سب سے پہلا اصول ہے۔ بہترین نظام ہی اصل کامیابی ہے۔</p>
-        </div>
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-100 text-xs shadow-sm text-slate-700">دیا گیا قرض 6 ماہ میں آسان اقساط میں واپس کرنا ہو گا۔</div>
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-100 text-xs shadow-sm text-slate-700">پہلے لیا ہوا قرض واپس کیے جانے کے بعد نئی قسط جاری کی جائے گی۔</div>
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-100 text-xs shadow-sm text-slate-700">وفات کی صورت میں دی جانے والی رقم قرض نہیں ہو گی۔</div>
-    </div>
-
-    <!-- Loan Application Form with Live Calculator -->
-    <div class="glass-card p-6 rounded-3xl shadow-xl border border-slate-200/80">
-        <h3 class="font-bold text-slate-900 mb-1 text-center">Request Financial Assistance</h3>
-        <p class="text-xs text-slate-400 text-center mb-4">Fill in details to submit application via WhatsApp</p>
-        
-        <form id="loanForm" class="space-y-3">
-            <div>
-              <input type="text" id="n" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition" required>
-            </div>
-            
-            <div>
-              <input type="number" id="a" oninput="calculateInstallment(this.value)" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition" required>
-            </div>
-
-            <!-- Dynamic 6-Month Estimate Box -->
-            <div id="calcBox" class="hidden p-3 bg-emerald-50 rounded-xl border border-emerald-100 text-xs text-emerald-800 flex justify-between items-center">
-              <span>Est. 6-Month Installment:</span>
-              <span id="monthlyAmount" class="font-bold text-sm">Rs. 0 / mo</span>
-            </div>
-
-            <div>
-              <textarea id="r" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition" rows="3" required></textarea>
-            </div>
-            
-            <button type="button" onclick="send(this)" class="w-full bg-brand-600 hover:bg-brand-500 text-white p-4 rounded-2xl font-semibold text-sm transition shadow-lg shadow-brand-600/20 active:scale-[0.98]">
-              Submit Application
-            </button>
-        </form>
-    </div>
-    
-    <!-- Contact Info -->
-    <div class="text-center pt-1">
-        <a href="mailto:ftcf.20@gmail.com" class="text-xs text-slate-500 font-medium inline-flex items-center gap-2 hover:text-brand-600 transition">
-            <i class="fas fa-envelope text-brand-600"></i> ftcf.20@gmail.com
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-amber-500 text-black w-11 h-11 flex items-center justify-center rounded-2xl font-bold shadow-lg shadow-amber-500/20 hover:bg-amber-400 active:scale-90 transition-all mx-1">
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
         </a>
-    </div>
 
-    <!-- Footer Tag -->
-    <footer class="text-center pt-2">
-      <p class="text-[10px] text-slate-400 tracking-wider">© 2026 FTCF PORTAL — ALL RIGHTS RESERVED</p>
-    </footer>
-  </main>
+        <button data-target="yearly" onclick="switchTab('yearly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+        </button>
+        <button data-target="rules" onclick="switchTab('rules', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="scale" class="w-5 h-5"></i>
+        </button>
+    </nav>
 
-  <script>
-    function toggleMission() {
-      const box = document.getElementById('missionBox');
-      box.classList.toggle('hidden');
-    }
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-    function calculateInstallment(val) {
-      const box = document.getElementById('calcBox');
-      const target = document.getElementById('monthlyAmount');
-      if (val && val > 0) {
-        box.classList.remove('hidden');
-        const perMonth = Math.round(val / 6);
-        target.innerText = `Rs. ${perMonth.toLocaleString()} / mo`;
-      } else {
-        box.classList.add('hidden');
-      }
-    }
+        // Tab Switcher
+        function switchTab(id, btnElement) { 
+            if (navigator.vibrate) navigator.vibrate([10, 30, 10]); 
+            
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('text-amber-500', 'bg-white/5')); 
+            
+            const targetContainer = document.getElementById(id);
+            targetContainer.classList.add('active');
 
-    function send(btn) {
-      const n = document.getElementById('n').value;
-      const a = document.getElementById('a').value;
-      const r = document.getElementById('r').value;
-      const date = new Date().toLocaleDateString();
+            // Lazy Load with Shimmer Loading Placeholder
+            if (!targetContainer.querySelector('iframe')) {
+                const shimmerLoader = document.createElement('div');
+                shimmerLoader.className = 'absolute inset-0 shimmer flex items-center justify-center';
+                shimmerLoader.innerHTML = `<span class="text-xs font-mono text-slate-500">Loading...</span>`;
+                targetContainer.appendChild(shimmerLoader);
 
-      if (!n || !a || !r) {
-        alert("Please fill in all fields.");
-        return;
-      }
+                const iframe = document.createElement('iframe');
+                iframe.src = targetContainer.getAttribute('data-src');
+                iframe.onload = () => shimmerLoader.remove();
+                targetContainer.appendChild(iframe);
+            }
+            
+            if (btnElement) {
+                btnElement.classList.add('text-amber-500', 'bg-white/5');
+            }
+            
+            localStorage.setItem('activeTab', id); 
+        }
 
-      const originalText = btn.innerText;
-      btn.innerText = "Processing...";
-      btn.disabled = true;
+        // Modal Handler
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
 
-      const msg = `New Loan Application:%0ADate: ${date}%0AName: ${n}%0AAmount: Rs. ${a}%0AReason: ${r}`;
-      window.open(`https://wa.me/923433052346?text=${msg}`, '_blank');
+        // Account Copy Helper
+        function copyAccount(num) {
+            navigator.clipboard.writeText(num);
+            if (navigator.vibrate) navigator.vibrate(20);
+            alert('Account number copied!');
+        }
 
-      setTimeout(() => {
-        btn.innerText = originalText;
-        btn.disabled = false;
-        document.getElementById('loanForm').reset();
-        document.getElementById('calcBox').classList.add('hidden');
-      }, 2000);
-    }
-  </script>
+        // Network Status Detection
+        window.addEventListener('online', () => document.getElementById('offline-banner').classList.add('hidden'));
+        window.addEventListener('offline', () => document.getElementById('offline-banner').classList.remove('hidden'));
+
+        // Keyboard Navigation (Desktop)
+        window.addEventListener('keydown', (e) => {
+            if (e.altKey) {
+                if (e.key === '1') switchTab('ledger', document.querySelector('[data-target="ledger"]'));
+                if (e.key === '2') switchTab('monthly', document.querySelector('[data-target="monthly"]'));
+                if (e.key === '3') switchTab('yearly', document.querySelector('[data-target="yearly"]'));
+                if (e.key === '4') switchTab('rules', document.querySelector('[data-target="rules"]'));
+            }
+        });
+
+        // App Initialization
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash');
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => { splash.style.display = 'none'; }, 500);
+            }, 600);
+
+            const lastTab = localStorage.getItem('activeTab') || 'ledger';
+            const targetBtn = document.querySelector(`button[data-target="${lastTab}"]`);
+            switchTab(lastTab, targetBtn);
+
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            }
+        });
+
+        // PWA Installation Hook
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => { 
+            e.preventDefault(); 
+            deferredPrompt = e; 
+            if (document.getElementById('installBtn')) {
+                document.getElementById('installBtn').classList.remove('hidden'); 
+            }
+        });
+
+        if (document.getElementById('installBtn')) {
+            document.getElementById('installBtn').addEventListener('click', () => { 
+                if (deferredPrompt) { 
+                    deferredPrompt.prompt(); 
+                    deferredPrompt.userChoice.then((choiceResult) => { 
+                        if (choiceResult.outcome === 'accepted') {
+                            document.getElementById('installBtn').classList.add('hidden');
+                        }
+                    }); 
+                } 
+            });
+        }
+    </script>
 </body>
 </html>
