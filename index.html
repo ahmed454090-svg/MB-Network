@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>FTCF Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>FTCF Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -16,86 +15,17 @@
                     "colors": {
                         "secondary-container": "#d97707",
                         "on-surface": "#e5e2e1",
-                        "surface-container-low": "#1c1b1b",
                         "surface": "#131313",
-                        "primary-fixed": "#ffddb8",
-                        "inverse-surface": "#e5e2e1",
-                        "surface-container-highest": "#353534",
-                        "error": "#ffb4ab",
-                        "on-surface-variant": "#d8c3ad",
-                        "surface-container-high": "#2a2a2a",
-                        "surface-container": "#201f1f",
-                        "on-error-container": "#ffdad6",
-                        "secondary-fixed": "#ffdcc3",
                         "primary-container": "#f59e0b",
                         "primary": "#ffc174",
-                        "secondary-fixed-dim": "#ffb77d",
-                        "on-primary-container": "#613b00",
-                        "primary-fixed-dim": "#ffb95f",
                         "on-background": "#e5e2e1",
-                        "inverse-primary": "#855300",
-                        "on-primary-fixed-variant": "#653e00",
-                        "on-tertiary-fixed-variant": "#474646",
-                        "on-primary": "#472a00",
-                        "surface-variant": "#353534",
-                        "tertiary-fixed": "#e5e2e1",
-                        "on-tertiary-fixed": "#1c1b1b",
-                        "surface-dim": "#131313",
-                        "inverse-on-surface": "#313030",
-                        "on-secondary": "#4d2600",
-                        "on-secondary-fixed": "#2f1500",
-                        "surface-tint": "#ffb95f",
-                        "on-tertiary": "#313030",
-                        "background": "#131313",
-                        "on-primary-fixed": "#2a1700",
-                        "error-container": "#93000a",
-                        "on-secondary-container": "#432100",
-                        "surface-container-lowest": "#0e0e0e",
-                        "secondary": "#ffb77d",
-                        "on-error": "#690005",
-                        "surface-bright": "#393939",
-                        "tertiary-fixed-dim": "#c9c6c5",
-                        "on-secondary-fixed-variant": "#6e3900",
-                        "on-tertiary-container": "#444343",
-                        "tertiary": "#cfcbcb",
-                        "tertiary-container": "#b3b0b0",
-                        "outline-variant": "#534434",
-                        "outline": "#a08e7a"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "base": "8px",
-                        "gutter": "24px",
-                        "margin-desktop": "64px",
-                        "margin-mobile": "16px",
-                        "container-max": "1200px"
-                    },
-                    "fontFamily": {
-                        "display-lg": ["Montserrat"],
-                        "headline-lg-mobile": ["Montserrat"],
-                        "headline-lg": ["Montserrat"],
-                        "body-lg": ["Inter"],
-                        "body-md": ["Inter"],
-                        "label-sm": ["Inter"]
-                    },
-                    "fontSize": {
-                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                        "background": "#131313"
                     }
                 }
             }
         }
     </script>
-<style>
+    <style>
         body { background-color: #050505; color: #e5e2e1; }
         .glass-card {
             background-color: #121212;
@@ -105,270 +35,43 @@
         }
         .glass-card:hover {
             border-color: rgba(245, 158, 11, 0.3);
-            background: linear-gradient(to top right, rgba(245, 158, 11, 0.05), transparent);
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(217, 119, 6, 0.15);
         }
         .progress-track { background-color: #2a2a2a; border-radius: 9999px; overflow: hidden; height: 8px; }
         .progress-bar { background-color: #f59e0b; height: 100%; border-radius: 9999px; }
-        
-        /* Urdu Font Support */
         .urdu-text { font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif; direction: rtl; text-align: right; }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden min-h-screen flex flex-col md:flex-row">
-<!-- TopNavBar (Mobile Only) -->
-<nav class="md:hidden fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-20 bg-surface/80 backdrop-blur-xl border-b border-primary/10 shadow-[0_20px_40px_rgba(217,119,6,0.05)]">
-<div class="font-display-lg text-headline-lg-mobile font-bold text-primary tracking-tight">FTCF</div>
-<div class="flex gap-4 items-center">
-<span class="material-symbols-outlined text-primary">search</span>
-<span class="material-symbols-outlined text-primary">menu</span>
-</div>
-</nav>
-<!-- SideNavBar (Desktop Only) -->
-<aside class="hidden md:flex flex-col py-base bg-surface-container-low/90 backdrop-blur-2xl border-r border-primary/10 shadow-2xl docked left-0 h-full w-64 fixed top-0 left-0 z-40">
-<div class="px-6 py-8 flex flex-col gap-2">
-<div class="w-12 h-12 rounded-full overflow-hidden mb-4 border-2 border-primary/30 flex items-center justify-center bg-surface-container">
-<span class="material-symbols-outlined text-primary text-2xl">account_balance</span>
-</div>
-<h1 class="font-display-lg text-headline-lg font-bold text-primary tracking-tight text-xl">Family Trust</h1>
-<p class="font-body-md text-body-md text-on-surface-variant text-sm">Secure Portal</p>
-</div>
-<div class="px-6 py-4">
-<button class="w-full bg-primary-container text-on-primary-container font-label-sm py-3 px-4 rounded hover:bg-primary/90 transition-all shadow-[0_10px_20px_rgba(245,158,11,0.2)]">New Grant</button>
-</div>
-<nav class="flex-1 mt-4 px-2">
-<ul class="flex flex-col gap-2">
-<li>
-<a class="bg-primary/10 text-primary border-r-4 border-primary px-4 py-3 flex items-center gap-3 font-body-md text-body-md rounded-l" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                        Overview
-                    </a>
-</li>
-<li>
-<a class="text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 flex items-center gap-3 font-body-md text-body-md transition-all duration-200 ease-in-out hover:text-primary rounded-l" href="#">
-<span class="material-symbols-outlined">group</span>
-                        Beneficiaries
-                    </a>
-</li>
-<li>
-<a class="text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 flex items-center gap-3 font-body-md text-body-md transition-all duration-200 ease-in-out hover:text-primary rounded-l" href="#">
-<span class="material-symbols-outlined">account_balance</span>
-                        Trust Assets
-                    </a>
-</li>
-<li>
-<a class="text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 flex items-center gap-3 font-body-md text-body-md transition-all duration-200 ease-in-out hover:text-primary rounded-l" href="#">
-<span class="material-symbols-outlined">verified_user</span>
-                        Compliance
-                    </a>
-</li>
-<li>
-<a class="text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 flex items-center gap-3 font-body-md text-body-md transition-all duration-200 ease-in-out hover:text-primary rounded-l" href="#">
-<span class="material-symbols-outlined">settings</span>
-                        Settings
-                    </a>
-</li>
-</ul>
-</nav>
-<div class="px-2 pb-8">
-<ul class="flex flex-col gap-2">
-<li>
-<a class="text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 flex items-center gap-3 font-body-md text-body-md transition-all duration-200 ease-in-out hover:text-primary rounded-l" href="#">
-<span class="material-symbols-outlined">help</span>
-                        Support
-                    </a>
-</li>
-<li>
-<a class="text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 flex items-center gap-3 font-body-md text-body-md transition-all duration-200 ease-in-out hover:text-error rounded-l" href="#">
-<span class="material-symbols-outlined">logout</span>
-                        Logout
-                    </a>
-</li>
-</ul>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="flex-1 md:ml-64 pt-24 md:pt-8 px-margin-mobile md:px-margin-desktop pb-24">
-<!-- Hero Section -->
-<section class="mb-16 relative">
-<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background pointer-events-none -z-10 h-64 rounded-xl blur-3xl"></div>
-<div class="max-w-4xl mx-auto text-center md:text-left flex flex-col gap-6">
-<h1 class="urdu-text text-4xl md:text-5xl lg:text-6xl text-primary font-bold leading-tight" style="line-height: 1.4;">
-                     فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF): مقصد، ترقی اور ہماری منزل
-                 </h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-2 border-primary/50 pl-4 py-2">
-                     Building a transparent, secure, and prosperous future for our community through dedicated welfare and trust management.
-                 </p>
-</div>
-</section>
-<!-- Dashboard Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[1400px] mx-auto">
-<!-- Card 1: Member Ledger & Financial Status -->
-<div class="glass-card rounded-xl p-8 flex flex-col gap-6 opacity-0 animate-[fadeIn_0.5s_ease-out_0.1s_forwards]">
-<div class="flex justify-between items-start border-b border-primary/10 pb-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">wallet</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-2xl text-on-surface">Member Ledger &amp; Financial Status</h2>
-</div>
-<button class="text-primary hover:text-primary-container transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div class="bg-surface-container-low p-4 rounded-lg border border-surface-variant">
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Total Balance</p>
-<p class="font-display-lg text-3xl text-primary">$1,245,000</p>
-</div>
-<div class="bg-surface-container-low p-4 rounded-lg border border-surface-variant">
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Monthly Contributions</p>
-<p class="font-display-lg text-3xl text-secondary-fixed-dim">+$45,200</p>
-</div>
-</div>
-<div class="mt-4">
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-3 uppercase tracking-wider">Recent Activity</p>
-<ul class="flex flex-col gap-3">
-<li class="flex justify-between items-center py-2 border-b border-surface-variant/50 hover:bg-surface-variant/20 px-2 rounded transition-colors">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-secondary-fixed-dim text-sm">arrow_downward</span>
-<div>
-<p class="font-body-md text-sm text-on-surface">Q3 Dividend Distribution</p>
-<p class="font-label-sm text-xs text-on-surface-variant">Oct 15, 2023</p>
-</div>
-</div>
-<span class="font-body-md text-sm text-on-surface">-$120,000</span>
-</li>
-<li class="flex justify-between items-center py-2 border-b border-surface-variant/50 hover:bg-surface-variant/20 px-2 rounded transition-colors">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-sm">arrow_upward</span>
-<div>
-<p class="font-body-md text-sm text-on-surface">Corporate Donation</p>
-<p class="font-label-sm text-xs text-on-surface-variant">Oct 10, 2023</p>
-</div>
-</div>
-<span class="font-body-md text-sm text-primary">+$50,000</span>
-</li>
-</ul>
-</div>
-</div>
-<!-- Card 2: Rules, Regulations & Trust Policies -->
-<div class="glass-card rounded-xl p-8 flex flex-col gap-6 opacity-0 animate-[fadeIn_0.5s_ease-out_0.2s_forwards]">
-<div class="flex justify-between items-start border-b border-primary/10 pb-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">gavel</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-2xl text-on-surface">Rules, Regulations &amp; Trust Policies</h2>
-</div>
-</div>
-<div class="grid grid-cols-1 gap-4">
-<a class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg border border-surface-variant hover:border-primary/50 hover:bg-surface-variant/50 transition-all group" href="#">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">description</span>
-<div>
-<h3 class="font-body-md text-on-surface">Governance Charter 2024</h3>
-<p class="font-label-sm text-on-surface-variant">Updated v2.1</p>
-</div>
-</div>
-<span class="material-symbols-outlined text-primary/50 group-hover:text-primary">download</span>
-</a>
-<a class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg border border-surface-variant hover:border-primary/50 hover:bg-surface-variant/50 transition-all group" href="#">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">shield</span>
-<div>
-<h3 class="font-body-md text-on-surface">Security &amp; Privacy Policy</h3>
-<p class="font-label-sm text-on-surface-variant">Reviewed Sep 2023</p>
-</div>
-</div>
-<span class="material-symbols-outlined text-primary/50 group-hover:text-primary">open_in_new</span>
-</a>
-<a class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg border border-surface-variant hover:border-primary/50 hover:bg-surface-variant/50 transition-all group" href="#">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">diversity_3</span>
-<div>
-<h3 class="font-body-md text-on-surface">Beneficiary Eligibility Criteria</h3>
-<p class="font-label-sm text-on-surface-variant">Guidelines for applicants</p>
-</div>
-</div>
-<span class="material-symbols-outlined text-primary/50 group-hover:text-primary">open_in_new</span>
-</a>
-</div>
-</div>
-<!-- Card 3: Loan & Assistance Tracking -->
-<div class="glass-card rounded-xl p-8 flex flex-col gap-6 opacity-0 animate-[fadeIn_0.5s_ease-out_0.3s_forwards]">
-<div class="flex justify-between items-start border-b border-primary/10 pb-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">trending_up</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-2xl text-on-surface">Loan &amp; Assistance Tracking</h2>
-</div>
-</div>
-<div class="flex flex-col gap-6">
-<div>
-<div class="flex justify-between items-end mb-2">
-<div>
-<h3 class="font-body-md text-on-surface">Active Applications Progress</h3>
-<p class="font-label-sm text-on-surface-variant">45 applications in review</p>
-</div>
-<span class="font-body-md text-primary font-semibold">68%</span>
-</div>
-<div class="progress-track">
-<div class="progress-bar w-[68%] relative overflow-hidden">
-<div class="absolute inset-0 bg-white/20 w-full animate-[pulse_2s_ease-in-out_infinite]"></div>
-</div>
-</div>
-</div>
-<div>
-<div class="flex justify-between items-end mb-2">
-<div>
-<h3 class="font-body-md text-on-surface">Fund Availability (Q4)</h3>
-<p class="font-label-sm text-on-surface-variant">Allocated vs Disbursed</p>
-</div>
-<span class="font-body-md text-secondary-fixed-dim font-semibold">42%</span>
-</div>
-<div class="progress-track">
-<div class="progress-bar bg-secondary-fixed-dim w-[42%]"></div>
-</div>
-</div>
-<div class="mt-2 bg-surface-container-low p-4 rounded-lg border border-surface-variant flex items-start gap-4">
-<span class="material-symbols-outlined text-primary mt-1">info</span>
-<div>
-<h4 class="font-body-md text-sm text-on-surface">Repayment Schedule Alert</h4>
-<p class="font-label-sm text-on-surface-variant mt-1">3 upcoming repayments due in the next 7 days totaling $15,400.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Card 4: Quarterly Reports & Transparency Hub -->
-<div class="glass-card rounded-xl p-8 flex flex-col gap-6 opacity-0 animate-[fadeIn_0.5s_ease-out_0.4s_forwards]">
-<div class="flex justify-between items-start border-b border-primary/10 pb-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">insights</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-2xl text-on-surface">Quarterly Reports &amp; Transparency Hub</h2>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div class="bg-surface-container-low p-5 rounded-lg border border-surface-variant text-center hover:border-primary/50 transition-colors cursor-pointer group">
-<span class="material-symbols-outlined text-4xl text-on-surface-variant group-hover:text-primary mb-3 block transition-colors">pie_chart</span>
-<h3 class="font-body-md text-sm text-on-surface">Impact Metrics</h3>
-<p class="font-label-sm text-xs text-on-surface-variant mt-1">View Dashboard</p>
-</div>
-<div class="bg-surface-container-low p-5 rounded-lg border border-surface-variant text-center hover:border-primary/50 transition-colors cursor-pointer group">
-<span class="material-symbols-outlined text-4xl text-on-surface-variant group-hover:text-primary mb-3 block transition-colors">fact_check</span>
-<h3 class="font-body-md text-sm text-on-surface">Audit Reports</h3>
-<p class="font-label-sm text-xs text-on-surface-variant mt-1">Download PDFs</p>
-</div>
-</div>
-<div class="mt-4 flex items-center justify-between p-4 bg-primary/5 rounded-lg border border-primary/20">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-primary text-sm">verified</span>
-</div>
-<div>
-<p class="font-body-md text-sm text-on-surface">Annual Summary 2023</p>
-<p class="font-label-sm text-xs text-on-surfa
+    <!-- Main Content Area -->
+    <main class="flex-1 px-4 md:px-16 py-12">
+        <section class="mb-12 text-center md:text-left">
+            <h1 class="urdu-text text-3xl md:text-5xl text-amber-400 font-bold leading-relaxed mb-4">
+                فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF): مقصد، ترقی اور ہماری منزل
+            </h1>
+            <p class="text-gray-300 text-lg border-l-2 border-amber-500 pl-4 py-1">
+                Building a transparent, secure, and prosperous future for our family network.
+            </p>
+        </section>
+
+        <!-- Dashboard Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[1400px]">
+            <!-- Card 1 -->
+            <div class="glass-card rounded-xl p-6 flex flex-col gap-4">
+                <h2 class="text-2xl font-bold text-amber-400 flex items-center gap-2">
+                    <span class="material-symbols-outlined">wallet</span> Member Ledger
+                </h2>
+                <p class="text-gray-300">Track and manage family contributions, funds, and active balances securely.</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="glass-card rounded-xl p-6 flex flex-col gap-4">
+                <h2 class="text-2xl font-bold text-amber-400 flex items-center gap-2">
+                    <span class="material-symbols-outlined">gavel</span> Rules & Regulations
+                </h2>
+                <p class="text-gray-300">Clear guidelines, governance charters, and eligibility criteria for members.</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
