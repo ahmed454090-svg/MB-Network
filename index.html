@@ -1,77 +1,192 @@
 <!DOCTYPE html>
 <html class="dark" lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>FTCF Dashboard</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTCF - Family Trust & Care Foundation</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <script>
         tailwind.config = {
-            darkMode: "class",
+            darkMode: 'class',
             theme: {
                 extend: {
-                    "colors": {
-                        "secondary-container": "#d97707",
-                        "on-surface": "#e5e2e1",
-                        "surface": "#131313",
-                        "primary-container": "#f59e0b",
-                        "primary": "#ffc174",
-                        "on-background": "#e5e2e1",
-                        "background": "#131313"
+                    colors: {
+                        matte: '#050505',
+                        surfaceDark: '#121212',
+                        gold: '#F59E0B',
+                        goldDark: '#D97706',
+                        textMain: '#E5E2E1',
+                        textMuted: '#A08E7A'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #050505; color: #e5e2e1; }
+        body { background-color: #050505; color: #E5E2E1; font-family: 'Inter', sans-serif; }
         .glass-card {
-            background-color: #121212;
-            border: 1px solid rgba(245, 158, 11, 0.1);
-            backdrop-filter: blur(20px);
+            background: #121212;
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            backdrop-filter: blur(12px);
             transition: all 0.3s ease;
         }
         .glass-card:hover {
-            border-color: rgba(245, 158, 11, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(217, 119, 6, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(217, 119, 6, 0.1);
         }
-        .progress-track { background-color: #2a2a2a; border-radius: 9999px; overflow: hidden; height: 8px; }
-        .progress-bar { background-color: #f59e0b; height: 100%; border-radius: 9999px; }
-        .urdu-text { font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif; direction: rtl; text-align: right; }
+        .urdu-title { font-family: 'Montserrat', serif; direction: rtl; }
     </style>
 </head>
-<body class="antialiased overflow-x-hidden min-h-screen flex flex-col md:flex-row">
+<body class="min-h-screen flex flex-col md:flex-row antialiased selection:bg-gold selection:text-matte">
+
+    <!-- Sidebar (Desktop) -->
+    <aside class="hidden md:flex flex-col w-72 bg-[#0A0A0A] border-r border-gold/10 fixed h-full z-30 p-6 justify-between">
+        <div>
+            <!-- Logo / Brand -->
+            <div class="flex items-center gap-3 mb-10">
+                <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold shadow-lg shadow-gold/5">
+                    <span class="material-symbols-outlined text-2xl">account_balance</span>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg text-gold tracking-wide">FTCF PORTAL</h1>
+                    <p class="text-xs text-textMuted tracking-widest uppercase">Family Trust</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex flex-col gap-2">
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-gold/10 text-gold font-medium border-r-2 border-gold">
+                    <span class="material-symbols-outlined font-variation-settings: 'FILL' 1;">dashboard</span> Overview
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-textMuted hover:text-textMain hover:bg-surfaceDark transition">
+                    <span class="material-symbols-outlined">wallet</span> Member Ledger
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-textMuted hover:text-textMain hover:bg-surfaceDark transition">
+                    <span class="material-symbols-outlined">gavel</span> Rules & Loans
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-textMuted hover:text-textMain hover:bg-surfaceDark transition">
+                    <span class="material-symbols-outlined">insights</span> Transparency Hub
+                </a>
+            </nav>
+        </div>
+
+        <!-- Footer profile / info -->
+        <div class="pt-4 border-t border-gold/10 text-xs text-textMuted flex items-center justify-between">
+            <span>Secure PWA v2.5</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <header class="md:hidden fixed top-0 w-full bg-[#0A0A0A]/90 backdrop-blur-md border-b border-gold/10 z-30 px-6 py-4 flex justify-between items-center">
+        <h1 class="font-bold text-gold text-lg">FTCF PORTAL</h1>
+        <span class="material-symbols-outlined text-gold cursor-pointer">menu</span>
+    </header>
+
     <!-- Main Content Area -->
-    <main class="flex-1 px-4 md:px-16 py-12">
-        <section class="mb-12 text-center md:text-left">
-            <h1 class="urdu-text text-3xl md:text-5xl text-amber-400 font-bold leading-relaxed mb-4">
-                فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF): مقصد، ترقی اور ہماری منزل
-            </h1>
-            <p class="text-gray-300 text-lg border-l-2 border-amber-500 pl-4 py-1">
-                Building a transparent, secure, and prosperous future for our family network.
-            </p>
+    <main class="flex-1 md:ml-72 p-6 md:p-12 pt-24 md:pt-12">
+        
+        <!-- Hero Banner Section -->
+        <section class="mb-12 glass-card rounded-2xl p-8 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-64 h-64 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="max-w-3xl">
+                <span class="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-semibold mb-4 tracking-wider uppercase border border-gold/20">
+                    Official Network Hub
+                </span>
+                <h2 class="urdu-title text-2xl md:text-4xl font-bold text-gold mb-4 leading-relaxed">
+                    فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF): مقصد، ترقی اور ہماری منزل
+                </h2>
+                <p class="text-textMuted text-base md:text-lg leading-relaxed">
+                    A minimalist luxury platform designed to manage family trust assets, transparent ledgers, and community welfare with absolute security.
+                </p>
+            </div>
         </section>
 
-        <!-- Dashboard Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[1400px]">
-            <!-- Card 1 -->
-            <div class="glass-card rounded-xl p-6 flex flex-col gap-4">
-                <h2 class="text-2xl font-bold text-amber-400 flex items-center gap-2">
-                    <span class="material-symbols-outlined">wallet</span> Member Ledger
-                </h2>
-                <p class="text-gray-300">Track and manage family contributions, funds, and active balances securely.</p>
+        <!-- Metrics Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Metric 1 -->
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-textMuted text-sm font-medium uppercase tracking-wider">Total Trust Fund</span>
+                    <span class="material-symbols-outlined text-gold p-2 bg-gold/10 rounded-lg">account_balance_wallet</span>
+                </div>
+                <h3 class="text-3xl font-extrabold text-textMain mb-1">₨ 2,450,000</h3>
+                <p class="text-xs text-emerald-400 flex items-center gap-1 font-medium">
+                    <span class="material-symbols-outlined text-sm">trending_up</span> +12% this month
+                </p>
             </div>
-            <!-- Card 2 -->
-            <div class="glass-card rounded-xl p-6 flex flex-col gap-4">
-                <h2 class="text-2xl font-bold text-amber-400 flex items-center gap-2">
-                    <span class="material-symbols-outlined">gavel</span> Rules & Regulations
-                </h2>
-                <p class="text-gray-300">Clear guidelines, governance charters, and eligibility criteria for members.</p>
+
+            <!-- Metric 2 -->
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-textMuted text-sm font-medium uppercase tracking-wider">Active Loans</span>
+                    <span class="material-symbols-outlined text-gold p-2 bg-gold/10 rounded-lg">assignment_turned_in</span>
+                </div>
+                <h3 class="text-3xl font-extrabold text-textMain mb-1">14 Cases</h3>
+                <p class="text-xs text-textMuted">Under review & processing</p>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-textMuted text-sm font-medium uppercase tracking-wider">Network Status</span>
+                    <span class="material-symbols-outlined text-gold p-2 bg-gold/10 rounded-lg">verified_user</span>
+                </div>
+                <h3 class="text-3xl font-extrabold text-emerald-400 mb-1">Active</h3>
+                <p class="text-xs text-textMuted">Encrypted ledger synchronized</p>
             </div>
         </div>
+
+        <!-- Quick Access Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Box: Recent Ledger -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold text-textMain mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-gold">history</span> Recent Transactions
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center p-3 rounded-lg bg-[#0E0E0E] border border-gold/5">
+                        <div>
+                            <p class="text-sm font-medium text-textMain">Monthly Contribution</p>
+                            <p class="text-xs text-textMuted">Mughal Network - Member #04</p>
+                        </div>
+                        <span class="text-sm font-bold text-emerald-400">+₨ 15,000</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 rounded-lg bg-[#0E0E0E] border border-gold/5">
+                        <div>
+                            <p class="text-sm font-medium text-textMain">Emergency Assistance</p>
+                            <p class="text-xs text-textMuted">Medical Support Fund</p>
+                        </div>
+                        <span class="text-sm font-bold text-rose-400">-₨ 25,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Box: Quick Links / Rules -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold text-textMain mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-gold">rule</span> Core Directives
+                </h3>
+                <div class="space-y-3">
+                    <a href="#" class="flex items-center justify-between p-3 rounded-lg bg-[#0E0E0E] border border-gold/5 hover:border-gold/30 transition">
+                        <span class="text-sm text-textMain">Trust Governance Charter 2026</span>
+                        <span class="material-symbols-outlined text-gold text-sm">arrow_forward</span>
+                    </a>
+                    <a href="#" class="flex items-center justify-between p-3 rounded-lg bg-[#0E0E0E] border border-gold/5 hover:border-gold/30 transition">
+                        <span class="text-sm text-textMain">Loan Eligibility & Repayment Rules</span>
+                        <span class="material-symbols-outlined text-gold text-sm">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </main>
+
 </body>
 </html>
