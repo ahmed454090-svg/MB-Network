@@ -1,192 +1,390 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTCF - Family Trust & Care Foundation</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     
+    <link rel="manifest" href="manifest.json">
+    <title>FTCF | Professional Portal</title>
+    
+    <!-- Tailwind CSS & Lucide Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
                     colors: {
-                        matte: '#050505',
-                        surfaceDark: '#121212',
-                        gold: '#F59E0B',
-                        goldDark: '#D97706',
-                        textMain: '#E5E2E1',
-                        textMuted: '#A08E7A'
+                        brand: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
                     }
                 }
             }
         }
     </script>
+    
     <style>
-        body { background-color: #050505; color: #E5E2E1; font-family: 'Inter', sans-serif; }
-        .glass-card {
-            background: #121212;
-            border: 1px solid rgba(245, 158, 11, 0.15);
-            backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body { 
+            background-color: #030712; 
+            font-family: 'Inter', sans-serif; 
+            overflow: hidden; 
+            margin: 0; 
+            -webkit-tap-highlight-color: transparent;
         }
-        .glass-card:hover {
-            border-color: rgba(245, 158, 11, 0.4);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(217, 119, 6, 0.1);
+        
+        /* Glassmorphism Styles */
+        .glass-panel { 
+            background: rgba(17, 24, 39, 0.75); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
         }
-        .urdu-title { font-family: 'Montserrat', serif; direction: rtl; }
+
+        .tab-content { display: none; height: 100vh; width: 100vw; position: relative; }
+        .tab-content.active { display: block; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* Shimmer Loading Animation */
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+        /* Golden Circle 3D Flip Card Loader */
+        .perspective-container {
+            perspective: 1200px;
+        }
+        
+        .card-3d-wrapper {
+            width: 140px;
+            height: 140px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: flipCircleGolden 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .card-face {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 50%; /* Circle Shape */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fef08a;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24, #d97706, #78350f);
+            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4), inset 0 2px 10px rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+        }
+
+        .card-face::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: rotate(45deg);
+            animation: shine 2.5s infinite;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #b45309, #d97706, #fbbf24, #92400e);
+        }
+
+        /* Tech Background Grid */
+        .bg-tech-grid {
+            background-image: radial-gradient(rgba(245, 158, 11, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        @keyframes flipCircleGolden {
+            0% { 
+                transform: rotateY(0deg) rotateX(10deg) scale(0.95); 
+                box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+            }
+            50% { 
+                transform: rotateY(180deg) rotateX(-10deg) scale(1.08); 
+                box-shadow: 0 25px 45px rgba(245, 158, 11, 0.6);
+            }
+            100% { 
+                transform: rotateY(360deg) rotateX(10deg) scale(0.95); 
+                box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+            }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            50%, 100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .fade-in-pulse {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { opacity: 0.7; transform: translateY(0); }
+            to { opacity: 1; transform: translateY(-2px); }
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col md:flex-row antialiased selection:bg-gold selection:text-matte">
+<body class="text-slate-100 antialiased selection:bg-amber-500 selection:text-black">
 
-    <!-- Sidebar (Desktop) -->
-    <aside class="hidden md:flex flex-col w-72 bg-[#0A0A0A] border-r border-gold/10 fixed h-full z-30 p-6 justify-between">
-        <div>
-            <!-- Logo / Brand -->
-            <div class="flex items-center gap-3 mb-10">
-                <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold shadow-lg shadow-gold/5">
-                    <span class="material-symbols-outlined text-2xl">account_balance</span>
+    <!-- Offline Status Indicator -->
+    <div id="offline-banner" class="hidden fixed top-0 left-0 right-0 z-[1000] bg-red-600/90 backdrop-blur-md text-white text-xs font-semibold py-1 px-4 text-center border-b border-red-500/30">
+        <i data-lucide="wifi-off" class="w-3.5 h-3.5 inline mr-1 -mt-0.5"></i> Offline Mode: Pre-loaded cache available
+    </div>
+
+    <!-- Golden Circle 3D Splash Screen -->
+    <div id="splash" class="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-2xl flex flex-col justify-center items-center transition-opacity duration-500 bg-tech-grid">
+        <!-- Ambient Golden Aura -->
+        <div class="absolute w-56 h-56 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="perspective-container relative">
+            <div class="card-3d-wrapper">
+                <!-- Golden Front (Circle) -->
+                <div class="card-face">
+                    <span class="text-3xl font-black tracking-wider text-black drop-shadow-[0_1px_2px_rgba(255,255,255,0.6)]">FTCF</span>
+                    <span class="text-[8px] font-mono tracking-widest text-slate-950 font-extrabold uppercase -mt-0.5">Portal</span>
                 </div>
-                <div>
-                    <h1 class="font-extrabold text-lg text-gold tracking-wide">FTCF PORTAL</h1>
-                    <p class="text-xs text-textMuted tracking-widest uppercase">Family Trust</p>
+                <!-- Golden Back (Circle) -->
+                <div class="card-face card-back">
+                    <div class="w-7 h-7 rounded-full bg-black/20 border border-white/40 flex items-center justify-center mb-0.5">
+                        <i data-lucide="layers" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <span class="text-[10px] font-black tracking-widest text-black uppercase font-mono">MBN</span>
                 </div>
             </div>
-
-            <!-- Navigation Links -->
-            <nav class="flex flex-col gap-2">
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-gold/10 text-gold font-medium border-r-2 border-gold">
-                    <span class="material-symbols-outlined font-variation-settings: 'FILL' 1;">dashboard</span> Overview
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-textMuted hover:text-textMain hover:bg-surfaceDark transition">
-                    <span class="material-symbols-outlined">wallet</span> Member Ledger
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-textMuted hover:text-textMain hover:bg-surfaceDark transition">
-                    <span class="material-symbols-outlined">gavel</span> Rules & Loans
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-textMuted hover:text-textMain hover:bg-surfaceDark transition">
-                    <span class="material-symbols-outlined">insights</span> Transparency Hub
-                </a>
-            </nav>
         </div>
 
-        <!-- Footer profile / info -->
-        <div class="pt-4 border-t border-gold/10 text-xs text-textMuted flex items-center justify-between">
-            <span>Secure PWA v2.5</span>
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        </div>
-    </aside>
+        <p class="text-amber-500 font-mono text-xs tracking-[0.3em] mt-8 font-bold uppercase fade-in-pulse">Mughal Brothers Network</p>
+    </div>
 
-    <!-- Mobile Header -->
-    <header class="md:hidden fixed top-0 w-full bg-[#0A0A0A]/90 backdrop-blur-md border-b border-gold/10 z-30 px-6 py-4 flex justify-between items-center">
-        <h1 class="font-bold text-gold text-lg">FTCF PORTAL</h1>
-        <span class="material-symbols-outlined text-gold cursor-pointer">menu</span>
+    <!-- Header Controls (Bank & Notice Controls Restored) -->
+    <header class="fixed top-4 right-4 z-[60] flex gap-2 pointer-events-auto">
+        <button id="installBtn" class="hidden w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="download" class="w-4 h-4"></i>
+        </button>
+        <button onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="building-2" class="w-4 h-4"></i>
+        </button>
+        <button onclick="toggleModal('notice-popup', true)" class="relative w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
+        </button>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-1 md:ml-72 p-6 md:p-12 pt-24 md:pt-12">
+    <!-- Bank Modal -->
+    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm text-center shadow-2xl border border-white/10">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="building-2" class="w-6 h-6"></i>
+            </div>
+            <h2 class="text-white text-base font-bold mb-4">HBL Konnect Details</h2>
+            <div class="bg-black/40 p-4 rounded-2xl text-left border border-white/5 space-y-3 mb-6">
+                <div>
+                    <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account Title</span>
+                    <span class="text-sm text-white font-semibold">Afzaal Ahmed</span>
+                </div>
+                <div class="pt-2 border-t border-white/5 flex justify-between items-center">
+                    <div>
+                        <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account / Mobile</span>
+                        <span class="text-sm text-amber-400 font-mono font-bold">0342-2735966</span>
+                    </div>
+                    <button onclick="copyAccount('03422735966')" class="p-2 text-slate-400 hover:text-amber-400 active:scale-90 transition-all">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            <button onclick="toggleModal('bank-popup', false)" class="w-full py-3 bg-white/10 hover:bg-white/20 active:scale-95 rounded-xl text-white font-medium transition-all text-sm">Close</button>
+        </div>
+    </div>
+
+    <!-- Notice Modal (Auto Open & Manual Close Enabled) -->
+    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-white/10">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
+                <i data-lucide="megaphone" class="w-6 h-6"></i>
+            </div>
+            <h2 class="text-white text-base font-bold mb-2">System Notice</h2>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                Meeting Announcement,Insha Allah 11 September Jummy ki Namaz k bad Meeting ho gi or Kuch Zarori points per bat Ho gi.
+            </p>
+            <button onclick="closeNoticeManual()" class="w-full py-3 bg-amber-500 text-black hover:bg-amber-400 active:scale-95 rounded-xl font-semibold transition-all text-sm">Acknowledge</button>
+        </div>
+    </div>
+
+    <!-- Tab Contents (Lazy Loaded + Shimmer Placeholder) -->
+    <div id="ledger" class="tab-content" data-src="https://ftcf20-hub.github.io/FTCF.com/"></div>
+    <div id="monthly" class="tab-content" data-src="https://ftcf20-hub.github.io/Monthly-Status/"></div>
+    <div id="yearly" class="tab-content" data-src="https://ftcf20-hub.github.io/Yearly-Record/"></div>
+    <div id="rules" class="tab-content" data-src="https://ftcf20-hub.github.io/Loneportal/"></div>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center shadow-2xl border border-white/10 max-w-xs w-full justify-between">
+        <button data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="wallet" class="w-5 h-5"></i>
+        </button>
+        <button data-target="monthly" onclick="switchTab('monthly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="calendar-check-2" class="w-5 h-5"></i>
+        </button>
         
-        <!-- Hero Banner Section -->
-        <section class="mb-12 glass-card rounded-2xl p-8 relative overflow-hidden">
-            <div class="absolute -right-10 -top-10 w-64 h-64 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="max-w-3xl">
-                <span class="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-semibold mb-4 tracking-wider uppercase border border-gold/20">
-                    Official Network Hub
-                </span>
-                <h2 class="urdu-title text-2xl md:text-4xl font-bold text-gold mb-4 leading-relaxed">
-                    فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF): مقصد، ترقی اور ہماری منزل
-                </h2>
-                <p class="text-textMuted text-base md:text-lg leading-relaxed">
-                    A minimalist luxury platform designed to manage family trust assets, transparent ledgers, and community welfare with absolute security.
-                </p>
-            </div>
-        </section>
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-amber-500 text-black w-11 h-11 flex items-center justify-center rounded-2xl font-bold shadow-lg shadow-amber-500/20 hover:bg-amber-400 active:scale-90 transition-all mx-1">
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
+        </a>
 
-        <!-- Metrics Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <!-- Metric 1 -->
-            <div class="glass-card rounded-xl p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <span class="text-textMuted text-sm font-medium uppercase tracking-wider">Total Trust Fund</span>
-                    <span class="material-symbols-outlined text-gold p-2 bg-gold/10 rounded-lg">account_balance_wallet</span>
-                </div>
-                <h3 class="text-3xl font-extrabold text-textMain mb-1">₨ 2,450,000</h3>
-                <p class="text-xs text-emerald-400 flex items-center gap-1 font-medium">
-                    <span class="material-symbols-outlined text-sm">trending_up</span> +12% this month
-                </p>
-            </div>
+        <button data-target="yearly" onclick="switchTab('yearly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+        </button>
+        <button data-target="rules" onclick="switchTab('rules', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="scale" class="w-5 h-5"></i>
+        </button>
+    </nav>
 
-            <!-- Metric 2 -->
-            <div class="glass-card rounded-xl p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <span class="text-textMuted text-sm font-medium uppercase tracking-wider">Active Loans</span>
-                    <span class="material-symbols-outlined text-gold p-2 bg-gold/10 rounded-lg">assignment_turned_in</span>
-                </div>
-                <h3 class="text-3xl font-extrabold text-textMain mb-1">14 Cases</h3>
-                <p class="text-xs text-textMuted">Under review & processing</p>
-            </div>
+    <script>
+        // Unique ID for current announcement (Change this value when sending a NEW announcement)
+        const CURRENT_ANNOUNCEMENT_ID = "announcement_11_sep_v1";
 
-            <!-- Metric 3 -->
-            <div class="glass-card rounded-xl p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <span class="text-textMuted text-sm font-medium uppercase tracking-wider">Network Status</span>
-                    <span class="material-symbols-outlined text-gold p-2 bg-gold/10 rounded-lg">verified_user</span>
-                </div>
-                <h3 class="text-3xl font-extrabold text-emerald-400 mb-1">Active</h3>
-                <p class="text-xs text-textMuted">Encrypted ledger synchronized</p>
-            </div>
-        </div>
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-        <!-- Quick Access Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Left Box: Recent Ledger -->
-            <div class="glass-card rounded-xl p-6">
-                <h3 class="text-lg font-bold text-textMain mb-4 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-gold">history</span> Recent Transactions
-                </h3>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center p-3 rounded-lg bg-[#0E0E0E] border border-gold/5">
-                        <div>
-                            <p class="text-sm font-medium text-textMain">Monthly Contribution</p>
-                            <p class="text-xs text-textMuted">Mughal Network - Member #04</p>
-                        </div>
-                        <span class="text-sm font-bold text-emerald-400">+₨ 15,000</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 rounded-lg bg-[#0E0E0E] border border-gold/5">
-                        <div>
-                            <p class="text-sm font-medium text-textMain">Emergency Assistance</p>
-                            <p class="text-xs text-textMuted">Medical Support Fund</p>
-                        </div>
-                        <span class="text-sm font-bold text-rose-400">-₨ 25,000</span>
-                    </div>
-                </div>
-            </div>
+        // Tab Switcher
+        function switchTab(id, btnElement) { 
+            if (navigator.vibrate) navigator.vibrate([10, 30, 10]); 
+            
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('text-amber-500', 'bg-white/5')); 
+            
+            const targetContainer = document.getElementById(id);
+            targetContainer.classList.add('active');
 
-            <!-- Right Box: Quick Links / Rules -->
-            <div class="glass-card rounded-xl p-6">
-                <h3 class="text-lg font-bold text-textMain mb-4 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-gold">rule</span> Core Directives
-                </h3>
-                <div class="space-y-3">
-                    <a href="#" class="flex items-center justify-between p-3 rounded-lg bg-[#0E0E0E] border border-gold/5 hover:border-gold/30 transition">
-                        <span class="text-sm text-textMain">Trust Governance Charter 2026</span>
-                        <span class="material-symbols-outlined text-gold text-sm">arrow_forward</span>
-                    </a>
-                    <a href="#" class="flex items-center justify-between p-3 rounded-lg bg-[#0E0E0E] border border-gold/5 hover:border-gold/30 transition">
-                        <span class="text-sm text-textMain">Loan Eligibility & Repayment Rules</span>
-                        <span class="material-symbols-outlined text-gold text-sm">arrow_forward</span>
-                    </a>
-                </div>
-            </div>
-        </div>
+            // Lazy Load with Shimmer Loading Placeholder
+            if (!targetContainer.querySelector('iframe')) {
+                const shimmerLoader = document.createElement('div');
+                shimmerLoader.className = 'absolute inset-0 shimmer flex items-center justify-center';
+                shimmerLoader.innerHTML = `<span class="text-xs font-mono text-slate-500">Loading...</span>`;
+                targetContainer.appendChild(shimmerLoader);
 
-    </main>
+                const iframe = document.createElement('iframe');
+                iframe.src = targetContainer.getAttribute('data-src');
+                iframe.onload = () => shimmerLoader.remove();
+                targetContainer.appendChild(iframe);
+            }
+            
+            if (btnElement) {
+                btnElement.classList.add('text-amber-500', 'bg-white/5');
+            }
+            
+            localStorage.setItem('activeTab', id); 
+        }
 
+        // Modal Handler
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Manual Close Function for Auto Notice
+        function closeNoticeManual() {
+            toggleModal('notice-popup', false);
+            localStorage.setItem('seen_announcement', CURRENT_ANNOUNCEMENT_ID);
+        }
+
+        // Check & Auto Open Notice Modal
+        function checkAutoNotice() {
+            const lastSeen = localStorage.getItem('seen_announcement');
+            if (lastSeen !== CURRENT_ANNOUNCEMENT_ID) {
+                toggleModal('notice-popup', true);
+            }
+        }
+
+        // Account Copy Helper
+        function copyAccount(num) {
+            navigator.clipboard.writeText(num);
+            if (navigator.vibrate) navigator.vibrate(20);
+            alert('Account number copied!');
+        }
+
+        // Network Status Detection
+        window.addEventListener('online', () => document.getElementById('offline-banner').classList.add('hidden'));
+        window.addEventListener('offline', () => document.getElementById('offline-banner').classList.remove('hidden'));
+
+        // Keyboard Navigation (Desktop)
+        window.addEventListener('keydown', (e) => {
+            if (e.altKey) {
+                if (e.key === '1') switchTab('ledger', document.querySelector('[data-target="ledger"]'));
+                if (e.key === '2') switchTab('monthly', document.querySelector('[data-target="monthly"]'));
+                if (e.key === '3') switchTab('yearly', document.querySelector('[data-target="yearly"]'));
+                if (e.key === '4') switchTab('rules', document.querySelector('[data-target="rules"]'));
+            }
+        });
+
+        // App Initialization (Updated to exactly 3 Seconds Auto-Hide)
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash');
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => { 
+                    splash.style.display = 'none'; 
+                    // Auto open announcement modal after splash screen disappears
+                    checkAutoNotice();
+                }, 500);
+            }, 3000); // Set to 3000ms (3 Seconds)
+
+            const lastTab = localStorage.getItem('activeTab') || 'ledger';
+            const targetBtn = document.querySelector(`button[data-target="${lastTab}"]`);
+            switchTab(lastTab, targetBtn);
+
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            }
+        });
+
+        // PWA Installation Hook
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => { 
+            e.preventDefault(); 
+            deferredPrompt = e; 
+            if (document.getElementById('installBtn')) {
+                document.getElementById('installBtn').classList.remove('hidden'); 
+            }
+        });
+
+        if (document.getElementById('installBtn')) {
+            document.getElementById('installBtn').addEventListener('click', () => { 
+                if (deferredPrompt) { 
+                    deferredPrompt.prompt(); 
+                    deferredPrompt.userChoice.then((choiceResult) => { 
+                        if (choiceResult.outcome === 'accepted') {
+                            document.getElementById('installBtn').classList.add('hidden');
+                        }
+                    }); 
+                } 
+            });
+        }
+    </script>
 </body>
 </html>
