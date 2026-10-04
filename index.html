@@ -62,23 +62,16 @@
         }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* --- LIGHT BLUE TRANSPARENT SPLASH SCREEN & DOUBLE CIRCLE ANIMATION --- */
-        #splash {
-            background: rgba(14, 116, 144, 0.25); /* Light Blue Glass Accent */
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-        }
-
+        /* CIRCLE ANIMATION */
         .splash-circle-container {
             position: relative;
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Outer Blue Rotating Circle */
         .outer-blue-circle {
             position: absolute;
             inset: 0;
@@ -90,33 +83,33 @@
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
         }
 
-        /* Inner White Rotating Circle */
         .inner-white-circle {
             position: absolute;
-            inset: 12px;
+            inset: 10px;
             border-radius: 50%;
             border: 2px dashed #ffffff;
             animation: spinCounterClockwise 1.8s linear infinite;
             opacity: 0.9;
         }
 
-        @keyframes spinClockwise {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spinClockwise { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spinCounterClockwise { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
 
-        @keyframes spinCounterClockwise {
-            0% { transform: rotate(360deg); }
-            100% { transform: rotate(0deg); }
-        }
+        .pulse-subtext { animation: pulseSubtext 1.8s ease-in-out infinite alternate; }
+        @keyframes pulseSubtext { from { opacity: 0.6; letter-spacing: 0.2em; } to { opacity: 1; letter-spacing: 0.3em; } }
 
-        .pulse-subtext {
-            animation: pulseSubtext 1.8s ease-in-out infinite alternate;
+        /* Pin Dot Indicator Animations */
+        .pin-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(245, 158, 11, 0.5);
+            transition: all 0.2s ease;
         }
-
-        @keyframes pulseSubtext {
-            from { opacity: 0.6; letter-spacing: 0.25em; }
-            to { opacity: 1; letter-spacing: 0.35em; }
+        .pin-dot.filled {
+            background-color: #f59e0b;
+            border-color: #f59e0b;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
         }
     </style>
 </head>
@@ -127,33 +120,57 @@
         <i data-lucide="wifi-off" class="w-3.5 h-3.5 inline mr-1 -mt-0.5"></i> Offline Mode: Pre-loaded cache available
     </div>
 
-    <!-- Light Blue Transparent Splash Screen with Blue/White Rotating Circles -->
-    <div id="splash" class="fixed inset-0 z-[9999] flex flex-col justify-center items-center transition-opacity duration-500">
-        <!-- Ambient Blue Light Glow -->
-        <div class="absolute w-64 h-64 bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- PASSCODE LOCK SCREEN MODAL -->
+    <div id="lock-screen" class="fixed inset-0 z-[9000] bg-black/95 backdrop-blur-2xl flex flex-col justify-center items-center p-6 overflow-y-auto">
+        <div class="absolute w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="splash-circle-container mb-6">
-            <!-- Outer Blue Circle -->
+        <div class="splash-circle-container mb-3 relative z-10">
             <div class="outer-blue-circle"></div>
-            <!-- Inner White Circle -->
             <div class="inner-white-circle"></div>
-            
-            <!-- Center Bold Text -->
-            <span class="text-3xl font-black tracking-wider text-white drop-shadow-[0_2px_8px_rgba(56,189,248,0.5)] z-10">
-                FTCF
-            </span>
+            <span class="text-2xl font-black tracking-wider text-white drop-shadow-[0_2px_8px_rgba(56,189,248,0.5)] z-10">FTCF</span>
         </div>
 
-        <!-- Subtitle Under Circle -->
-        <p class="text-sky-300 font-mono text-xs font-bold uppercase tracking-[0.3em] pulse-subtext">
-            Secure Portal
-        </p>
+        <p class="text-sky-300 font-mono text-[10px] font-bold uppercase tracking-[0.25em] pulse-subtext mb-6 relative z-10">Secure Portal</p>
+
+        <h2 id="lock-title" class="text-white text-base font-bold mb-1 relative z-10">Set Security PIN</h2>
+        <p id="lock-subtitle" class="text-slate-400 text-xs mb-5 font-mono relative z-10">Choose a 4-digit PIN for portal protection</p>
+
+        <!-- PIN Dots Indicator -->
+        <div class="flex gap-4 mb-6 relative z-10">
+            <div class="pin-dot" id="dot-0"></div>
+            <div class="pin-dot" id="dot-1"></div>
+            <div class="pin-dot" id="dot-2"></div>
+            <div class="pin-dot" id="dot-3"></div>
+        </div>
+
+        <!-- Numeric Keypad -->
+        <div class="grid grid-cols-3 gap-3 max-w-xs w-full mb-4 relative z-10">
+            <button onclick="pressPin('1')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">1</button>
+            <button onclick="pressPin('2')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">2</button>
+            <button onclick="pressPin('3')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">3</button>
+            <button onclick="pressPin('4')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">4</button>
+            <button onclick="pressPin('5')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">5</button>
+            <button onclick="pressPin('6')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">6</button>
+            <button onclick="pressPin('7')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">7</button>
+            <button onclick="pressPin('8')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">8</button>
+            <button onclick="pressPin('9')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">9</button>
+            <button onclick="clearPinData()" class="h-12 glass-panel rounded-2xl text-xs font-semibold text-amber-400 active:scale-90 transition-all">Reset</button>
+            <button onclick="pressPin('0')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">0</button>
+            <button onclick="deletePin()" class="h-12 glass-panel rounded-2xl text-white active:scale-90 transition-all flex items-center justify-center">
+                <i data-lucide="delete" class="w-5 h-5"></i>
+            </button>
+        </div>
+        
+        <p id="lock-error" class="text-red-400 text-xs font-semibold h-4 text-center relative z-10"></p>
     </div>
 
-    <!-- Header Controls (Bank & Notice Controls Restored) -->
+    <!-- Header Controls -->
     <header class="fixed top-4 right-4 z-[60] flex gap-2 pointer-events-auto">
         <button id="installBtn" class="hidden w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
             <i data-lucide="download" class="w-4 h-4"></i>
+        </button>
+        <button onclick="clearPinData()" title="Reset PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="key-round" class="w-4 h-4"></i>
         </button>
         <button onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
             <i data-lucide="building-2" class="w-4 h-4"></i>
@@ -190,7 +207,7 @@
         </div>
     </div>
 
-    <!-- Notice Modal (Auto Open & Manual Close Enabled) -->
+    <!-- Notice Modal -->
     <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
         <div class="glass-panel p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-white/10">
             <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
@@ -198,12 +215,13 @@
             </div>
             <h2 class="text-white text-base font-bold mb-2">System Notice</h2>
             <p class="text-slate-400 text-xs leading-relaxed mb-6">
-    مصروفیت کی وجہ سے میٹنگ نہیں ہو سکی، انشاء اللہ آئندہ کا لائحہ عمل آپ کو واٹس ایپ گروپ کے ذریعے بتا دیا جائے گا۔           </p>
+                مصروفیت کی وجہ سے میٹنگ نہیں ہو سکی، انشاء اللہ آئندہ کا لائحہ عمل آپ کو واٹس ایپ گروپ کے ذریعے بتا دیا جائے گا۔
+            </p>
             <button onclick="closeNoticeManual()" class="w-full py-3 bg-amber-500 text-black hover:bg-amber-400 active:scale-95 rounded-xl font-semibold transition-all text-sm">Acknowledge</button>
         </div>
     </div>
 
-    <!-- Tab Contents (Lazy Loaded + Shimmer Placeholder) -->
+    <!-- Tab Contents -->
     <div id="ledger" class="tab-content" data-src="https://ftcf20-hub.github.io/FTCF.com/"></div>
     <div id="monthly" class="tab-content" data-src="https://ftcf20-hub.github.io/Monthly-Status/"></div>
     <div id="yearly" class="tab-content" data-src="https://ftcf20-hub.github.io/Yearly-Record/"></div>
@@ -231,13 +249,119 @@
     </nav>
 
     <script>
-        // Unique ID for current announcement (Change this value when sending a NEW announcement)
         const CURRENT_ANNOUNCEMENT_ID = "announcement_11_sep_v2";
 
-        // Initialize Lucide Icons
-        lucide.createIcons();
+        let enteredPin = "";
+        let tempFirstPin = "";
+        let isSettingPin = false;
 
-        // Tab Switcher
+        function checkPasscodeFlow() {
+            const savedPin = localStorage.getItem('user_portal_pin');
+            const title = document.getElementById('lock-title');
+            const subtitle = document.getElementById('lock-subtitle');
+
+            enteredPin = "";
+            tempFirstPin = "";
+            updatePinDots();
+
+            if (!savedPin || savedPin.trim() === "") {
+                isSettingPin = true;
+                title.innerText = "Set Security PIN";
+                subtitle.innerText = "Choose a 4-digit PIN for portal protection";
+            } else {
+                isSettingPin = false;
+                title.innerText = "Enter Security PIN";
+                subtitle.innerText = "Enter your 4-digit passcode to proceed";
+            }
+        }
+
+        function pressPin(num) {
+            if (enteredPin.length < 4) {
+                enteredPin += num;
+                updatePinDots();
+                if (enteredPin.length === 4) {
+                    setTimeout(validatePin, 150);
+                }
+            }
+        }
+
+        function deletePin() {
+            if (enteredPin.length > 0) {
+                enteredPin = enteredPin.slice(0, -1);
+                updatePinDots();
+            }
+        }
+
+        function updatePinDots() {
+            for (let i = 0; i < 4; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (dot) {
+                    if (i < enteredPin.length) {
+                        dot.classList.add('filled');
+                    } else {
+                        dot.classList.remove('filled');
+                    }
+                }
+            }
+        }
+
+        function unlockPortal() {
+            document.getElementById('lock-screen').style.display = 'none';
+            enteredPin = "";
+            
+            const lastTab = localStorage.getItem('activeTab') || 'ledger';
+            const targetBtn = document.querySelector(`button[data-target="${lastTab}"]`);
+            switchTab(lastTab, targetBtn);
+
+            checkAutoNotice();
+        }
+
+        function validatePin() {
+            const savedPin = localStorage.getItem('user_portal_pin');
+            const errorElement = document.getElementById('lock-error');
+            const title = document.getElementById('lock-title');
+            const subtitle = document.getElementById('lock-subtitle');
+
+            if (isSettingPin) {
+                if (!tempFirstPin) {
+                    tempFirstPin = enteredPin;
+                    enteredPin = "";
+                    updatePinDots();
+                    title.innerText = "Confirm Security PIN";
+                    subtitle.innerText = "Re-enter your 4-digit PIN to confirm";
+                } else {
+                    if (enteredPin === tempFirstPin) {
+                        localStorage.setItem('user_portal_pin', enteredPin);
+                        tempFirstPin = "";
+                        isSettingPin = false;
+                        unlockPortal();
+                    } else {
+                        errorElement.innerText = "PIN match nahi hua. Dubara set karein.";
+                        tempFirstPin = "";
+                        enteredPin = "";
+                        updatePinDots();
+                        title.innerText = "Set Security PIN";
+                        subtitle.innerText = "Choose a 4-digit PIN for portal protection";
+                        setTimeout(() => errorElement.innerText = "", 2000);
+                    }
+                }
+            } else {
+                if (enteredPin === savedPin) {
+                    unlockPortal();
+                } else {
+                    errorElement.innerText = "Galat PIN. Phir se koshish karein.";
+                    enteredPin = "";
+                    updatePinDots();
+                    setTimeout(() => errorElement.innerText = "", 2000);
+                }
+            }
+        }
+
+        function clearPinData() {
+            localStorage.removeItem('user_portal_pin');
+            checkPasscodeFlow();
+        }
+
         function switchTab(id, btnElement) { 
             if (navigator.vibrate) navigator.vibrate([10, 30, 10]); 
             
@@ -245,9 +369,10 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('text-amber-500', 'bg-white/5')); 
             
             const targetContainer = document.getElementById(id);
+            if (!targetContainer) return;
+
             targetContainer.classList.add('active');
 
-            // Lazy Load with Shimmer Loading Placeholder
             if (!targetContainer.querySelector('iframe')) {
                 const shimmerLoader = document.createElement('div');
                 shimmerLoader.className = 'absolute inset-0 shimmer flex items-center justify-center';
@@ -264,98 +389,4 @@
                 btnElement.classList.add('text-amber-500', 'bg-white/5');
             }
             
-            localStorage.setItem('activeTab', id); 
-        }
-
-        // Modal Handler
-        function toggleModal(modalId, show) {
-            const modal = document.getElementById(modalId);
-            if (show) {
-                modal.classList.remove('hidden');
-            } else {
-                modal.classList.add('hidden');
-            }
-        }
-
-        // Manual Close Function for Auto Notice
-        function closeNoticeManual() {
-            toggleModal('notice-popup', false);
-            localStorage.setItem('seen_announcement', CURRENT_ANNOUNCEMENT_ID);
-        }
-
-        // Check & Auto Open Notice Modal
-        function checkAutoNotice() {
-            const lastSeen = localStorage.getItem('seen_announcement');
-            if (lastSeen !== CURRENT_ANNOUNCEMENT_ID) {
-                toggleModal('notice-popup', true);
-            }
-        }
-
-        // Account Copy Helper
-        function copyAccount(num) {
-            navigator.clipboard.writeText(num);
-            if (navigator.vibrate) navigator.vibrate(20);
-            alert('Account number copied!');
-        }
-
-        // Network Status Detection
-        window.addEventListener('online', () => document.getElementById('offline-banner').classList.add('hidden'));
-        window.addEventListener('offline', () => document.getElementById('offline-banner').classList.remove('hidden'));
-
-        // Keyboard Navigation (Desktop)
-        window.addEventListener('keydown', (e) => {
-            if (e.altKey) {
-                if (e.key === '1') switchTab('ledger', document.querySelector('[data-target="ledger"]'));
-                if (e.key === '2') switchTab('monthly', document.querySelector('[data-target="monthly"]'));
-                if (e.key === '3') switchTab('yearly', document.querySelector('[data-target="yearly"]'));
-                if (e.key === '4') switchTab('rules', document.querySelector('[data-target="rules"]'));
-            }
-        });
-
-        // App Initialization (Splash timer set to exactly 3.5 Seconds / 3500ms)
-        window.addEventListener('load', () => {
-            const splash = document.getElementById('splash');
-            setTimeout(() => {
-                splash.style.opacity = '0';
-                setTimeout(() => { 
-                    splash.style.display = 'none'; 
-                    // Auto open announcement modal after splash screen disappears
-                    checkAutoNotice();
-                }, 500);
-            }, 3500); // 3.5 Seconds Timing
-
-            const lastTab = localStorage.getItem('activeTab') || 'ledger';
-            const targetBtn = document.querySelector(`button[data-target="${lastTab}"]`);
-            switchTab(lastTab, targetBtn);
-
-            // Register Service Worker for PWA
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js').catch(() => {});
-            }
-        });
-
-        // PWA Installation Hook
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => { 
-            e.preventDefault(); 
-            deferredPrompt = e; 
-            if (document.getElementById('installBtn')) {
-                document.getElementById('installBtn').classList.remove('hidden'); 
-            }
-        });
-
-        if (document.getElementById('installBtn')) {
-            document.getElementById('installBtn').addEventListener('click', () => { 
-                if (deferredPrompt) { 
-                    deferredPrompt.prompt(); 
-                    deferredPrompt.userChoice.then((choiceResult) => { 
-                        if (choiceResult.outcome === 'accepted') {
-                            document.getElementById('installBtn').classList.add('hidden');
-                        }
-                    }); 
-                } 
-            });
-        }
-    </script>
-</body>
-</html>
+            localStorage.setItem
