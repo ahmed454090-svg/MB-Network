@@ -392,4 +392,111 @@
             loantakers[editIndex].name = name;
             loantakers[editIndex].amount = amount;
             loantakers[editIndex].duration = duration || 'Flexible';
-            alert("Loantaker u
+            alert("Loantaker updated successfully!");
+        }
+
+        localStorage.setItem('ftcf_loantakers', JSON.stringify(loantakers));
+        localStorage.setItem('ftcf_loans', loantakers.length);
+        
+        resetLoantakerForm();
+        loadMetrics();
+        renderMainLoantakers();
+        renderAdminLoantakers();
+      }
+
+      function editLoantaker(index) {
+        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
+        var item = loantakers[index];
+        if(!item) return;
+
+        document.getElementById('ltName').value = item.name;
+        document.getElementById('ltAmount').value = item.amount;
+        document.getElementById('ltDuration').value = item.duration;
+        document.getElementById('editIndex').value = index;
+
+        document.getElementById('loantakerFormTitle').innerHTML = '<i class="fas fa-user-edit"></i> Edit Active Loantaker';
+        document.getElementById('loantakerSubmitBtn').innerText = 'Update Loantaker';
+        document.getElementById('loantakerCancelBtn').classList.remove('hidden');
+      }
+
+      function resetLoantakerForm() {
+        document.getElementById('ltName').value = '';
+        document.getElementById('ltAmount').value = '';
+        document.getElementById('ltDuration').value = '';
+        document.getElementById('editIndex').value = '-1';
+
+        document.getElementById('loantakerFormTitle').innerHTML = '<i class="fas fa-user-plus"></i> Add Active Loantaker';
+        document.getElementById('loantakerSubmitBtn').innerText = 'Add Loantaker';
+        document.getElementById('loantakerCancelBtn').classList.add('hidden');
+      }
+
+      function deleteLoantaker(id) {
+        if(!confirm("Kya aap waqai is loantaker ko delete karna chahte hain?")) return;
+        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
+        loantakers = loantakers.filter(function(item) { return item.id !== id; });
+        
+        localStorage.setItem('ftcf_loantakers', JSON.stringify(loantakers));
+        localStorage.setItem('ftcf_loans', loantakers.length);
+
+        loadMetrics();
+        renderMainLoantakers();
+        renderAdminLoantakers();
+      }
+
+      function renderAdminLoantakers() {
+        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
+        var container = document.getElementById('adminLoantakersList');
+
+        if(loantakers.length === 0) {
+            container.innerHTML = '<p style="font-size: 10px; color: #94a3b8; text-align: center; padding: 8px;">No active loantakers found.</p>';
+            return;
+        }
+
+        var html = '';
+        loantakers.forEach(function(item, index) {
+            html += '<div class="flex-row" style="background: #090d16; padding: 8px 10px; border-radius: 10px; margin-bottom: 6px; border: 1px solid #1e293b;">' +
+                        '<div>' +
+                            '<p style="font-size: 11px; font-weight: bold; color: #f8fafc;">' + item.name + '</p>' +
+                            '<p style="font-size: 9px; color: #34d399;">Rs. ' + Number(item.amount).toLocaleString() + '</p>' +
+                        '</div>' +
+                        '<div style="display: flex; gap: 6px;">' +
+                            '<button onclick="editLoantaker(' + index + ')" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: none; padding: 6px 8px; border-radius: 8px; font-size: 11px; cursor: pointer;"><i class="fas fa-edit"></i></button>' +
+                            '<button onclick="deleteLoantaker(' + item.id + ')" style="background: rgba(244, 63, 94, 0.15); color: #fb7185; border: none; padding: 6px 8px; border-radius: 8px; font-size: 11px; cursor: pointer;"><i class="fas fa-trash-alt"></i></button>' +
+                        '</div>' +
+                    '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      function renderMainLoantakers() {
+        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
+        var container = document.getElementById('mainLoantakersContainer');
+        var badge = document.getElementById('loantakersCountBadge');
+
+        badge.innerText = loantakers.length + " Active";
+
+        if(loantakers.length === 0) {
+            container.innerHTML = '<div class="glass-card" style="text-align: center; padding: 12px;"><p style="font-size: 11px; color: #94a3b8;">No active loantakers listed.</p></div>';
+            return;
+        }
+
+        var html = '';
+        loantakers.forEach(function(item) {
+            html += '<div class="glass-card flex-row" style="padding: 12px; margin-bottom: 8px;">' +
+                        '<div>' +
+                            '<p style="font-size: 12px; font-weight: bold;">' + item.name + '</p>' +
+                            '<p style="font-size: 9px; color: #94a3b8;">Duration: ' + item.duration + '</p>' +
+                        '</div>' +
+                        '<span style="font-weight: 900; font-size: 12px; color: #34d399;">Rs. ' + Number(item.amount).toLocaleString() + '</span>' +
+                    '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      window.onload = function() {
+        loadMetrics();
+        renderMainLoantakers();
+      };
+    </script>
+</body>
+</html>
