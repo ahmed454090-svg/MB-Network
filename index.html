@@ -108,6 +108,17 @@
         </div>
     </div>
 
+    <!-- Fund Allocation Section -->
+    <div class="glass-card" style="margin-bottom: 16px;">
+        <div class="flex-row" style="margin-bottom: 10px;">
+            <h3 style="font-size: 11px; font-weight: 900; color: #cbd5e1; text-transform: uppercase;"><i class="fas fa-chart-pie" style="color: #34d399;"></i> Fund Allocation</h3>
+            <span style="font-size: 9px; color: #94a3b8; font-weight: bold;">Distributed</span>
+        </div>
+        <div id="mainFundsContainer">
+            <!-- Dynamically populated -->
+        </div>
+    </div>
+
     <!-- Active Loantakers Directory -->
     <div style="margin-bottom: 16px;">
         <div class="flex-row" style="margin-bottom: 8px; padding: 0 4px;">
@@ -229,6 +240,15 @@
                 <button onclick="saveAdminStats()" class="btn btn-emerald" style="padding: 10px; font-size: 11px;">Save Metrics</button>
             </div>
 
+            <!-- Fund Allocation Manager -->
+            <div class="glass-card" style="margin-bottom: 14px;">
+                <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-wallet"></i> Fund Allocation Control</p>
+                <div id="adminFundsList">
+                    <!-- Dynamically populated fund editors -->
+                </div>
+                <button onclick="saveAdminFunds()" class="btn btn-emerald" style="padding: 10px; font-size: 11px; margin-top: 10px;">Save Funds Settings</button>
+            </div>
+
             <!-- Add / Edit Loantaker -->
             <div class="glass-card" style="margin-bottom: 14px;">
                 <p id="loantakerFormTitle" style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-user-plus"></i> Add Active Loantaker</p>
@@ -260,6 +280,18 @@
     <script>
       var ADMIN_PIN = "2026";
 
+      var defaultFunds = [
+        { id: 'death', name: 'Death Fund', percent: 30, active: true },
+        { id: 'medical', name: 'Medical Fund', percent: 25, active: true },
+        { id: 'marriage', name: 'Loan For Marriage', percent: 25, active: true },
+        { id: 'reserve', name: 'Reserved Fund', percent: 20, active: true }
+      ];
+
+      function getFunds() {
+        var stored = localStorage.getItem('ftcf_funds');
+        return stored ? JSON.parse(stored) : defaultFunds;
+      }
+
       function getWhatsAppNumber() {
         return localStorage.getItem('ftcf_wa_number') || '923433052346';
       }
@@ -277,6 +309,82 @@
         document.getElementById('admOutflow').value = outflow;
         document.getElementById('admLoans').value = loans;
         document.getElementById('admWaNumber').value = getWhatsAppNumber();
+      }
+function renderMainFunds() {
+        var funds = getFunds();
+        var container = document.getElementById('mainFundsContainer');
+        var inflowVal = Number(localStorage.getItem('ftcf_inflow') || '11500');
+
+        var html = '';
+        funds.forEach(function(fund) {
+            var amount = Math.round((inflowVal * fund.percent) / 100);
+            var statusBadge = fund.active 
+                ? '<span style="font-size: 9px; color: #34d399; background: #064e3b; padding: 2px 6px; border-radius: 6px;">Active</span>' 
+                : '<span style="font-size: 9px; color: #fb7185; background: #4c0519; padding: 2px 6px; border-radius: 6px;">Locked</span>';
+            
+            var opacityStyle = fund.active ? 'opacity: 1;' : 'opacity: 0.5;';
+
+            html += '<div class="flex-row" style="background: #090d16; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #1e293b; ' + opacityStyle + '">' +
+                        '<div>' +
+                            '<p style="font-size: 11px; font-weight: bold; color: #f8fafc;">' + fund.name + ' (' + fund.percent + '%)</p>' +
+                            '<p style="font-size: 10px; color: #34d399; font-weight: 800;">Rs. ' + amount.toLocaleString() + '</p>' +
+                        '</div>' +
+                        statusBadge +
+                    '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      function renderAdminFunds() {
+        var funds = getFunds();
+        var container = document.getElementById('adminFundsList');
+
+        var html = '';
+        funds.forEach(function(fund, index) {
+            html += '<div style="background: #090d16; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #1e293b;">' +
+                        '<div class="flex-row" style="margin-bottom: 6px;">' +
+                            '<span style="font-size: 11px; font-weight: bold; color: #f8fafc;">' + fund.name + '</span>' +
+                            '<label style="font-size: 10px; color: #94a3b8; display: flex; align-items: center; gap: 4px; cursor: pointer;">' +
+                                '<input type="checkbox" id="fundActive_' + index + '" ' + (fund.active ? 'checked' : '') + '> Unlock' +
+                            '</label>' +
+                        '</div>' +
+                        '<div style="display: flex; align-items: center; gap: 8px;">' +
+                            '<span style="font-size: 10px; color: #94a3b8;">Percentage (%):</span>' +
+                            '<input type="number" id="fundPercent_' + index + '" value="' + fund.percent + '" class="input-field" style="margin-bottom: 0; padding: 6px 10px;">' +
+                        '</div>' +
+                    '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      function saveAdminFunds() {
+        var funds = getFunds();
+        var totalPercent = 0;
+
+        for(var i = 0; i < funds.length; i++) {
+            var percentVal = Number(document.getElementById('fundPercent_' + i).value);
+            var activeVal = document.getElementById('fundActive_' + i).checked;
+
+            if(percentVal < 0) {
+                alert("Percentage negative nahi ho sakti!");
+                return;
+            }
+
+            funds[i].percent = percentVal;
+            funds[i].active = activeVal;
+            totalPercent += percentVal;
+        }
+
+        if(totalPercent !== 100) {
+            if(!confirm("Aapke funds ki total percentage " + totalPercent + "% ban rahi hai (100% honi chahiye). Kya aap phir bhi save karna chahte hain?")) {
+                return;
+            }
+        }
+
+        localStorage.setItem('ftcf_funds', JSON.stringify(funds));
+        renderMainFunds();
+        renderAdminFunds();
+        alert("Fund allocation settings updated successfully!");
       }
 
       function toggleMission() {
@@ -327,7 +435,6 @@
       function closePinModal() {
         document.getElementById('pinModal').classList.add('hidden');
       }
-
       function verifyPin() {
         var pin = document.getElementById('adminPinInput').value.trim();
         if(pin === ADMIN_PIN) {
@@ -335,6 +442,7 @@
             document.getElementById('adminDashboardModal').classList.remove('hidden');
             loadMetrics();
             renderAdminLoantakers();
+            renderAdminFunds();
         } else {
             document.getElementById('pinErrorMsg').style.display = 'block';
         }
@@ -369,6 +477,7 @@
         localStorage.setItem('ftcf_outflow', outflow);
         localStorage.setItem('ftcf_loans', loans);
         loadMetrics();
+        renderMainFunds();
         alert("Portal metrics updated successfully!");
       }
 
@@ -495,6 +604,7 @@
 
       window.onload = function() {
         loadMetrics();
+        renderMainFunds();
         renderMainLoantakers();
       };
     </script>
