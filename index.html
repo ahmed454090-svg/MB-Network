@@ -22,7 +22,7 @@
                     },
                     colors: {
                         brand: {
-                            500: '#fbbf24',
+                            500: '#f59e0b',
                             600: '#d97706',
                         }
                     }
@@ -35,30 +35,19 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
         
         body { 
-            background-color: #011c14; 
+            background-color: #030712; 
             font-family: 'Inter', sans-serif; 
             overflow: hidden; 
             margin: 0; 
             -webkit-tap-highlight-color: transparent;
         }
-
-        /* Islamic Geometric Background Pattern */
-        .bg-ramzan-pattern {
-            background-color: #011c14;
-            background-image: 
-                radial-gradient(rgba(251, 191, 36, 0.1) 1px, transparent 1px),
-                radial-gradient(rgba(16, 185, 129, 0.15) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-        }
         
-        /* Glassmorphism Styles with Emerald Tint */
+        /* Glassmorphism Styles */
         .glass-panel { 
-            background: rgba(2, 44, 34, 0.85); 
+            background: rgba(17, 24, 39, 0.75); 
             backdrop-filter: blur(20px); 
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(251, 191, 36, 0.2); 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
         }
 
         .tab-content { display: none; height: 100vh; width: 100vw; position: relative; }
@@ -73,30 +62,61 @@
         }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* Digital Islamic Astrolabe & Rotating Geometric Star Animation */
-        .fade-in-up {
-            animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        /* --- LIGHT BLUE TRANSPARENT SPLASH SCREEN & DOUBLE CIRCLE ANIMATION --- */
+        #splash {
+            background: rgba(14, 116, 144, 0.25); /* Light Blue Glass Accent */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
         }
 
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(20px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+        .splash-circle-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .fade-in-pulse {
-            animation: pulseGlow 2s ease-in-out infinite alternate;
+        /* Outer Blue Rotating Circle */
+        .outer-blue-circle {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #38bdf8;
+            border-right-color: #0284c7;
+            animation: spinClockwise 2.5s linear infinite;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
         }
 
-        @keyframes pulseGlow {
-            from { opacity: 0.7; transform: translateY(0); }
-            to { opacity: 1; transform: translateY(-2px); }
+        /* Inner White Rotating Circle */
+        .inner-white-circle {
+            position: absolute;
+            inset: 12px;
+            border-radius: 50%;
+            border: 2px dashed #ffffff;
+            animation: spinCounterClockwise 1.8s linear infinite;
+            opacity: 0.9;
         }
 
-        /* Navigation Bar Special Glow & Active State */
-        .nav-active-glow {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(16, 185, 129, 0.3));
-            border: 1px solid rgba(251, 191, 36, 0.4);
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.25);
+        @keyframes spinClockwise {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes spinCounterClockwise {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .pulse-subtext {
+            animation: pulseSubtext 1.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseSubtext {
+            from { opacity: 0.6; letter-spacing: 0.25em; }
+            to { opacity: 1; letter-spacing: 0.35em; }
         }
     </style>
 </head>
@@ -107,48 +127,38 @@
         <i data-lucide="wifi-off" class="w-3.5 h-3.5 inline mr-1 -mt-0.5"></i> Offline Mode: Pre-loaded cache available
     </div>
 
-    <!-- Digital Islamic Astrolabe / Rotating Geometric Star Splash Screen (Idea 3) -->
-    <div id="splash" class="fixed inset-0 z-[9999] bg-[#011c14] backdrop-blur-2xl flex flex-col justify-center items-center transition-opacity duration-700 bg-ramzan-pattern">
-        <!-- Ambient Emerald & Gold Aura -->
-        <div class="absolute w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
-        <div class="absolute w-48 h-48 bg-amber-500/25 rounded-full blur-2xl pointer-events-none"></div>
+    <!-- Light Blue Transparent Splash Screen with Blue/White Rotating Circles -->
+    <div id="splash" class="fixed inset-0 z-[9999] flex flex-col justify-center items-center transition-opacity duration-500">
+        <!-- Ambient Blue Light Glow -->
+        <div class="absolute w-64 h-64 bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="relative flex flex-col items-center">
-            <!-- 3D Rotating Rings & Astrolabe Star Graphic -->
-            <div class="relative w-36 h-36 flex items-center justify-center mb-4">
-                <div class="absolute inset-0 border-2 border-dashed border-amber-400/40 rounded-full animate-[spin_12s_linear_infinite]"></div>
-                <div class="absolute inset-2 border-2 border-emerald-400/50 rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
-                <div class="absolute inset-4 border border-amber-300/60 rounded-full flex items-center justify-center bg-emerald-950/40 backdrop-blur-sm animate-[spin_15s_linear_infinite]">
-                    <!-- Rub El Hizb / 8-pointed star SVG -->
-                    <svg class="w-16 h-16 text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.8)] animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        <path d="M12 5l2.12 4.31L18.5 10l-3.15 3.08.74 4.35L12 15.3l-4.09 2.13.74-4.35L5.5 10l4.38-.69L12 5z"/>
-                    </svg>
-                </div>
-            </div>
-
-            <!-- Text Content -->
-            <div class="text-center space-y-1 fade-in-up">
-                <h1 class="text-2xl font-black tracking-widest text-amber-300 drop-shadow-[0_0_10px_rgba(251,191,36,0.5)] font-sans">FTCF</h1>
-                <p class="text-xs font-mono tracking-[0.25em] text-amber-400/90 font-semibold uppercase">Professional Portal</p>
-            </div>
+        <div class="splash-circle-container mb-6">
+            <!-- Outer Blue Circle -->
+            <div class="outer-blue-circle"></div>
+            <!-- Inner White Circle -->
+            <div class="inner-white-circle"></div>
+            
+            <!-- Center Bold Text -->
+            <span class="text-3xl font-black tracking-wider text-white drop-shadow-[0_2px_8px_rgba(56,189,248,0.5)] z-10">
+                FTCF
+            </span>
         </div>
 
-        <div class="absolute bottom-12 text-center space-y-1 fade-in-pulse">
-            <p class="text-emerald-300 text-[10px] tracking-[0.2em] font-mono">Mughal Brothers Network</p>
-            <p class="text-amber-400 font-mono text-xs tracking-[0.3em] font-extrabold uppercase">Ramzan-ul-Mubarak</p>
-        </div>
+        <!-- Subtitle Under Circle -->
+        <p class="text-sky-300 font-mono text-xs font-bold uppercase tracking-[0.3em] pulse-subtext">
+            Secure Portal
+        </p>
     </div>
 
-    <!-- Header Controls -->
+    <!-- Header Controls (Bank & Notice Controls Restored) -->
     <header class="fixed top-4 right-4 z-[60] flex gap-2 pointer-events-auto">
-        <button id="installBtn" class="hidden w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-400 active:scale-95 transition-all">
+        <button id="installBtn" class="hidden w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
             <i data-lucide="download" class="w-4 h-4"></i>
         </button>
-        <button onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-400 active:scale-95 transition-all">
+        <button onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
             <i data-lucide="building-2" class="w-4 h-4"></i>
         </button>
-        <button onclick="toggleModal('notice-popup', true)" class="relative w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-400 active:scale-95 transition-all">
+        <button onclick="toggleModal('notice-popup', true)" class="relative w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
             <i data-lucide="bell" class="w-4 h-4"></i>
             <span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
         </button>
@@ -157,7 +167,7 @@
     <!-- Bank Modal -->
     <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
         <div class="glass-panel p-6 rounded-3xl w-full max-w-sm text-center shadow-2xl border border-white/10">
-            <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <i data-lucide="building-2" class="w-6 h-6"></i>
             </div>
             <h2 class="text-white text-base font-bold mb-4">HBL Konnect Details</h2>
@@ -180,65 +190,68 @@
         </div>
     </div>
 
-    <!-- Notice Modal -->
+    <!-- Notice Modal (Auto Open & Manual Close Enabled) -->
     <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
         <div class="glass-panel p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-white/10">
-            <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mb-4">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
                 <i data-lucide="megaphone" class="w-6 h-6"></i>
             </div>
             <h2 class="text-white text-base font-bold mb-2">System Notice</h2>
-            <p class="text-slate-300 text-xs leading-relaxed mb-6">
-                Meeting Announcement,Insha Allah 11 September Jummy ki Namaz k bad Meeting ho gi or Kuch Zarori points per bat Ho gi.
-            </p>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+    مصروفیت کی وجہ سے میٹنگ نہیں ہو سکی، انشاء اللہ آئندہ کا لائحہ عمل آپ کو واٹس ایپ گروپ کے ذریعے بتا دیا جائے گا۔           </p>
             <button onclick="closeNoticeManual()" class="w-full py-3 bg-amber-500 text-black hover:bg-amber-400 active:scale-95 rounded-xl font-semibold transition-all text-sm">Acknowledge</button>
         </div>
     </div>
 
-    <!-- Tab Contents -->
+    <!-- Tab Contents (Lazy Loaded + Shimmer Placeholder) -->
     <div id="ledger" class="tab-content" data-src="https://ftcf20-hub.github.io/FTCF.com/"></div>
     <div id="monthly" class="tab-content" data-src="https://ftcf20-hub.github.io/Monthly-Status/"></div>
     <div id="yearly" class="tab-content" data-src="https://ftcf20-hub.github.io/Yearly-Record/"></div>
     <div id="rules" class="tab-content" data-src="https://ftcf20-hub.github.io/Loneportal/"></div>
 
-    <!-- Ramzan Styled Bottom Navigation -->
-    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center shadow-2xl border border-amber-500/20 max-w-xs w-full justify-between">
-        <button data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-emerald-200/60 hover:text-amber-300 transition-all rounded-2xl active:scale-95">
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center shadow-2xl border border-white/10 max-w-xs w-full justify-between">
+        <button data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
             <i data-lucide="wallet" class="w-5 h-5"></i>
         </button>
-        <button data-target="monthly" onclick="switchTab('monthly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-emerald-200/60 hover:text-amber-300 transition-all rounded-2xl active:scale-95">
+        <button data-target="monthly" onclick="switchTab('monthly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
             <i data-lucide="calendar-check-2" class="w-5 h-5"></i>
         </button>
         
-        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-300 text-slate-950 w-11 h-11 flex items-center justify-center rounded-2xl font-bold shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-90 transition-all mx-1 border border-yellow-200">
-            <i data-lucide="moon" class="w-5 h-5 fill-slate-950"></i>
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-amber-500 text-black w-11 h-11 flex items-center justify-center rounded-2xl font-bold shadow-lg shadow-amber-500/20 hover:bg-amber-400 active:scale-90 transition-all mx-1">
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
         </a>
 
-        <button data-target="yearly" onclick="switchTab('yearly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-emerald-200/60 hover:text-amber-300 transition-all rounded-2xl active:scale-95">
+        <button data-target="yearly" onclick="switchTab('yearly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
             <i data-lucide="trending-up" class="w-5 h-5"></i>
         </button>
-        <button data-target="rules" onclick="switchTab('rules', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-emerald-200/60 hover:text-amber-300 transition-all rounded-2xl active:scale-95">
+        <button data-target="rules" onclick="switchTab('rules', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
             <i data-lucide="scale" class="w-5 h-5"></i>
         </button>
     </nav>
 
     <script>
-        const CURRENT_ANNOUNCEMENT_ID = "announcement_11_sep_v1";
+        // Unique ID for current announcement (Change this value when sending a NEW announcement)
+        const CURRENT_ANNOUNCEMENT_ID = "announcement_11_sep_v2";
 
+        // Initialize Lucide Icons
         lucide.createIcons();
 
+        // Tab Switcher
         function switchTab(id, btnElement) { 
             if (navigator.vibrate) navigator.vibrate([10, 30, 10]); 
             
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('text-amber-300', 'nav-active-glow')); 
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('text-amber-500', 'bg-white/5')); 
             
             const targetContainer = document.getElementById(id);
             targetContainer.classList.add('active');
 
+            // Lazy Load with Shimmer Loading Placeholder
             if (!targetContainer.querySelector('iframe')) {
                 const shimmerLoader = document.createElement('div');
                 shimmerLoader.className = 'absolute inset-0 shimmer flex items-center justify-center';
-                shimmerLoader.innerHTML = `<span class="text-xs font-mono text-slate-400">Loading...</span>`;
+                shimmerLoader.innerHTML = `<span class="text-xs font-mono text-slate-500">Loading...</span>`;
                 targetContainer.appendChild(shimmerLoader);
 
                 const iframe = document.createElement('iframe');
@@ -248,12 +261,13 @@
             }
             
             if (btnElement) {
-                btnElement.classList.add('text-amber-300', 'nav-active-glow');
+                btnElement.classList.add('text-amber-500', 'bg-white/5');
             }
             
             localStorage.setItem('activeTab', id); 
         }
 
+        // Modal Handler
         function toggleModal(modalId, show) {
             const modal = document.getElementById(modalId);
             if (show) {
@@ -263,11 +277,13 @@
             }
         }
 
+        // Manual Close Function for Auto Notice
         function closeNoticeManual() {
             toggleModal('notice-popup', false);
             localStorage.setItem('seen_announcement', CURRENT_ANNOUNCEMENT_ID);
         }
 
+        // Check & Auto Open Notice Modal
         function checkAutoNotice() {
             const lastSeen = localStorage.getItem('seen_announcement');
             if (lastSeen !== CURRENT_ANNOUNCEMENT_ID) {
@@ -275,15 +291,18 @@
             }
         }
 
+        // Account Copy Helper
         function copyAccount(num) {
             navigator.clipboard.writeText(num);
             if (navigator.vibrate) navigator.vibrate(20);
             alert('Account number copied!');
         }
 
+        // Network Status Detection
         window.addEventListener('online', () => document.getElementById('offline-banner').classList.add('hidden'));
         window.addEventListener('offline', () => document.getElementById('offline-banner').classList.remove('hidden'));
 
+        // Keyboard Navigation (Desktop)
         window.addEventListener('keydown', (e) => {
             if (e.altKey) {
                 if (e.key === '1') switchTab('ledger', document.querySelector('[data-target="ledger"]'));
@@ -293,25 +312,29 @@
             }
         });
 
+        // App Initialization (Splash timer set to exactly 3.5 Seconds / 3500ms)
         window.addEventListener('load', () => {
             const splash = document.getElementById('splash');
             setTimeout(() => {
                 splash.style.opacity = '0';
                 setTimeout(() => { 
                     splash.style.display = 'none'; 
+                    // Auto open announcement modal after splash screen disappears
                     checkAutoNotice();
                 }, 500);
-            }, 3000);
+            }, 3500); // 3.5 Seconds Timing
 
             const lastTab = localStorage.getItem('activeTab') || 'ledger';
             const targetBtn = document.querySelector(`button[data-target="${lastTab}"]`);
             switchTab(lastTab, targetBtn);
 
+            // Register Service Worker for PWA
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('/sw.js').catch(() => {});
             }
         });
 
+        // PWA Installation Hook
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => { 
             e.preventDefault(); 
