@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    
     <title>FTCF | Professional Portal</title>
     
-    <!-- Tailwind CSS & Lucide Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -46,14 +43,6 @@
         .tab-content.active { display: block; }
         iframe { width: 100%; height: 100%; border: none; }
 
-        .shimmer {
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-
-        /* CIRCLE ANIMATION */
         .splash-circle-container {
             position: relative;
             width: 120px;
@@ -128,20 +117,20 @@
             <div class="pin-dot" id="dot-3"></div>
         </div>
 
-        <!-- Numeric Keypad -->
+        <!-- Keypad -->
         <div class="grid grid-cols-3 gap-3 max-w-xs w-full mb-4 relative z-10">
-            <button type="button" onclick="pressPin('1')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">1</button>
-            <button type="button" onclick="pressPin('2')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">2</button>
-            <button type="button" onclick="pressPin('3')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">3</button>
-            <button type="button" onclick="pressPin('4')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">4</button>
-            <button type="button" onclick="pressPin('5')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">5</button>
-            <button type="button" onclick="pressPin('6')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">6</button>
-            <button type="button" onclick="pressPin('7')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">7</button>
-            <button type="button" onclick="pressPin('8')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">8</button>
-            <button type="button" onclick="pressPin('9')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">9</button>
-            <button type="button" onclick="forceResetPIN()" class="h-12 glass-panel rounded-2xl text-xs font-semibold text-amber-400 active:scale-90 transition-all">Reset</button>
-            <button type="button" onclick="pressPin('0')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 transition-all">0</button>
-            <button type="button" onclick="deletePin()" class="h-12 glass-panel rounded-2xl text-white active:scale-90 transition-all flex items-center justify-center">
+            <button type="button" onclick="pressPin('1')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">1</button>
+            <button type="button" onclick="pressPin('2')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">2</button>
+            <button type="button" onclick="pressPin('3')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">3</button>
+            <button type="button" onclick="pressPin('4')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">4</button>
+            <button type="button" onclick="pressPin('5')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">5</button>
+            <button type="button" onclick="pressPin('6')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">6</button>
+            <button type="button" onclick="pressPin('7')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">7</button>
+            <button type="button" onclick="pressPin('8')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">8</button>
+            <button type="button" onclick="pressPin('9')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">9</button>
+            <button type="button" onclick="resetPinStorage()" class="h-12 glass-panel rounded-2xl text-xs font-semibold text-amber-400 active:scale-90">Reset</button>
+            <button type="button" onclick="pressPin('0')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">0</button>
+            <button type="button" onclick="deletePin()" class="h-12 glass-panel rounded-2xl text-white active:scale-90 flex items-center justify-center">
                 <i data-lucide="delete" class="w-5 h-5"></i>
             </button>
         </div>
@@ -150,22 +139,22 @@
     </div>
 
     <!-- Header Controls -->
-    <header class="fixed top-4 right-4 z-[60] flex gap-2 pointer-events-auto">
-        <button type="button" onclick="forceResetPIN()" title="Reset PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+    <header class="fixed top-4 right-4 z-[60] flex gap-2">
+        <button type="button" onclick="resetPinStorage()" title="Reset PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
             <i data-lucide="key-round" class="w-4 h-4"></i>
         </button>
-        <button type="button" onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+        <button type="button" onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
             <i data-lucide="building-2" class="w-4 h-4"></i>
         </button>
-        <button type="button" onclick="toggleModal('notice-popup', true)" class="relative w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+        <button type="button" onclick="toggleModal('notice-popup', true)" class="relative w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
             <i data-lucide="bell" class="w-4 h-4"></i>
             <span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
         </button>
     </header>
 
     <!-- Bank Modal -->
-    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
-        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm text-center shadow-2xl border border-white/10">
+    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm text-center border border-white/10">
             <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <i data-lucide="building-2" class="w-6 h-6"></i>
             </div>
@@ -180,18 +169,15 @@
                         <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account / Mobile</span>
                         <span class="text-sm text-amber-400 font-mono font-bold">0342-2735966</span>
                     </div>
-                    <button type="button" onclick="copyAccount('03422735966')" class="p-2 text-slate-400 hover:text-amber-400 active:scale-90 transition-all">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                    </button>
                 </div>
             </div>
-            <button type="button" onclick="toggleModal('bank-popup', false)" class="w-full py-3 bg-white/10 hover:bg-white/20 active:scale-95 rounded-xl text-white font-medium transition-all text-sm">Close</button>
+            <button type="button" onclick="toggleModal('bank-popup', false)" class="w-full py-3 bg-white/10 rounded-xl text-white font-medium text-sm">Close</button>
         </div>
     </div>
 
     <!-- Notice Modal -->
-    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
-        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-white/10">
+    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm border border-white/10">
             <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
                 <i data-lucide="megaphone" class="w-6 h-6"></i>
             </div>
@@ -199,7 +185,7 @@
             <p class="text-slate-400 text-xs leading-relaxed mb-6">
                 مصروفیت کی وجہ سے میٹنگ نہیں ہو سکی، انشاء اللہ آئندہ کا لائحہ عمل آپ کو واٹس ایپ گروپ کے ذریعے بتا دیا جائے گا۔
             </p>
-            <button type="button" onclick="toggleModal('notice-popup', false)" class="w-full py-3 bg-amber-500 text-black hover:bg-amber-400 active:scale-95 rounded-xl font-semibold transition-all text-sm">Acknowledge</button>
+            <button type="button" onclick="toggleModal('notice-popup', false)" class="w-full py-3 bg-amber-500 text-black rounded-xl font-semibold text-sm">Acknowledge</button>
         </div>
     </div>
 
@@ -210,63 +196,56 @@
     <div id="rules" class="tab-content" data-src="https://ftcf20-hub.github.io/Loneportal/"></div>
 
     <!-- Bottom Navigation -->
-    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center shadow-2xl border border-white/10 max-w-xs w-full justify-between">
-        <button type="button" data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center border border-white/10 max-w-xs w-full justify-between">
+        <button type="button" data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
             <i data-lucide="wallet" class="w-5 h-5"></i>
         </button>
-        <button type="button" data-target="monthly" onclick="switchTab('monthly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+        <button type="button" data-target="monthly" onclick="switchTab('monthly', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
             <i data-lucide="calendar-check-2" class="w-5 h-5"></i>
         </button>
-        
-        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-amber-500 text-black w-11 h-11 flex items-center justify-center rounded-2xl font-bold shadow-lg shadow-amber-500/20 hover:bg-amber-400 active:scale-90 transition-all mx-1">
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-amber-500 text-black w-11 h-11 flex items-center justify-center rounded-2xl font-bold mx-1">
             <i data-lucide="message-circle" class="w-5 h-5"></i>
         </a>
-
-        <button type="button" data-target="yearly" onclick="switchTab('yearly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+        <button type="button" data-target="yearly" onclick="switchTab('yearly', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
             <i data-lucide="trending-up" class="w-5 h-5"></i>
         </button>
-        <button type="button" data-target="rules" onclick="switchTab('rules', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+        <button type="button" data-target="rules" onclick="switchTab('rules', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
             <i data-lucide="scale" class="w-5 h-5"></i>
         </button>
     </nav>
 
     <script>
+        const PIN_KEY = "ftcf_pin_v2";
         let enteredPin = "";
-        let tempFirstPin = "";
+        let confirmPin = "";
         let isSettingPin = false;
 
-        function checkPasscodeFlow() {
-            let savedPin = null;
-            try {
-                savedPin = localStorage.getItem('user_portal_pin');
-            } catch (e) {
-                console.warn("Storage access failed:", e);
-            }
-
+        function initPasscode() {
+            const savedPin = localStorage.getItem(PIN_KEY);
             const title = document.getElementById('lock-title');
             const subtitle = document.getElementById('lock-subtitle');
 
             enteredPin = "";
-            tempFirstPin = "";
-            updatePinDots();
+            confirmPin = "";
+            updateDots();
 
-            if (!savedPin || savedPin.trim() === "") {
+            if (!savedPin) {
                 isSettingPin = true;
                 title.innerText = "Set Security PIN";
-                subtitle.innerText = "Choose a 4-digit PIN for portal protection";
+                subtitle.innerText = "Set a 4-digit PIN for first-time protection";
             } else {
                 isSettingPin = false;
                 title.innerText = "Enter Security PIN";
-                subtitle.innerText = "Enter your 4-digit passcode to proceed";
+                subtitle.innerText = "Enter 4-digit PIN to open dashboard";
             }
         }
 
         function pressPin(num) {
             if (enteredPin.length < 4) {
                 enteredPin += num;
-                updatePinDots();
+                updateDots();
                 if (enteredPin.length === 4) {
-                    setTimeout(validatePin, 100);
+                    setTimeout(handlePinComplete, 100);
                 }
             }
         }
@@ -274,11 +253,11 @@
         function deletePin() {
             if (enteredPin.length > 0) {
                 enteredPin = enteredPin.slice(0, -1);
-                updatePinDots();
+                updateDots();
             }
         }
 
-        function updatePinDots() {
+        function updateDots() {
             for (let i = 0; i < 4; i++) {
                 const dot = document.getElementById(`dot-${i}`);
                 if (dot) {
@@ -288,111 +267,81 @@
             }
         }
 
-        function unlockPortal() {
-            const lockModal = document.getElementById('lock-screen');
-            if (lockModal) lockModal.style.display = 'none';
-            enteredPin = "";
-            
-            let lastTab = 'ledger';
-            try {
-                lastTab = localStorage.getItem('activeTab') || 'ledger';
-            } catch (e) {}
-
-            const targetBtn = document.querySelector(`button[data-target="${lastTab}"]`);
-            switchTab(lastTab, targetBtn);
-        }
-
-        function validatePin() {
-            let savedPin = null;
-            try {
-                savedPin = localStorage.getItem('user_portal_pin');
-            } catch (e) {}
-
-            const errorElement = document.getElementById('lock-error');
+        function handlePinComplete() {
+            const savedPin = localStorage.getItem(PIN_KEY);
             const title = document.getElementById('lock-title');
             const subtitle = document.getElementById('lock-subtitle');
+            const errorElement = document.getElementById('lock-error');
 
             if (isSettingPin) {
-                if (!tempFirstPin) {
-                    tempFirstPin = enteredPin;
+                if (!confirmPin) {
+                    confirmPin = enteredPin;
                     enteredPin = "";
-                    updatePinDots();
+                    updateDots();
                     title.innerText = "Confirm Security PIN";
                     subtitle.innerText = "Re-enter your 4-digit PIN to confirm";
                 } else {
-                    if (enteredPin === tempFirstPin) {
-                        try {
-                            localStorage.setItem('user_portal_pin', enteredPin);
-                        } catch (e) {}
-                        tempFirstPin = "";
-                        isSettingPin = false;
-                        unlockPortal();
+                    if (enteredPin === confirmPin) {
+                        localStorage.setItem(PIN_KEY, enteredPin);
+                        openDashboard();
                     } else {
-                        errorElement.innerText = "PIN match nahi hua. Phir se try karein.";
-                        tempFirstPin = "";
+                        errorElement.innerText = "PIN match nahi hua. Reset karke dubara karein.";
+                        confirmPin = "";
                         enteredPin = "";
-                        updatePinDots();
+                        updateDots();
                         title.innerText = "Set Security PIN";
-                        subtitle.innerText = "Choose a 4-digit PIN for portal protection";
-                        setTimeout(() => { if (errorElement) errorElement.innerText = ""; }, 2000);
+                        subtitle.innerText = "Set a 4-digit PIN for first-time protection";
+                        setTimeout(() => { errorElement.innerText = ""; }, 2500);
                     }
                 }
             } else {
                 if (enteredPin === savedPin) {
-                    unlockPortal();
+                    openDashboard();
                 } else {
-                    errorElement.innerText = "Galat PIN! Dubara enter karein.";
+                    errorElement.innerText = "Galat PIN. Phir se enter karein.";
                     enteredPin = "";
-                    updatePinDots();
-                    setTimeout(() => { if (errorElement) errorElement.innerText = ""; }, 2000);
+                    updateDots();
+                    setTimeout(() => { errorElement.innerText = ""; }, 2000);
                 }
             }
         }
 
-        function forceResetPIN() {
-            try {
-                localStorage.removeItem('user_portal_pin');
-            } catch (e) {}
-            checkPasscodeFlow();
+        function openDashboard() {
+            document.getElementById('lock-screen').style.display = 'none';
+            switchTab('ledger', document.querySelector('[data-target="ledger"]'));
+        }
+
+        function resetPinStorage() {
+            localStorage.removeItem(PIN_KEY);
+            initPasscode();
         }
 
         function switchTab(id, btnElement) { 
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('text-amber-500', 'bg-white/5')); 
             
-            const targetContainer = document.getElementById(id);
-            if (!targetContainer) return;
-
-            targetContainer.classList.add('active');
-
-            if (!targetContainer.querySelector('iframe')) {
-                const shimmerLoader = document.createElement('div');
-                shimmerLoader.className = 'absolute inset-0 shimmer flex items-center justify-center';
-                shimmerLoader.innerHTML = `<span class="text-xs font-mono text-slate-500">Loading...</span>`;
-                targetContainer.appendChild(shimmerLoader);
-
-                const iframe = document.createElement('iframe');
-                iframe.src = targetContainer.getAttribute('data-src');
-                iframe.onload = () => shimmerLoader.remove();
-                targetContainer.appendChild(iframe);
+            const target = document.getElementById(id);
+            if (target) {
+                target.classList.add('active');
+                if (!target.querySelector('iframe')) {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = target.getAttribute('data-src');
+                    target.appendChild(iframe);
+                }
             }
-            
-            if (btnElement) {
-                btnElement.classList.add('text-amber-500', 'bg-white/5');
-            }
-            
-            try {
-                localStorage.setItem('activeTab', id); 
-            } catch (e) {}
+            if (btnElement) btnElement.classList.add('text-amber-500', 'bg-white/5');
         }
 
-        function toggleModal(modalId, show) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                if (show) modal.classList.remove('hidden');
-                else modal.classList.add('hidden');
-            }
+        function toggleModal(id, show) {
+            const m = document.getElementById(id);
+            if (m) m.classList.toggle('hidden', !show);
         }
 
-        function copyAccount(num) {
-       
+        window.onload = function() {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            initPasscode();
+        };
+    </script>
+</body>
+</html>
+
