@@ -1,664 +1,355 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FTCF | Modern Financial Portal</title>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FTCF | Professional Portal</title>
     
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { 
-        font-family: 'Plus Jakarta Sans', sans-serif; 
-        background-color: #090d16; 
-        color: #f8fafc; 
-        min-height: 100vh; 
-        padding: 16px;
-        max-width: 480px;
-        margin: 0 auto;
-    }
-    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; direction: rtl; }
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     
-    .bank-gradient { 
-        background: linear-gradient(135deg, rgba(6, 78, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
-        border: 1px solid rgba(16, 185, 129, 0.35);
-        box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
-    }
-    .glass-card {
-        background: rgba(15, 23, 42, 0.95); 
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 16px;
-        margin-bottom: 12px;
-    }
-    .btn {
-        width: 100%;
-        padding: 14px;
-        border-radius: 14px;
-        font-weight: 800;
-        font-size: 12px;
-        text-transform: uppercase;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: 0.2s;
-    }
-    .btn-emerald { background-color: #10b981; color: #022c22; }
-    .btn-emerald:active { transform: scale(0.98); }
-    .btn-slate { background-color: #1e293b; color: #f8fafc; border: 1px solid #334155; }
-    .input-field {
-        width: 100%;
-        padding: 12px 14px;
-        font-size: 13px;
-        background-color: #090d16;
-        border: 1px solid #334155;
-        color: #f8fafc;
-        border-radius: 14px;
-        outline: none;
-        margin-bottom: 10px;
-    }
-    .input-field:focus { border-color: #10b981; }
-    .modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.9);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 16px;
-        z-index: 100;
-    }
-    .hidden { display: none !important; }
-    .flex-row { display: flex; justify-content: space-between; align-items: center; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  </style>
-</head>
-<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body { 
+            background-color: #030712; 
+            font-family: 'Inter', sans-serif; 
+            overflow: hidden; 
+            margin: 0; 
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .glass-panel { 
+            background: rgba(17, 24, 39, 0.75); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
 
-    <!-- Header -->
-    <header class="flex-row" style="padding-bottom: 16px; border-bottom: 1px solid #1e293b; margin-bottom: 16px;">
-        <div>
-          <span style="font-size: 10px; font-weight: 900; color: #34d399; letter-spacing: 1px;">2026-2027 FISCAL PORTAL</span>
-          <h1 style="font-size: 18px; font-weight: 900; text-transform: uppercase;">Rules & Loans</h1>
+        .tab-content { display: none; height: 100vh; width: 100vw; position: relative; }
+        .tab-content.active { display: block; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        .splash-circle-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .outer-blue-circle {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #38bdf8;
+            border-right-color: #0284c7;
+            animation: spinClockwise 2.5s linear infinite;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .inner-white-circle {
+            position: absolute;
+            inset: 10px;
+            border-radius: 50%;
+            border: 2px dashed #ffffff;
+            animation: spinCounterClockwise 1.8s linear infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes spinClockwise { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spinCounterClockwise { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+
+        .pulse-subtext { animation: pulseSubtext 1.8s ease-in-out infinite alternate; }
+        @keyframes pulseSubtext { from { opacity: 0.6; letter-spacing: 0.2em; } to { opacity: 1; letter-spacing: 0.3em; } }
+
+        .pin-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(245, 158, 11, 0.5);
+            transition: all 0.2s ease;
+        }
+        .pin-dot.filled {
+            background-color: #f59e0b;
+            border-color: #f59e0b;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+        }
+    </style>
+</head>
+<body class="text-slate-100 antialiased selection:bg-amber-500 selection:text-black">
+
+    <!-- PASSCODE LOCK SCREEN MODAL -->
+    <div id="lock-screen" class="fixed inset-0 z-[9000] bg-black/95 backdrop-blur-2xl flex flex-col justify-center items-center p-6 overflow-y-auto">
+        <div class="absolute w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="splash-circle-container mb-3 relative z-10">
+            <div class="outer-blue-circle"></div>
+            <div class="inner-white-circle"></div>
+            <span class="text-2xl font-black tracking-wider text-white drop-shadow-[0_2px_8px_rgba(56,189,248,0.5)] z-10">FTCF</span>
         </div>
-        <button onclick="openPinModal()" class="btn-slate" style="width: 42px; height: 42px; border-radius: 14px; font-weight: 900; color: #34d399;">FTCF</button>
+
+        <p class="text-sky-300 font-mono text-[10px] font-bold uppercase tracking-[0.25em] pulse-subtext mb-6 relative z-10">Secure Portal</p>
+
+        <h2 id="lock-title" class="text-white text-base font-bold mb-1 relative z-10">Set Security PIN</h2>
+        <p id="lock-subtitle" class="text-slate-400 text-xs mb-5 font-mono relative z-10">Choose a 4-digit PIN for portal protection</p>
+
+        <!-- PIN Dots Indicator -->
+        <div class="flex gap-4 mb-6 relative z-10">
+            <div class="pin-dot" id="dot-0"></div>
+            <div class="pin-dot" id="dot-1"></div>
+            <div class="pin-dot" id="dot-2"></div>
+            <div class="pin-dot" id="dot-3"></div>
+        </div>
+
+        <!-- Keypad Without Reset Button -->
+        <div class="grid grid-cols-3 gap-3 max-w-xs w-full mb-4 relative z-10">
+            <button type="button" onclick="pressPin('1')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">1</button>
+            <button type="button" onclick="pressPin('2')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">2</button>
+            <button type="button" onclick="pressPin('3')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">3</button>
+            <button type="button" onclick="pressPin('4')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">4</button>
+            <button type="button" onclick="pressPin('5')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">5</button>
+            <button type="button" onclick="pressPin('6')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">6</button>
+            <button type="button" onclick="pressPin('7')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">7</button>
+            <button type="button" onclick="pressPin('8')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">8</button>
+            <button type="button" onclick="pressPin('9')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">9</button>
+            <div class="h-12"></div> <!-- Blank Space for symmetry -->
+            <button type="button" onclick="pressPin('0')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">0</button>
+            <button type="button" onclick="deletePin()" class="h-12 glass-panel rounded-2xl text-white active:scale-90 flex items-center justify-center">
+                <i data-lucide="delete" class="w-5 h-5"></i>
+            </button>
+        </div>
+        
+        <p id="lock-error" class="text-red-400 text-xs font-semibold h-4 text-center relative z-10"></p>
+    </div>
+
+    <!-- Header Controls -->
+    <header class="fixed top-4 right-4 z-[60] flex gap-2">
+        <button type="button" onclick="resetPinStorageSecure()" title="Reset PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
+            <i data-lucide="key-round" class="w-4 h-4"></i>
+        </button>
+        <button type="button" onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
+            <i data-lucide="building-2" class="w-4 h-4"></i>
+        </button>
+        <button type="button" onclick="toggleModal('notice-popup', true)" class="relative w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
+        </button>
     </header>
 
-    <!-- Stats -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
-        <div class="bank-gradient" style="grid-column: span 2; padding: 20px; border-radius: 20px;">
-            <p style="font-size: 10px; font-weight: 900; color: #34d399; text-transform: uppercase; margin-bottom: 4px;">Active Loans</p>
-            <h2 id="activeLoansDisplay" style="font-size: 36px; font-weight: 900;">0</h2>
-        </div>
-
-        <div class="glass-card" style="margin: 0;">
-            <p style="font-size: 9px; color: #94a3b8; font-weight: 900; text-transform: uppercase;">Inflow</p>
-            <p id="inflowDisplay" style="font-size: 15px; font-weight: 900; color: #34d399; margin-top: 4px;">Rs. 11,500</p>
-        </div>
-
-        <div class="glass-card" style="margin: 0;">
-            <p style="font-size: 9px; color: #94a3b8; font-weight: 900; text-transform: uppercase;">Outflow</p>
-            <p id="outflowDisplay" style="font-size: 15px; font-weight: 900; color: #fb7185; margin-top: 4px;">Rs. 0</p>
-        </div>
-    </div>
-
-    <!-- Fund Allocation Section -->
-    <div class="glass-card" style="margin-bottom: 16px;">
-        <div class="flex-row" style="margin-bottom: 10px;">
-            <h3 style="font-size: 11px; font-weight: 900; color: #cbd5e1; text-transform: uppercase;"><i class="fas fa-chart-pie" style="color: #34d399;"></i> Fund Allocation</h3>
-            <span style="font-size: 9px; color: #94a3b8; font-weight: bold;">Distributed</span>
-        </div>
-        <div id="mainFundsContainer">
-            <!-- Dynamically populated -->
-        </div>
-    </div>
-
-    <!-- Active Loantakers Directory -->
-    <div style="margin-bottom: 16px;">
-        <div class="flex-row" style="margin-bottom: 8px; padding: 0 4px;">
-          <h3 style="font-size: 11px; font-weight: 900; color: #cbd5e1; text-transform: uppercase;">Active Loantakers Directory</h3>
-          <span id="loantakersCountBadge" style="font-size: 9px; font-weight: 900; color: #34d399; background: #064e3b; padding: 2px 8px; border-radius: 20px;">0 Active</span>
-        </div>
-        <div id="mainLoantakersContainer">
-            <!-- Dynamically populated -->
-        </div>
-    </div>
-
-  <!-- Mission & Vision -->
-    <div style="margin-bottom: 16px;">
-        <button onclick="toggleMission()" class="btn btn-slate">
-            <i class="fas fa-book-open" style="color: #34d399;"></i>
-            <span>Read Full Mission & Vision</span>
-        </button>
-        
-        <div id="missionBox" class="glass-card urdu-text hidden" style="margin-top: 10px; max-height: 200px; overflow-y: auto; font-size: 12px; color: #e2e8f0;">
-            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ یہ ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن hai.</p>
-        </div>
-    </div>
-
-    <!-- Application Form -->
-    <div class="glass-card">
-        <h3 style="font-size: 13px; font-weight: 900; text-align: center; text-transform: uppercase; margin-bottom: 4px;">Request Financial Assistance</h3>
-        <p style="font-size: 9px; color: #94a3b8; text-align: center; text-transform: uppercase; margin-bottom: 14px; font-weight: 700;">Submit details directly to WhatsApp</p>
-        
-        <input type="text" id="uName" placeholder="Full Name" class="input-field">
-        <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="input-field">
-        <textarea id="uReason" placeholder="Reason for Request" class="input-field" rows="3" style="resize: none;"></textarea>
-        
-        <button onclick="handleApplication()" class="btn btn-emerald">
-            <i class="fab fa-whatsapp" style="font-size: 16px;"></i> Submit & Generate Receipt
-        </button>
-    </div>
-
-    <!-- DIGITAL RECEIPT MODAL -->
-    <div id="receiptModal" class="modal hidden">
-        <div style="width: 100%; max-width: 360px;">
-            <div class="glass-card" style="border: 1px solid #334155; margin-bottom: 10px; background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(6, 78, 59, 0.4) 100%);">
-                <!-- Receipt Header -->
-                <div class="flex-row" style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
-                    <div>
-                        <span style="color: #34d399; font-weight: 900; font-size: 11px; letter-spacing: 0.5px;"><i class="fas fa-shield-alt"></i> FTCF OFFICIAL</span>
-                        <h4 style="font-size: 16px; font-weight: 900; margin-top: 2px;">Financial Voucher</h4>
-                    </div>
-                    <span id="rcptStatusBadge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 9px; font-weight: 900; padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.3);">Verified Draft</span>
-                </div>
-
-                <!-- Receipt Body Details -->
-                <div style="font-size: 12px; display: flex; flex-direction: column; gap: 8px;">
-                    <div class="flex-row"><span style="color: #94a3b8; font-size: 11px;">Reference ID:</span> <span id="rcptRef" style="font-weight: 900; color: #38bdf8; font-family: monospace;">#FTCF-0000</span></div>
-                    <div class="flex-row"><span style="color: #94a3b8; font-size: 11px;">Date & Time:</span> <span id="rcptDateTime" style="font-weight: bold; font-size: 11px; color: #cbd5e1;">---</span></div>
-                    <div class="flex-row"><span style="color: #94a3b8; font-size: 11px;">Applicant Name:</span> <span id="rcptName" style="font-weight: bold; color: #f8fafc;">---</span></div>
-                    <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 8px; border-radius: 8px; border: 1px dashed rgba(16, 185, 129, 0.3);">
-                        <span style="color: #34d399; font-weight: 800; font-size: 11px;">Requested Amount:</span> 
-                        <span id="rcptAmount" style="font-weight: 900; color: #34d399; font-size: 14px;">Rs. 0</span>
-                    </div>
-                    <div style="margin-top: 2px;">
-                        <span style="color: #94a3b8; font-size: 10px; text-transform: uppercase; font-weight: 800;">Purpose / Reason:</span> 
-                        <p id="rcptReason" style="font-size: 11px; font-style: italic; color: #e2e8f0; margin-top: 3px; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; border-left: 3px solid #10b981;">---</p>
-                    </div>
-                </div>
-
-                <!-- Receipt Footer Stamp -->
-                <div style="margin-top: 12px; padding-top: 8px; border-top: 1px dashed rgba(255,255,255,0.1); text-align: center;">
-                    <span style="font-size: 9px; color: #64748b; font-weight: 700; letter-spacing: 0.5px;">FAMILY TRUST & CARE FOUNDATION PORTAL</span>
-                </div>
+    <!-- Bank Modal -->
+    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm text-center border border-white/10">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="building-2" class="w-6 h-6"></i>
             </div>
-
-            <!-- Action Buttons -->
-            <a id="modalWaBtn" href="#" target="_blank" class="btn btn-emerald" style="text-decoration: none; margin-bottom: 8px;">
-                <i class="fab fa-whatsapp" style="font-size: 15px;"></i> Send on WhatsApp Now
-            </a>
-            <button onclick="downloadReceipt()" class="btn btn-slate" style="margin-bottom: 8px; background: #0369a1; color: #fff; border: none;">
-                <i class="fas fa-download"></i> Download / Save Receipt
-            </button>
-            <button onclick="closeReceiptModal()" class="btn btn-slate">Close</button>
-        </div>
-    </div>
-
-    <!-- ADMIN PIN MODAL -->
-    <div id="pinModal" class="modal hidden">
-        <div class="glass-card" style="width: 100%; max-width: 300px; text-align: center; margin: 0;">
-            <div style="width: 45px; height: 45px; background: rgba(16, 185, 129, 0.1); color: #34d399; border-radius: 14px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;">
-                <i class="fas fa-user-shield"></i>
-            </div>
-            <h3 style="font-size: 14px; font-weight: 900; text-transform: uppercase;">Admin Verification</h3>
-            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">Enter 4-Digit PIN (2026)</p>
-            
-            <input type="password" id="adminPinInput" maxlength="4" placeholder="••••" class="input-field" style="text-align: center; letter-spacing: 6px; font-size: 20px;">
-            <p id="pinErrorMsg" style="font-size: 10px; color: #fb7185; font-weight: bold; margin-bottom: 10px; display: none;">Incorrect PIN!</p>
-
-            <div class="grid-2">
-                <button onclick="verifyPin()" class="btn btn-emerald" style="padding: 10px;">Verify</button>
-                <button onclick="closePinModal()" class="btn btn-slate" style="padding: 10px;">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ADMIN DASHBOARD MODAL -->
-    <div id="adminDashboardModal" class="modal hidden" style="align-items: flex-start; overflow-y: auto; padding: 20px 10px;">
-        <div style="width: 100%; max-width: 400px; margin: auto; background: #0f172a; border: 1px solid #334155; border-radius: 24px; padding: 20px;">
-            <div class="flex-row" style="margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">
+            <h2 class="text-white text-base font-bold mb-4">HBL Konnect Details</h2>
+            <div class="bg-black/40 p-4 rounded-2xl text-left border border-white/5 space-y-3 mb-6">
                 <div>
-                    <span style="font-size: 9px; font-weight: 900; color: #10b981; letter-spacing: 1px;">CONTROL CENTER</span>
-                    <h2 style="font-size: 16px; font-weight: 900;">Admin Dashboard</h2>
+                    <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account Title</span>
+                    <span class="text-sm text-white font-semibold">Afzaal Ahmed</span>
                 </div>
-                <button onclick="closeAdminDashboard()" class="btn-slate" style="width: 32px; height: 32px; border-radius: 10px;"><i class="fas fa-times"></i></button>
-            </div>
-
-            <!-- WhatsApp Number Config -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 8px; text-transform: uppercase;"><i class="fab fa-whatsapp"></i> Configure WhatsApp Number</p>
-                <input type="text" id="admWaNumber" class="input-field" placeholder="923433052346" style="margin-bottom: 8px;">
-                <button onclick="saveWhatsAppNumber()" class="btn btn-slate" style="padding: 8px; font-size: 10px; background: #0369a1; color: #fff;">Save WhatsApp Number</button>
-            </div>
-
-            <!-- Metrics Manager -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p style="font-size: 11px; font-weight: 900; color: #34d399; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-sliders-h"></i> Update Portal Metrics</p>
-                <div class="grid-2">
+                <div class="pt-2 border-t border-white/5 flex justify-between items-center">
                     <div>
-                        <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Inflow (PKR)</label>
-                        <input type="number" id="admInflow" class="input-field" style="margin-bottom: 8px;">
-                    </div>
-                    <div>
-                        <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Outflow (PKR)</label>
-                        <input type="number" id="admOutflow" class="input-field" style="margin-bottom: 8px;">
+                        <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account / Mobile</span>
+                        <span class="text-sm text-amber-400 font-mono font-bold">0342-2735966</span>
                     </div>
                 </div>
-                <div>
-                    <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Active Loans Count</label>
-                    <input type="number" id="admLoans" class="input-field" style="margin-bottom: 8px;">
-                </div>
-                <button onclick="saveAdminStats()" class="btn btn-emerald" style="padding: 10px; font-size: 11px;">Save Metrics</button>
             </div>
-
-            <!-- Fund Allocation Manager -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-wallet"></i> Fund Allocation Control</p>
-                <div id="adminFundsList">
-                    <!-- Dynamically populated fund editors -->
-                </div>
-                <button onclick="saveAdminFunds()" class="btn btn-emerald" style="padding: 10px; font-size: 11px; margin-top: 10px;">Save Funds Settings</button>
-            </div>
-
-            <!-- Add / Edit Loantaker -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p id="loantakerFormTitle" style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-user-plus"></i> Add Active Loantaker</p>
-                <input type="hidden" id="editIndex" value="-1">
-                <input type="text" id="ltName" placeholder="Loantaker Name" class="input-field">
-                <div class="grid-2">
-                    <input type="number" id="ltAmount" placeholder="Amount (PKR)" class="input-field" style="margin-bottom: 0;">
-                    <input type="text" id="ltDuration" placeholder="Duration (e.g. 6 Months)" class="input-field" style="margin-bottom: 0;">
-                </div>
-                <div style="display: flex; gap: 8px; margin-top: 10px;">
-                    <button onclick="saveLoantaker()" id="loantakerSubmitBtn" class="btn btn-slate" style="padding: 10px; font-size: 11px; background: #0369a1; color: #fff;">Add Loantaker</button>
-                    <button onclick="resetLoantakerForm()" id="loantakerCancelBtn" class="btn btn-slate hidden" style="padding: 10px; font-size: 11px;">Cancel</button>
-                </div>
-            </div>
-
-            <!-- Manage / Delete Loantakers List -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p style="font-size: 11px; font-weight: 900; color: #fb7185; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-trash-alt"></i> Manage / Delete Loantakers</p>
-                <div id="adminLoantakersList" style="max-height: 160px; overflow-y: auto;">
-                    <!-- Dynamically populated list -->
-                </div>
-            </div>
-            
-            <button onclick="closeAdminDashboard()" class="btn btn-slate" style="padding: 12px;">Exit Dashboard</button>
+            <button type="button" onclick="toggleModal('bank-popup', false)" class="w-full py-3 bg-white/10 rounded-xl text-white font-medium text-sm">Close</button>
         </div>
     </div>
 
-    <!-- Script -->
+    <!-- Notice Modal -->
+    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm border border-white/10">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
+                <i data-lucide="megaphone" class="w-6 h-6"></i>
+            </div>
+            <h2 class="text-white text-base font-bold mb-2">System Notice</h2>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                مصروفیت کی وجہ سے میٹنگ نہیں ہو سکی، انشاء اللہ آئندہ کا لائحہ عمل آپ کو واٹس ایپ گروپ کے ذریعے بتا دیا جائے گا۔
+            </p>
+            <button type="button" onclick="toggleModal('notice-popup', false)" class="w-full py-3 bg-amber-500 text-black rounded-xl font-semibold text-sm">Acknowledge</button>
+        </div>
+    </div>
+
+    <!-- Tab Contents -->
+    <div id="ledger" class="tab-content" data-src="https://ftcf20-hub.github.io/FTCF.com/"></div>
+    <div id="monthly" class="tab-content" data-src="https://ftcf20-hub.github.io/Monthly-Status/"></div>
+    <div id="yearly" class="tab-content" data-src="https://ftcf20-hub.github.io/Yearly-Record/"></div>
+    <div id="rules" class="tab-content" data-src="https://ftcf20-hub.github.io/Loneportal/"></div>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center border border-white/10 max-w-xs w-full justify-between">
+        <button type="button" data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
+            <i data-lucide="wallet" class="w-5 h-5"></i>
+        </button>
+        <button type="button" data-target="monthly" onclick="switchTab('monthly', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
+            <i data-lucide="calendar-check-2" class="w-5 h-5"></i>
+        </button>
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-amber-500 text-black w-11 h-11 flex items-center justify-center rounded-2xl font-bold mx-1">
+            <i data-lucide="users" class="w-5 h-5"></i>
+        </a>
+        <button type="button" data-target="yearly" onclick="switchTab('yearly', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+        </button>
+        <button type="button" data-target="rules" onclick="switchTab('rules', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
+            <i data-lucide="scale" class="w-5 h-5"></i>
+        </button>
+    </nav>
+
     <script>
-      var ADMIN_PIN = "2026";
+        const PIN_KEY = "ftcf_pin_v2";
+        const MASTER_ADMIN_KEY = "7860"; // Aap is Master Code ko change kar sakte hain
 
-      var defaultFunds = [
-        { id: 'death', name: 'Death Fund', percent: 30, active: true },
-        { id: 'medical', name: 'Medical Fund', percent: 25, active: true },
-        { id: 'marriage', name: 'Loan For Marriage', percent: 25, active: true },
-        { id: 'reserve', name: 'Reserved Fund', percent: 20, active: true }
-      ];
+        let enteredPin = "";
+        let confirmPin = "";
+        let isSettingPin = false;
 
-      function getFunds() {
-        var stored = localStorage.getItem('ftcf_funds');
-        return stored ? JSON.parse(stored) : defaultFunds;
-      }
+        function initPasscode() {
+            const savedPin = localStorage.getItem(PIN_KEY);
+            const title = document.getElementById('lock-title');
+            const subtitle = document.getElementById('lock-subtitle');
 
-      function getWhatsAppNumber() {
-        return localStorage.getItem('ftcf_wa_number') || '923433052346';
-      }
+            enteredPin = "";
+            confirmPin = "";
+            updateDots();
 
-      function loadMetrics() {
-        var inflow = localStorage.getItem('ftcf_inflow') || '11500';
-        var outflow = localStorage.getItem('ftcf_outflow') || '0';
-        var loans = localStorage.getItem('ftcf_loans') || '0';
+            if (!savedPin) {
+                isSettingPin = true;
+                title.innerText = "Set Security PIN";
+                subtitle.innerText = "Set a 4-digit PIN for first-time protection";
+            } else {
+                isSettingPin = false;
+                title.innerText = "Enter Security PIN";
+                subtitle.innerText = "Enter 4-digit PIN to open dashboard";
+            }
+        }
 
-        document.getElementById('inflowDisplay').innerText = 'Rs. ' + Number(inflow).toLocaleString();
-        document.getElementById('outflowDisplay').innerText = 'Rs. ' + Number(outflow).toLocaleString();
-        document.getElementById('activeLoansDisplay').innerText = loans;
+        function pressPin(num) {
+            if (enteredPin.length < 4) {
+                enteredPin += num;
+                updateDots();
+                if (enteredPin.length === 4) {
+                    setTimeout(handlePinComplete, 100);
+                }
+            }
+        }
 
-        document.getElementById('admInflow').value = inflow;
-        document.getElementById('admOutflow').value = outflow;
-        document.getElementById('admLoans').value = loans;
-        document.getElementById('admWaNumber').value = getWhatsAppNumber();
-      }
+        function deletePin() {
+            if (enteredPin.length > 0) {
+                enteredPin = enteredPin.slice(0, -1);
+                updateDots();
+            }
+        }
 
-      function renderMainFunds() {
-        var funds = getFunds();
-        var container = document.getElementById('mainFundsContainer');
-        var inflowVal = Number(localStorage.getItem('ftcf_inflow') || '11500');
+        function updateDots() {
+            for (let i = 0; i < 4; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (dot) {
+                    if (i < enteredPin.length) dot.classList.add('filled');
+                    else dot.classList.remove('filled');
+                }
+            }
+        }
 
-        var html = '';
-        funds.forEach(function(fund) {
-            var amount = Math.round((inflowVal * fund.percent) / 100);
-            var statusBadge = fund.active 
-                ? '<span style="font-size: 9px; color: #34d399; background: #064e3b; padding: 2px 6px; border-radius: 6px;">Active</span>' 
-                : '<span style="font-size: 9px; color: #fb7185; background: #4c0519; padding: 2px 6px; border-radius: 6px;">Locked</span>';
+        function handlePinComplete() {
+            const savedPin = localStorage.getItem(PIN_KEY);
+            const title = document.getElementById('lock-title');
+            const subtitle = document.getElementById('lock-subtitle');
+            const errorElement = document.getElementById('lock-error');
+
+            if (isSettingPin) {
+                if (!confirmPin) {
+                    confirmPin = enteredPin;
+                    enteredPin = "";
+                    updateDots();
+                    title.innerText = "Confirm Security PIN";
+                    subtitle.innerText = "Re-enter your 4-digit PIN to confirm";
+                } else {
+                    if (enteredPin === confirmPin) {
+                        localStorage.setItem(PIN_KEY, enteredPin);
+                        openDashboard();
+                    } else {
+                        errorElement.innerText = "PIN match nahi hua. Dubara try karein.";
+                        confirmPin = "";
+                        enteredPin = "";
+                        updateDots();
+                        title.innerText = "Set Security PIN";
+                        subtitle.innerText = "Set a 4-digit PIN for first-time protection";
+                        setTimeout(() => { errorElement.innerText = ""; }, 2500);
+                    }
+                }
+            } else {
+                if (enteredPin === savedPin) {
+                    openDashboard();
+                } else {
+                    errorElement.innerText = "Galat PIN. Phir se enter karein.";
+                    enteredPin = "";
+                    updateDots();
+                    setTimeout(() => { errorElement.innerText = ""; }, 2000);
+                }
+            }
+        }
+
+        function openDashboard() {
+            document.getElementById('lock-screen').style.display = 'none';
+            switchTab('ledger', document.querySelector('[data-target="ledger"]'));
+        }
+
+        function resetPinStorageSecure() {
+            const masterInput = prompt("PIN Reset karne ke liye Admin Master Key enter karein:");
+            if (masterInput === MASTER_ADMIN_KEY) {
+                localStorage.removeItem(PIN_KEY);
+                document.getElementById('lock-screen').style.display = 'flex';
+                initPasscode();
+                alert("PIN Reset ho chuka hai! Ab naya PIN set karein.");
+            } else if (masterInput !== null) {
+                alert("Galat Admin Master Key!");
+            }
+        }
+
+        function switchTab(id, btnElement) { 
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('text-amber-500', 'bg-white/5')); 
             
-            var opacityStyle = fund.active ? 'opacity: 1;' : 'opacity: 0.5;';
-
-            html += '<div class="flex-row" style="background: #090d16; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #1e293b; ' + opacityStyle + '">' +
-                        '<div>' +
-                            '<p style="font-size: 11px; font-weight: bold; color: #f8fafc;">' + fund.name + ' (' + fund.percent + '%)</p>' +
-                            '<p style="font-size: 10px; color: #34d399; font-weight: 800;">Rs. ' + amount.toLocaleString() + '</p>' +
-                        '</div>' +
-                        statusBadge +
-                    '</div>';
-        });
-        container.innerHTML = html;
-      }
-      
-      function renderAdminFunds() {
-        var funds = getFunds();
-        var container = document.getElementById('adminFundsList');
-
-        var html = '';
-        funds.forEach(function(fund, index) {
-            html += '<div style="background: #090d16; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #1e293b;">' +
-                        '<div class="flex-row" style="margin-bottom: 6px;">' +
-                            '<span style="font-size: 11px; font-weight: bold; color: #f8fafc;">' + fund.name + '</span>' +
-                            '<label style="font-size: 10px; color: #94a3b8; display: flex; align-items: center; gap: 4px; cursor: pointer;">' +
-                                '<input type="checkbox" id="fundActive_' + index + '" ' + (fund.active ? 'checked' : '') + '> Unlock' +
-                            '</label>' +
-                        '</div>' +
-                        '<div style="display: flex; align-items: center; gap: 8px;">' +
-                            '<span style="font-size: 10px; color: #94a3b8;">Percentage (%):</span>' +
-                            '<input type="number" id="fundPercent_' + index + '" value="' + fund.percent + '" class="input-field" style="margin-bottom: 0; padding: 6px 10px;">' +
-                        '</div>' +
-                    '</div>';
-        });
-        container.innerHTML = html;
-      }
-
-      function saveAdminFunds() {
-        var funds = getFunds();
-        var totalPercent = 0;
-
-        for(var i = 0; i < funds.length; i++) {
-            var percentVal = Number(document.getElementById('fundPercent_' + i).value);
-            var activeVal = document.getElementById('fundActive_' + i).checked;
-
-            if(percentVal < 0) {
-                alert("Percentage negative nahi ho sakti!");
-                return;
+            const target = document.getElementById(id);
+            if (target) {
+                target.classList.add('active');
+                if (!target.querySelector('iframe')) {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = target.getAttribute('data-src');
+                    target.appendChild(iframe);
+                }
             }
-
-            funds[i].percent = percentVal;
-            funds[i].active = activeVal;
-            totalPercent += percentVal;
+            if (btnElement) btnElement.classList.add('text-amber-500', 'bg-white/5');
         }
 
-        if(totalPercent !== 100) {
-            if(!confirm("Aapke funds ki total percentage " + totalPercent + "% ban rahi hai (100% honi chahiye). Kya aap phir bhi save karna chahte hain?")) {
-                return;
-            }
+        function toggleModal(id, show) {
+            const m = document.getElementById(id);
+            if (m) m.classList.toggle('hidden', !show);
         }
 
-        localStorage.setItem('ftcf_funds', JSON.stringify(funds));
-        renderMainFunds();
-        renderAdminFunds();
-        alert("Fund allocation settings updated successfully!");
-      }
-
-      function toggleMission() {
-        var box = document.getElementById('missionBox');
-        if(box) box.classList.toggle('hidden');
-      }
-
-      function handleApplication() {
-        var n = document.getElementById('uName').value.trim();
-        var a = Number(document.getElementById('uAmount').value);
-        var r = document.getElementById('uReason').value.trim();
-
-        if(!n || !a || !r) {
-          alert("Pehle tamam khane (Name, Amount, Reason) theek se pur karein.");
-          return;
-        }
-
-        if(a <= 0) {
-          alert("Amount 0 ya negative nahi ho sakti!");
-          return;
-        }
-
-        var refId = "FTCF-" + Math.floor(1000 + Math.random() * 9000);
-        
-        // Current formatted date and time
-        var now = new Date();
-        var dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        document.getElementById('rcptRef').innerText = "#" + refId;
-        document.getElementById('rcptDateTime').innerText = dateStr;
-        document.getElementById('rcptName').innerText = n;
-        document.getElementById('rcptAmount').innerText = "Rs. " + a.toLocaleString();
-        document.getElementById('rcptReason').innerText = r;
-
-        var waNumber = getWhatsAppNumber();
-        var waText = "*FTCF Loan Application*\nRef: #" + refId + "\nDate: " + dateStr + "\nName: " + n + "\nAmount: Rs. " + a.toLocaleString() + "\nReason: " + r;
-        var waUrl = "https://api.whatsapp.com/send?phone=" + waNumber + "&text=" + encodeURIComponent(waText);
-        document.getElementById('modalWaBtn').href = waUrl;
-
-        document.getElementById('receiptModal').classList.remove('hidden');
-      }
-
-      function downloadReceipt() {
-        var ref = document.getElementById('rcptRef').innerText;
-        var dt = document.getElementById('rcptDateTime').innerText;
-        var name = document.getElementById('rcptName').innerText;
-        var amt = document.getElementById('rcptAmount').innerText;
-        var reason = document.getElementById('rcptReason').innerText;
-
-        var receiptText = "=== FTCF FINANCIAL VOUCHER ===\n" +
-                          "Reference: " + ref + "\n" +
-                          "Date & Time: " + dt + "\n" +
-                          "Applicant Name: " + name + "\n" +
-                          "Requested Amount: " + amt + "\n" +
-                          "Reason: " + reason + "\n" +
-                          "============================\n" +
-                          "Family Trust & Care Foundation";
-
-        var blob = new Blob([receiptText], { type: 'text/plain;charset=utf-8' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = ref + "-Receipt.txt";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
-
-      function closeReceiptModal() {
-        document.getElementById('receiptModal').classList.add('hidden');
-      }
-
-      function openPinModal() {
-        document.getElementById('adminPinInput').value = '';
-        document.getElementById('pinErrorMsg').style.display = 'none';
-        document.getElementById('pinModal').classList.remove('hidden');
-      }
-
-      function closePinModal() {
-        document.getElementById('pinModal').classList.add('hidden');
-      }
-
-      function verifyPin() {
-        var pin = document.getElementById('adminPinInput').value.trim();
-        if(pin === ADMIN_PIN) {
-            closePinModal();
-            document.getElementById('adminDashboardModal').classList.remove('hidden');
-            loadMetrics();
-            renderAdminLoantakers();
-            renderAdminFunds();
-        } else {
-            document.getElementById('pinErrorMsg').style.display = 'block';
-        }
-      }
-
-      function closeAdminDashboard() {
-        document.getElementById('adminDashboardModal').classList.add('hidden');
-        resetLoantakerForm();
-      }
-
-      function saveWhatsAppNumber() {
-        var num = document.getElementById('admWaNumber').value.trim();
-        if(!num) {
-            alert("WhatsApp number khali nahi ho sakta.");
-            return;
-        }
-        localStorage.setItem('ftcf_wa_number', num);
-        alert("WhatsApp number updated successfully!");
-      }
-
-      function saveAdminStats() {
-        var inflow = Number(document.getElementById('admInflow').value);
-        var outflow = Number(document.getElementById('admOutflow').value);
-        var loans = Number(document.getElementById('admLoans').value);
-
-        if(inflow < 0 || outflow < 0 || loans < 0) {
-            alert("Values negative nahi ho sakti!");
-            return;
-        }
-
-        localStorage.setItem('ftcf_inflow', inflow);
-        localStorage.setItem('ftcf_outflow', outflow);
-        localStorage.setItem('ftcf_loans', loans);
-        loadMetrics();
-        renderMainFunds();
-        alert("Portal metrics updated successfully!");
-      }
-
-      function saveLoantaker() {
-        var name = document.getElementById('ltName').value.trim();
-        var amount = document.getElementById('ltAmount').value.trim();
-        var duration = document.getElementById('ltDuration').value.trim();
-        var editIndex = parseInt(document.getElementById('editIndex').value);
-
-        if(!name || !amount) {
-            alert("Name aur Amount lazmi bharein.");
-            return;
-        }
-
-        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-
-        if(editIndex === -1) {
-            loantakers.push({ id: Date.now(), name: name, amount: amount, duration: duration || 'Flexible' });
-            alert("Loantaker added successfully!");
-        } else {
-            loantakers[editIndex].name = name;
-            loantakers[editIndex].amount = amount;
-            loantakers[editIndex].duration = duration || 'Flexible';
-            alert("Loantaker updated successfully!");
-        }
-
-        localStorage.setItem('ftcf_loantakers', JSON.stringify(loantakers));
-        localStorage.setItem('ftcf_loans', loantakers.length);
-        
-        resetLoantakerForm();
-        loadMetrics();
-        renderMainLoantakers();
-        renderAdminLoantakers();
-      }
-
-      function editLoantaker(index) {
-        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        var item = loantakers[index];
-        if(!item) return;
-
-        document.getElementById('ltName').value = item.name;
-        document.getElementById('ltAmount').value = item.amount;
-        document.getElementById('ltDuration').value = item.duration;
-        document.getElementById('editIndex').value = index;
-
-        document.getElementById('loantakerFormTitle').innerHTML = '<i class="fas fa-user-edit"></i> Edit Active Loantaker';
-        document.getElementById('loantakerSubmitBtn').innerText = 'Update Loantaker';
-        document.getElementById('loantakerCancelBtn').classList.remove('hidden');
-      }
-
-      function resetLoantakerForm() {
-        document.getElementById('ltName').value = '';
-        document.getElementById('ltAmount').value = '';
-        document.getElementById('ltDuration').value = '';
-        document.getElementById('editIndex').value = '-1';
-
-        document.getElementById('loantakerFormTitle').innerHTML = '<i class="fas fa-user-plus"></i> Add Active Loantaker';
-        document.getElementById('loantakerSubmitBtn').innerText = 'Add Loantaker';
-        document.getElementById('loantakerCancelBtn').classList.add('hidden');
-      }
-
-      function deleteLoantaker(id) {
-        if(!confirm("Kya aap waqai is loantaker ko delete karna chahte hain?")) return;
-        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        loantakers = loantakers.filter(function(item) { return item.id !== id; });
-        
-        localStorage.setItem('ftcf_loantakers', JSON.stringify(loantakers));
-        localStorage.setItem('ftcf_loans', loantakers.length);
-
-        loadMetrics();
-        renderMainLoantakers();
-        renderAdminLoantakers();
-      }
-
-      function renderAdminLoantakers() {
-        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        var container = document.getElementById('adminLoantakersList');
-
-        if(loantakers.length === 0) {
-            container.innerHTML = '<p style="font-size: 10px; color: #94a3b8; text-align: center; padding: 8px;">No active loantakers found.</p>';
-            return;
-        }
-
-        var html = '';
-        loantakers.forEach(function(item, index) {
-            html += '<div class="flex-row" style="background: #090d16; padding: 8px 10px; border-radius: 10px; margin-bottom: 6px; border: 1px solid #1e293b;">' +
-                        '<div>' +
-                            '<p style="font-size: 11px; font-weight: bold; color: #f8fafc;">' + item.name + '</p>' +
-                            '<p style="font-size: 9px; color: #34d399;">Rs. ' + Number(item.amount).toLocaleString() + '</p>' +
-                        '</div>' +
-                        '<div style="display: flex; gap: 6px;">' +
-                            '<button onclick="editLoantaker(' + index + ')" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: none; padding: 6px 8px; border-radius: 8px; font-size: 11px; cursor: pointer;"><i class="fas fa-edit"></i></button>' +
-                            '<button onclick="deleteLoantaker(' + item.id + ')" style="background: rgba(244, 63, 94, 0.15); color: #fb7185; border: none; padding: 6px 8px; border-radius: 8px; font-size: 11px; cursor: pointer;"><i class="fas fa-trash-alt"></i></button>' +
-                        '</div>' +
-                    '</div>';
-        });
-        container.innerHTML = html;
-      }
-
-      function renderMainLoantakers() {
-        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        var container = document.getElementById('mainLoantakersContainer');
-        var badge = document.getElementById('loantakersCountBadge');
-
-        badge.innerText = loantakers.length + " Active";
-
-        if(loantakers.length === 0) {
-            container.innerHTML = '<div class="glass-card" style="text-align: center; padding: 12px;"><p style="font-size: 11px; color: #94a3b8;">No active loantakers listed.</p></div>';
-            return;
-        }
-
-        var html = '';
-        loantakers.forEach(function(item) {
-            html += '<div class="glass-card flex-row" style="padding: 12px; margin-bottom: 8px;">' +
-                        '<div>' +
-                            '<p style="font-size: 12px; font-weight: bold;">' + item.name + '</p>' +
-                            '<p style="font-size: 9px; color: #94a3b8;">Duration: ' + item.duration + '</p>' +
-                        '</div>' +
-                        '<span style="font-weight: 900; font-size: 12px; color: #34d399;">Rs. ' + Number(item.amount).toLocaleString() + '</span>' +
-                    '</div>';
-        });
-        container.innerHTML = html;
-      }
-
-      window.onload = function() {
-        loadMetrics();
-        renderMainFunds();
-        renderMainLoantakers();
-      };
+        window.onload = function() {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            initPasscode();
+        };
     </script>
 </body>
-</html>
+  </html>
