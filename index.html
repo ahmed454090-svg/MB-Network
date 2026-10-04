@@ -73,7 +73,7 @@
         }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* Grand Mosque & Rising Crescent Animation */
+        /* Digital Islamic Astrolabe & Rotating Geometric Star Animation */
         .fade-in-up {
             animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
@@ -107,27 +107,28 @@
         <i data-lucide="wifi-off" class="w-3.5 h-3.5 inline mr-1 -mt-0.5"></i> Offline Mode: Pre-loaded cache available
     </div>
 
-    <!-- Grand Mosque Dome & Rising Crescent Silhouette Splash Screen -->
+    <!-- Digital Islamic Astrolabe / Rotating Geometric Star Splash Screen (Idea 3) -->
     <div id="splash" class="fixed inset-0 z-[9999] bg-[#011c14] backdrop-blur-2xl flex flex-col justify-center items-center transition-opacity duration-700 bg-ramzan-pattern">
         <!-- Ambient Emerald & Gold Aura -->
         <div class="absolute w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
         <div class="absolute w-48 h-48 bg-amber-500/25 rounded-full blur-2xl pointer-events-none"></div>
 
-        <div class="relative flex flex-col items-center fade-in-up">
+        <div class="relative flex flex-col items-center">
+            <!-- 3D Rotating Rings & Astrolabe Star Graphic -->
             <div class="relative w-36 h-36 flex items-center justify-center mb-4">
-                <div class="absolute inset-0 bg-gradient-to-t from-amber-500/30 to-transparent rounded-full blur-xl opacity-70"></div>
-                
-                <!-- Mosque & Crescent Graphic Silhouette -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-36 h-36 text-amber-400 drop-shadow-[0_0_25px_rgba(251,191,36,0.7)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                    <path d="M15 3a7 7 0 1 0 6 10.5A8.5 8.5 0 0 1 15 3z" fill="rgba(251, 191, 36, 0.15)" stroke="#fde047" stroke-width="0.8"/>
-                    <path d="M3 21h18v-1a2 2 0 0 0-2-2h-2v-4a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v4H5a2 2 0 0 0-2 2v1z" fill="#022c22" stroke="#fbbf24" stroke-width="1"/>
-                    <path d="M12 11c-2 0-3.5 1.5-3.5 4h7c0-2.5-1.5-4-3.5-4z" fill="#fbbf24"/>
-                    <path d="M5 18v-6h2v6M17 18v-6h2v6" stroke="#fbbf24" stroke-width="1"/>
-                </svg>
+                <div class="absolute inset-0 border-2 border-dashed border-amber-400/40 rounded-full animate-[spin_12s_linear_infinite]"></div>
+                <div class="absolute inset-2 border-2 border-emerald-400/50 rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
+                <div class="absolute inset-4 border border-amber-300/60 rounded-full flex items-center justify-center bg-emerald-950/40 backdrop-blur-sm animate-[spin_15s_linear_infinite]">
+                    <!-- Rub El Hizb / 8-pointed star SVG -->
+                    <svg class="w-16 h-16 text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.8)] animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        <path d="M12 5l2.12 4.31L18.5 10l-3.15 3.08.74 4.35L12 15.3l-4.09 2.13.74-4.35L5.5 10l4.38-.69L12 5z"/>
+                    </svg>
+                </div>
             </div>
 
             <!-- Text Content -->
-            <div class="text-center space-y-1">
+            <div class="text-center space-y-1 fade-in-up">
                 <h1 class="text-2xl font-black tracking-widest text-amber-300 drop-shadow-[0_0_10px_rgba(251,191,36,0.5)] font-sans">FTCF</h1>
                 <p class="text-xs font-mono tracking-[0.25em] text-amber-400/90 font-semibold uppercase">Professional Portal</p>
             </div>
