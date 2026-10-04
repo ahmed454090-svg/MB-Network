@@ -28,7 +28,7 @@
         box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
     }
     .glass-card {
-        background: rgba(15, 23, 42, 0.9); 
+        background: rgba(15, 23, 42, 0.95); 
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 20px;
         padding: 16px;
@@ -54,10 +54,10 @@
     .btn-slate { background-color: #1e293b; color: #f8fafc; border: 1px solid #334155; }
     .input-field {
         width: 100%;
-        padding: 14px;
+        padding: 12px 14px;
         font-size: 13px;
-        background-color: #0f172a;
-        border: 1px solid #1e293b;
+        background-color: #090d16;
+        border: 1px solid #334155;
         color: #f8fafc;
         border-radius: 14px;
         outline: none;
@@ -67,7 +67,7 @@
     .modal {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.85);
+        background: rgba(0, 0, 0, 0.9);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -157,7 +157,7 @@
                     <span id="rcptStatusBadge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; font-size: 9px; font-weight: 900; padding: 2px 8px; border-radius: 20px;">Pending</span>
                 </div>
 
-                <div style="font-size: 12px; space-y: 8px;">
+                <div style="font-size: 12px;">
                     <div class="flex-row" style="margin-bottom: 6px;"><span style="color: #94a3b8;">Ref ID:</span> <span id="rcptRef" style="font-weight: bold;">#FTCF-0000</span></div>
                     <div class="flex-row" style="margin-bottom: 6px;"><span style="color: #94a3b8;">Name:</span> <span id="rcptName" style="font-weight: bold;">---</span></div>
                     <div class="flex-row" style="margin-bottom: 6px;"><span style="color: #94a3b8;">Amount:</span> <span id="rcptAmount" style="font-weight: 900; color: #34d399;">Rs. 0</span></div>
@@ -192,41 +192,77 @@
     </div>
 
     <!-- ADMIN DASHBOARD MODAL -->
-    <div id="adminDashboardModal" class="modal hidden" style="align-items: flex-start; overflow-y: auto; padding: 10px;">
-        <div style="width: 100%; max-width: 42px; margin: 20px auto; background: #0f172a; border: 1px solid #334155; border-radius: 20px; padding: 16px;">
-            <div class="flex-row" style="margin-bottom: 14px;">
-                <h2 style="font-size: 14px; font-weight: 900;">Admin Dashboard</h2>
-                <button onclick="closeAdminDashboard()" class="btn-slate" style="width: 30px; height: 30px; border-radius: 8px;"><i class="fas fa-times"></i></button>
+    <div id="adminDashboardModal" class="modal hidden" style="align-items: flex-start; overflow-y: auto; padding: 20px 10px;">
+        <div style="width: 100%; max-width: 400px; margin: auto; background: #0f172a; border: 1px solid #334155; border-radius: 24px; padding: 20px;">
+            <div class="flex-row" style="margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">
+                <div>
+                    <span style="font-size: 9px; font-weight: 900; color: #10b981; letter-spacing: 1px;">CONTROL CENTER</span>
+                    <h2 style="font-size: 16px; font-weight: 900;">Admin Dashboard</h2>
+                </div>
+                <button onclick="closeAdminDashboard()" class="btn-slate" style="width: 32px; height: 32px; border-radius: 10px;"><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- WhatsApp Number Config -->
+            <div class="glass-card" style="margin-bottom: 14px;">
+                <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 8px; text-transform: uppercase;"><i class="fab fa-whatsapp"></i> Configure WhatsApp Number</p>
+                <input type="text" id="admWaNumber" class="input-field" placeholder="923433052346" style="margin-bottom: 8px;">
+                <button onclick="saveWhatsAppNumber()" class="btn btn-slate" style="padding: 8px; font-size: 10px; background: #0369a1; color: #fff;">Save WhatsApp Number</button>
             </div>
 
             <!-- Metrics Manager -->
-            <div class="glass-card" style="margin-bottom: 10px;">
-                <p style="font-size: 11px; font-weight: 900; color: #34d399; margin-bottom: 8px;">Update Metrics</p>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                    <input type="number" id="admInflow" placeholder="Inflow" class="input-field" style="margin: 0; font-size: 11px; padding: 8px;">
-                    <input type="number" id="admLoans" placeholder="Loans" class="input-field" style="margin: 0; font-size: 11px; padding: 8px;">
+            <div class="glass-card" style="margin-bottom: 14px;">
+                <p style="font-size: 11px; font-weight: 900; color: #34d399; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-sliders-h"></i> Update Portal Metrics</p>
+                <div class="grid-2">
+                    <div>
+                        <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Inflow (PKR)</label>
+                        <input type="number" id="admInflow" class="input-field" style="margin-bottom: 8px;">
+                    </div>
+                    <div>
+                        <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Outflow (PKR)</label>
+                        <input type="number" id="admOutflow" class="input-field" style="margin-bottom: 8px;">
+                    </div>
                 </div>
-                <button onclick="saveAdminStats()" class="btn btn-emerald" style="margin-top: 8px; padding: 8px; font-size: 10px;">Save Stats</button>
+                <div>
+                    <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Active Loans Count</label>
+                    <input type="number" id="admLoans" class="input-field" style="margin-bottom: 8px;">
+                </div>
+                <button onclick="saveAdminStats()" class="btn btn-emerald" style="padding: 10px; font-size: 11px;">Save Metrics</button>
             </div>
 
-            <!-- Add Loantaker -->
-            <div class="glass-card">
-                <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 8px;">Add Loantaker</p>
-                <input type="text" id="ltName" placeholder="Name" class="input-field" style="padding: 8px; font-size: 11px;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                    <input type="number" id="ltAmount" placeholder="Amount" class="input-field" style="margin: 0; padding: 8px; font-size: 11px;">
-                    <input type="text" id="ltDuration" placeholder="Duration" class="input-field" style="margin: 0; padding: 8px; font-size: 11px;">
+            <!-- Add / Edit Loantaker -->
+            <div class="glass-card" style="margin-bottom: 14px;">
+                <p id="loantakerFormTitle" style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-user-plus"></i> Add Active Loantaker</p>
+                <input type="hidden" id="editIndex" value="-1">
+                <input type="text" id="ltName" placeholder="Loantaker Name" class="input-field">
+                <div class="grid-2">
+                    <input type="number" id="ltAmount" placeholder="Amount (PKR)" class="input-field" style="margin-bottom: 0;">
+                    <input type="text" id="ltDuration" placeholder="Duration (e.g. 6 Months)" class="input-field" style="margin-bottom: 0;">
                 </div>
-                <button onclick="addLoantaker()" class="btn btn-slate" style="margin-top: 8px; padding: 8px; font-size: 10px; background: #0369a1; color: #fff;">Add to List</button>
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <button onclick="saveLoantaker()" id="loantakerSubmitBtn" class="btn btn-slate" style="padding: 10px; font-size: 11px; background: #0369a1; color: #fff;">Add Loantaker</button>
+                    <button onclick="resetLoantakerForm()" id="loantakerCancelBtn" class="btn btn-slate hidden" style="padding: 10px; font-size: 11px;">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Manage / Delete Loantakers List -->
+            <div class="glass-card" style="margin-bottom: 14px;">
+                <p style="font-size: 11px; font-weight: 900; color: #fb7185; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-trash-alt"></i> Manage / Delete Loantakers</p>
+                <div id="adminLoantakersList" style="max-height: 160px; overflow-y: auto;">
+                    <!-- Dynamically populated list -->
+                </div>
             </div>
             
-            <button onclick="closeAdminDashboard()" class="btn btn-slate" style="margin-top: 10px;">Exit Dashboard</button>
+            <button onclick="closeAdminDashboard()" class="btn btn-slate" style="padding: 12px;">Exit Dashboard</button>
         </div>
     </div>
 
     <!-- Script -->
     <script>
       var ADMIN_PIN = "2026";
+
+      function getWhatsAppNumber() {
+        return localStorage.getItem('ftcf_wa_number') || '923433052346';
+      }
 
       function loadMetrics() {
         var inflow = localStorage.getItem('ftcf_inflow') || '11500';
@@ -238,34 +274,41 @@
         document.getElementById('activeLoansDisplay').innerText = loans;
 
         document.getElementById('admInflow').value = inflow;
+        document.getElementById('admOutflow').value = outflow;
         document.getElementById('admLoans').value = loans;
+        document.getElementById('admWaNumber').value = getWhatsAppNumber();
       }
 
       function toggleMission() {
         var box = document.getElementById('missionBox');
-        box.classList.toggle('hidden');
+        if(box) box.classList.toggle('hidden');
       }
 
       function handleApplication() {
         var n = document.getElementById('uName').value.trim();
-        var a = document.getElementById('uAmount').value.trim();
+        var a = Number(document.getElementById('uAmount').value);
         var r = document.getElementById('uReason').value.trim();
 
         if(!n || !a || !r) {
-          alert("Pehle tamam khane (Name, Amount, Reason) pur karein.");
+          alert("Pehle tamam khane (Name, Amount, Reason) theek se pur karein.");
+          return;
+        }
+
+        if(a <= 0) {
+          alert("Amount 0 ya negative nahi ho sakti!");
           return;
         }
 
         var refId = "FTCF-" + Math.floor(1000 + Math.random() * 9000);
-        var currentDate = new Date().toLocaleDateString();
 
         document.getElementById('rcptRef').innerText = "#" + refId;
         document.getElementById('rcptName').innerText = n;
-        document.getElementById('rcptAmount').innerText = "Rs. " + Number(a).toLocaleString();
+        document.getElementById('rcptAmount').innerText = "Rs. " + a.toLocaleString();
         document.getElementById('rcptReason').innerText = r;
 
-        var waText = "*FTCF Loan Application*\nName: " + n + "\nAmount: Rs. " + Number(a).toLocaleString() + "\nReason: " + r;
-        var waUrl = "https://api.whatsapp.com/send?phone=923433052346&text=" + encodeURIComponent(waText);
+        var waNumber = getWhatsAppNumber();
+        var waText = "*FTCF Loan Application*\nName: " + n + "\nAmount: Rs. " + a.toLocaleString() + "\nReason: " + r;
+        var waUrl = "https://api.whatsapp.com/send?phone=" + waNumber + "&text=" + encodeURIComponent(waText);
         document.getElementById('modalWaBtn').href = waUrl;
 
         document.getElementById('receiptModal').classList.remove('hidden');
@@ -291,6 +334,7 @@
             closePinModal();
             document.getElementById('adminDashboardModal').classList.remove('hidden');
             loadMetrics();
+            renderAdminLoantakers();
         } else {
             document.getElementById('pinErrorMsg').style.display = 'block';
         }
@@ -298,22 +342,41 @@
 
       function closeAdminDashboard() {
         document.getElementById('adminDashboardModal').classList.add('hidden');
+        resetLoantakerForm();
+      }
+
+      function saveWhatsAppNumber() {
+        var num = document.getElementById('admWaNumber').value.trim();
+        if(!num) {
+            alert("WhatsApp number khali nahi ho sakta.");
+            return;
+        }
+        localStorage.setItem('ftcf_wa_number', num);
+        alert("WhatsApp number updated successfully!");
       }
 
       function saveAdminStats() {
-        var inflow = document.getElementById('admInflow').value;
-        var loans = document.getElementById('admLoans').value;
+        var inflow = Number(document.getElementById('admInflow').value);
+        var outflow = Number(document.getElementById('admOutflow').value);
+        var loans = Number(document.getElementById('admLoans').value);
+
+        if(inflow < 0 || outflow < 0 || loans < 0) {
+            alert("Values negative nahi ho sakti!");
+            return;
+        }
 
         localStorage.setItem('ftcf_inflow', inflow);
+        localStorage.setItem('ftcf_outflow', outflow);
         localStorage.setItem('ftcf_loans', loans);
         loadMetrics();
-        alert("Updated successfully!");
+        alert("Portal metrics updated successfully!");
       }
 
-      function addLoantaker() {
+      function saveLoantaker() {
         var name = document.getElementById('ltName').value.trim();
         var amount = document.getElementById('ltAmount').value.trim();
         var duration = document.getElementById('ltDuration').value.trim();
+        var editIndex = parseInt(document.getElementById('editIndex').value);
 
         if(!name || !amount) {
             alert("Name aur Amount lazmi bharein.");
@@ -321,50 +384,12 @@
         }
 
         var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        loantakers.push({ name: name, amount: amount, duration: duration || 'Flexible' });
 
-        localStorage.setItem('ftcf_loantakers', JSON.stringify(loantakers));
-        localStorage.setItem('ftcf_loans', loantakers.length);
-        
-        document.getElementById('ltName').value = '';
-        document.getElementById('ltAmount').value = '';
-        document.getElementById('ltDuration').value = '';
-
-        loadMetrics();
-        renderMainLoantakers();
-        alert("Loantaker added!");
-      }
-
-      function renderMainLoantakers() {
-        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        var container = document.getElementById('mainLoantakersContainer');
-        var badge = document.getElementById('loantakersCountBadge');
-
-        badge.innerText = loantakers.length + " Active";
-
-        if(loantakers.length === 0) {
-            container.innerHTML = '<div class="glass-card" style="text-align: center; padding: 12px;"><p style="font-size: 11px; color: #94a3b8;">No active loantakers listed.</p></div>';
-            return;
-        }
-
-        var html = '';
-        loantakers.forEach(function(item) {
-            html += '<div class="glass-card flex-row" style="padding: 12px; margin-bottom: 8px;">' +
-                        '<div>' +
-                            '<p style="font-size: 12px; font-weight: bold;">' + item.name + '</p>' +
-                            '<p style="font-size: 9px; color: #94a3b8;">Duration: ' + item.duration + '</p>' +
-                        '</div>' +
-                        '<span style="font-weight: 900; font-size: 12px; color: #34d399;">Rs. ' + Number(item.amount).toLocaleString() + '</span>' +
-                    '</div>';
-        });
-        container.innerHTML = html;
-      }
-
-      window.onload = function() {
-        loadMetrics();
-        renderMainLoantakers();
-      };
-    </script>
-</body>
-</html>
-
+        if(editIndex === -1) {
+            loantakers.push({ id: Date.now(), name: name, amount: amount, duration: duration || 'Flexible' });
+            alert("Loantaker added successfully!");
+        } else {
+            loantakers[editIndex].name = name;
+            loantakers[editIndex].amount = amount;
+            loantakers[editIndex].duration = duration || 'Flexible';
+            alert("Loantaker u
