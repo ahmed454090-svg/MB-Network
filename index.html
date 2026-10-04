@@ -1,347 +1,332 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FTCF | Professional Portal</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    }
-                }
-            }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FTCF | Modern Financial Portal</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#ecfdf5', 500: '#10b981', 600: '#059669', 900: '#064e3b', 950: '#022c22' }
+          }
         }
-    </script>
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
-        
-        body { 
-            background-color: #030712; 
-            font-family: 'Inter', sans-serif; 
-            overflow: hidden; 
-            margin: 0; 
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .glass-panel { 
-            background: rgba(17, 24, 39, 0.75); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-        }
+      }
+    }
+  </script>
 
-        .tab-content { display: none; height: 100vh; width: 100vw; position: relative; }
-        .tab-content.active { display: block; }
-        iframe { width: 100%; height: 100%; border: none; }
-
-        .splash-circle-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .outer-blue-circle {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: #38bdf8;
-            border-right-color: #0284c7;
-            animation: spinClockwise 2.5s linear infinite;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-        }
-
-        .inner-white-circle {
-            position: absolute;
-            inset: 10px;
-            border-radius: 50%;
-            border: 2px dashed #ffffff;
-            animation: spinCounterClockwise 1.8s linear infinite;
-            opacity: 0.9;
-        }
-
-        @keyframes spinClockwise { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes spinCounterClockwise { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
-
-        .pulse-subtext { animation: pulseSubtext 1.8s ease-in-out infinite alternate; }
-        @keyframes pulseSubtext { from { opacity: 0.6; letter-spacing: 0.2em; } to { opacity: 1; letter-spacing: 0.3em; } }
-
-        .pin-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: 2px solid rgba(245, 158, 11, 0.5);
-            transition: all 0.2s ease;
-        }
-        .pin-dot.filled {
-            background-color: #f59e0b;
-            border-color: #f59e0b;
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
-        }
-    </style>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #090d16; color: #f8fafc; min-height: 100vh; }
+    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
+    .bank-gradient { 
+        background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
+    }
+    .glass-card {
+        background: rgba(15, 23, 42, 0.85); 
+        backdrop-filter: blur(24px); 
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .pulse-dot {
+        width: 7px; height: 7px; background-color: #34d399; border-radius: 50%;
+        box-shadow: 0 0 10px #34d399; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.8); }
+        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+    }
+  </style>
 </head>
-<body class="text-slate-100 antialiased selection:bg-amber-500 selection:text-black">
+<body class="pb-12 relative antialiased p-4 max-w-md mx-auto space-y-6">
 
-    <!-- PASSCODE LOCK SCREEN MODAL -->
-    <div id="lock-screen" class="fixed inset-0 z-[9000] bg-black/95 backdrop-blur-2xl flex flex-col justify-center items-center p-6 overflow-y-auto">
-        <div class="absolute w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="splash-circle-container mb-3 relative z-10">
-            <div class="outer-blue-circle"></div>
-            <div class="inner-white-circle"></div>
-            <span class="text-2xl font-black tracking-wider text-white drop-shadow-[0_2px_8px_rgba(56,189,248,0.5)] z-10">FTCF</span>
+    <!-- Header -->
+    <header class="flex justify-between items-center py-2 border-b border-slate-800">
+        <div>
+          <span class="text-[10px] font-black text-emerald-400 tracking-widest uppercase">2026-2027 FISCAL PORTAL</span>
+          <h1 class="font-black text-xl text-slate-100 tracking-tight uppercase">Rules & Loans</h1>
         </div>
-
-        <p class="text-sky-300 font-mono text-[10px] font-bold uppercase tracking-[0.25em] pulse-subtext mb-6 relative z-10">Secure Portal</p>
-
-        <h2 id="lock-title" class="text-white text-base font-bold mb-1 relative z-10">Set Security PIN</h2>
-        <p id="lock-subtitle" class="text-slate-400 text-xs mb-5 font-mono relative z-10">Choose a 4-digit PIN for portal protection</p>
-
-        <!-- PIN Dots Indicator -->
-        <div class="flex gap-4 mb-6 relative z-10">
-            <div class="pin-dot" id="dot-0"></div>
-            <div class="pin-dot" id="dot-1"></div>
-            <div class="pin-dot" id="dot-2"></div>
-            <div class="pin-dot" id="dot-3"></div>
-        </div>
-
-        <!-- Keypad -->
-        <div class="grid grid-cols-3 gap-3 max-w-xs w-full mb-4 relative z-10">
-            <button type="button" onclick="pressPin('1')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">1</button>
-            <button type="button" onclick="pressPin('2')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">2</button>
-            <button type="button" onclick="pressPin('3')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">3</button>
-            <button type="button" onclick="pressPin('4')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">4</button>
-            <button type="button" onclick="pressPin('5')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">5</button>
-            <button type="button" onclick="pressPin('6')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">6</button>
-            <button type="button" onclick="pressPin('7')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">7</button>
-            <button type="button" onclick="pressPin('8')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">8</button>
-            <button type="button" onclick="pressPin('9')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">9</button>
-            <button type="button" onclick="resetPinStorage()" class="h-12 glass-panel rounded-2xl text-xs font-semibold text-amber-400 active:scale-90">Reset</button>
-            <button type="button" onclick="pressPin('0')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">0</button>
-            <button type="button" onclick="deletePin()" class="h-12 glass-panel rounded-2xl text-white active:scale-90 flex items-center justify-center">
-                <i data-lucide="delete" class="w-5 h-5"></i>
-            </button>
-        </div>
-        
-        <p id="lock-error" class="text-red-400 text-xs font-semibold h-4 text-center relative z-10"></p>
-    </div>
-
-    <!-- Header Controls -->
-    <header class="fixed top-4 right-4 z-[60] flex gap-2">
-        <button type="button" onclick="resetPinStorage()" title="Reset PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
-            <i data-lucide="key-round" class="w-4 h-4"></i>
-        </button>
-        <button type="button" onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
-            <i data-lucide="building-2" class="w-4 h-4"></i>
-        </button>
-        <button type="button" onclick="toggleModal('notice-popup', true)" class="relative w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
-            <i data-lucide="bell" class="w-4 h-4"></i>
-            <span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
+        <!-- Admin Access Button -->
+        <button id="adminPortalBtn" type="button" class="w-10 h-10 bg-slate-900 hover:bg-slate-800 text-emerald-400 border border-slate-700/80 rounded-2xl flex items-center justify-center font-black text-xs shadow-lg active:scale-95 transition cursor-pointer" title="Admin Portal">
+            FTCF
         </button>
     </header>
 
-    <!-- Bank Modal -->
-    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
-        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm text-center border border-white/10">
-            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <i data-lucide="building-2" class="w-6 h-6"></i>
+    <!-- Stats -->
+    <section class="grid grid-cols-2 gap-3">
+        <div class="col-span-2 bank-gradient p-6 rounded-3xl text-white shadow-2xl relative overflow-hidden">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-emerald-300 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Active Loans</p>
+                <h2 id="activeLoansDisplay" class="font-extrabold text-4xl text-white tracking-tight">0</h2>
+              </div>
+              <span class="bg-emerald-500/10 text-emerald-300 text-[9px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-emerald-500/20 backdrop-blur-md flex items-center gap-1.5">
+                  <span class="pulse-dot"></span> Live Status
+              </span>
             </div>
-            <h2 class="text-white text-base font-bold mb-4">HBL Konnect Details</h2>
-            <div class="bg-black/40 p-4 rounded-2xl text-left border border-white/5 space-y-3 mb-6">
-                <div>
-                    <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account Title</span>
-                    <span class="text-sm text-white font-semibold">Afzaal Ahmed</span>
-                </div>
-                <div class="pt-2 border-t border-white/5 flex justify-between items-center">
+        </div>
+
+        <div class="glass-card p-4 rounded-2xl text-left border border-slate-800">
+            <p class="text-[9px] text-slate-400 uppercase font-black tracking-wider">Inflow</p>
+            <p id="inflowDisplay" class="font-extrabold text-emerald-400 text-base mt-1 tracking-tight">Rs. 11,500</p>
+        </div>
+
+        <div class="glass-card p-4 rounded-2xl text-left border border-slate-800">
+            <p class="text-[9px] text-slate-400 uppercase font-black tracking-wider">Outflow</p>
+            <p id="outflowDisplay" class="font-extrabold text-rose-400 text-base mt-1 tracking-tight">Rs. 0</p>
+        </div>
+    </section>
+
+    <!-- Active Loantakers List Section -->
+    <section class="space-y-3">
+        <div class="flex justify-between items-center px-1">
+          <h3 class="font-black text-xs text-slate-300 tracking-[0.2em] uppercase">Active Loantakers Directory</h3>
+          <span id="loantakersCountBadge" class="text-[9px] font-bold text-emerald-400/80 uppercase tracking-wider bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/60">0 Active</span>
+        </div>
+  
+        <div id="mainLoantakersContainer" class="space-y-2">
+            <!-- Dynamically populated -->
+        </div>
+    </section>
+
+    <!-- Allocations -->
+    <section class="space-y-3">
+      <div class="flex justify-between items-center px-1">
+        <h3 class="font-black text-xs text-slate-300 tracking-[0.2em] uppercase">Fund Allocation Framework</h3>
+        <span class="text-[9px] font-bold text-emerald-400/80 uppercase tracking-wider">2026 Scheme</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-ribbon text-purple-400 text-sm"></i>
+            <span class="text-[8px] bg-amber-950/80 text-amber-300 font-bold px-2 py-0.5 rounded-full border border-amber-800/60 uppercase">Unlock-Apr 2027</span>
+          </div>
+          <p class="text-xs font-bold text-slate-100 uppercase">Death Assistance</p>
+          <p class="text-xs text-purple-400 font-extrabold mt-1">30% Share</p>
+        </div>
+        
+        <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-notes-medical text-rose-400 text-sm"></i>
+            <span class="text-[8px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-800/60 uppercase">Locked</span>
+          </div>
+          <p class="text-xs font-bold text-slate-100 uppercase">Medical Aid</p>
+          <p class="text-xs text-rose-400 font-extrabold mt-1">25% Share</p>
+        </div>
+
+        <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-heart text-amber-400 text-sm"></i>
+            <span class="text-[8px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-800/60 uppercase">Locked</span>
+          </div>
+          <p class="text-xs font-bold text-slate-100 uppercase">Marriage Support</p>
+          <p class="text-xs text-amber-400 font-extrabold mt-1">25% Share</p>
+        </div>
+
+        <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-shield-halved text-sky-400 text-sm"></i>
+            <span class="text-[8px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-800/60 uppercase">Locked</span>
+          </div>
+          <p class="text-xs font-bold text-slate-100 uppercase">Emergency Reserve</p>
+          <p class="text-xs text-sky-400 font-extrabold mt-1">20% Share</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Rules -->
+    <div class="space-y-3">
+        <button id="toggleMissionBtn" type="button" class="w-full bg-slate-900 text-slate-100 border border-slate-700 p-3.5 rounded-2xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer">
+            <i class="fas fa-book-open text-emerald-400"></i>
+            <span>Read Full Mission & Vision</span>
+        </button>
+        
+        <div id="missionBox" class="hidden glass-card p-5 rounded-3xl urdu-text text-right h-64 overflow-y-auto text-slate-200 text-xs leading-loose">
+            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ یہ ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن hai.</p>
+        </div>
+    </div>
+
+    <!-- Direct Guaranteed WhatsApp Form -->
+    <div class="glass-card p-5 rounded-3xl border border-slate-800 shadow-2xl">
+        <h3 class="font-black text-slate-100 uppercase tracking-wide text-sm text-center">Request Financial Assistance</h3>
+        <p class="text-[10px] text-slate-400 text-center mb-4 uppercase font-semibold">Submit details directly to WhatsApp</p>
+        
+        <div class="space-y-3">
+            <div>
+              <input type="text" id="uName" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none focus:border-emerald-500/50 transition">
+            </div>
+            
+            <div>
+              <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none focus:border-emerald-500/50 transition">
+            </div>
+
+            <div>
+              <textarea id="uReason" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none focus:border-emerald-500/50 transition" rows="3"></textarea>
+            </div>
+            
+            <button id="submitAppBtn" type="button" class="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 text-center cursor-pointer">
+              <i class="fab fa-whatsapp text-base"></i> Submit & Generate Receipt
+            </button>
+        </div>
+    </div>
+
+    <!-- DIGITAL RECEIPT MODAL -->
+    <div id="receiptModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-sm space-y-4">
+            
+            <div id="receiptCard" class="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 text-slate-100 space-y-4 shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 text-slate-800/30 text-8xl font-black pointer-events-none select-none">FTCF</div>
+                
+                <div class="flex justify-between items-start border-b border-slate-800 pb-4">
                     <div>
-                        <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account / Mobile</span>
-                        <span class="text-sm text-amber-400 font-mono font-bold">0342-2735966</span>
+                        <div class="flex items-center gap-1.5 text-emerald-400 font-black text-xs uppercase tracking-wider">
+                            <i class="fas fa-check-circle"></i> FTCF Official
+                        </div>
+                        <h4 class="font-extrabold text-base text-white tracking-tight mt-0.5">Loan Application Receipt</h4>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[9px] text-slate-400 uppercase tracking-widest">Status</p>
+                        <span id="rcptStatusBadge" class="inline-block bg-amber-500/10 text-amber-400 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full border border-amber-500/20">Pending</span>
                     </div>
                 </div>
+
+                <div class="grid grid-cols-2 gap-3 text-xs bg-slate-950/50 p-3 rounded-2xl border border-slate-800/60">
+                    <div>
+                        <p class="text-[9px] text-slate-400 uppercase">Ref ID</p>
+                        <p id="rcptRef" class="font-mono font-bold text-slate-200">#FTCF-0000</p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] text-slate-400 uppercase">Date & Time</p>
+                        <p id="rcptDate" class="font-mono font-bold text-slate-200">00/00/0000</p>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5 text-xs">
+                    <div class="flex justify-between py-1 border-b border-slate-800/40">
+                        <span class="text-slate-400">Applicant Name</span>
+                        <span id="rcptName" class="font-bold text-slate-100">---</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-slate-800/40">
+                        <span class="text-slate-400">Requested Amount</span>
+                        <span id="rcptAmount" class="font-black text-emerald-400 text-sm">Rs. 0</span>
+                    </div>
+                    <div class="pt-1">
+                        <span class="text-slate-400 block mb-1">Reason / Notes</span>
+                        <p id="rcptReason" class="text-slate-300 italic text-[11px] bg-slate-950/30 p-2.5 rounded-xl border border-slate-800/40 leading-snug">---</p>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-800 flex justify-between items-center text-[9px] text-slate-500 uppercase tracking-widest font-bold">
+                    <span>Mughal Brothers</span>
+                    <span>Fiscal Scheme 2026-2027</span>
+                </div>
             </div>
-            <button type="button" onclick="toggleModal('bank-popup', false)" class="w-full py-3 bg-white/10 rounded-xl text-white font-medium text-sm">Close</button>
+
+            <div class="space-y-2">
+                <a id="modalWaBtn" href="#" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 py-3 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition">
+                    <i class="fab fa-whatsapp text-base"></i> Send on WhatsApp Now
+                </a>
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <button id="printRcptBtn" type="button" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 border border-slate-700 cursor-pointer">
+                        <i class="fas fa-print text-xs text-emerald-400"></i> Print / Save
+                    </button>
+                    <button id="closeRcptBtn" type="button" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-400 py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wider border border-slate-800 cursor-pointer">
+                        Close
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- Notice Modal -->
-    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
-        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm border border-white/10">
-            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
-                <i data-lucide="megaphone" class="w-6 h-6"></i>
+    <!-- ADMIN PIN VERIFICATION MODAL -->
+    <div id="pinModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-xs glass-card p-6 rounded-3xl border border-slate-700 shadow-2xl text-center space-y-4">
+            <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-2xl mx-auto flex items-center justify-center text-xl">
+                <i class="fas fa-user-shield"></i>
             </div>
-            <h2 class="text-white text-base font-bold mb-2">System Notice</h2>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6">
-                مصروفیت کی وجہ سے میٹنگ نہیں ہو سکی، انشاء اللہ آئندہ کا لائحہ عمل آپ کو واٹس ایپ گروپ کے ذریعے بتا دیا جائے گا۔
-            </p>
-            <button type="button" onclick="toggleModal('notice-popup', false)" class="w-full py-3 bg-amber-500 text-black rounded-xl font-semibold text-sm">Acknowledge</button>
-        </div>
-    </div>
-
-    <!-- Tab Contents -->
-    <div id="ledger" class="tab-content" data-src="https://ftcf20-hub.github.io/FTCF.com/"></div>
-    <div id="monthly" class="tab-content" data-src="https://ftcf20-hub.github.io/Monthly-Status/"></div>
-    <div id="yearly" class="tab-content" data-src="https://ftcf20-hub.github.io/Yearly-Record/"></div>
-    <div id="rules" class="tab-content" data-src="https://ftcf20-hub.github.io/Loneportal/"></div>
-
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center border border-white/10 max-w-xs w-full justify-between">
-        <button type="button" data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
-            <i data-lucide="wallet" class="w-5 h-5"></i>
-        </button>
-        <button type="button" data-target="monthly" onclick="switchTab('monthly', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
-            <i data-lucide="calendar-check-2" class="w-5 h-5"></i>
-        </button>
-        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-amber-500 text-black w-11 h-11 flex items-center justify-center rounded-2xl font-bold mx-1">
-            <i data-lucide="message-circle" class="w-5 h-5"></i>
-        </a>
-        <button type="button" data-target="yearly" onclick="switchTab('yearly', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
-            <i data-lucide="trending-up" class="w-5 h-5"></i>
-        </button>
-        <button type="button" data-target="rules" onclick="switchTab('rules', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400">
-            <i data-lucide="scale" class="w-5 h-5"></i>
-        </button>
-    </nav>
-
-    <script>
-        const PIN_KEY = "ftcf_pin_v2";
-        let enteredPin = "";
-        let confirmPin = "";
-        let isSettingPin = false;
-
-        function initPasscode() {
-            const savedPin = localStorage.getItem(PIN_KEY);
-            const title = document.getElementById('lock-title');
-            const subtitle = document.getElementById('lock-subtitle');
-
-            enteredPin = "";
-            confirmPin = "";
-            updateDots();
-
-            if (!savedPin) {
-                isSettingPin = true;
-                title.innerText = "Set Security PIN";
-                subtitle.innerText = "Set a 4-digit PIN for first-time protection";
-            } else {
-                isSettingPin = false;
-                title.innerText = "Enter Security PIN";
-                subtitle.innerText = "Enter 4-digit PIN to open dashboard";
-            }
-        }
-
-        function pressPin(num) {
-            if (enteredPin.length < 4) {
-                enteredPin += num;
-                updateDots();
-                if (enteredPin.length === 4) {
-                    setTimeout(handlePinComplete, 100);
-                }
-            }
-        }
-
-        function deletePin() {
-            if (enteredPin.length > 0) {
-                enteredPin = enteredPin.slice(0, -1);
-                updateDots();
-            }
-        }
-
-        function updateDots() {
-            for (let i = 0; i < 4; i++) {
-                const dot = document.getElementById(`dot-${i}`);
-                if (dot) {
-                    if (i < enteredPin.length) dot.classList.add('filled');
-                    else dot.classList.remove('filled');
-                }
-            }
-        }
-
-        function handlePinComplete() {
-            const savedPin = localStorage.getItem(PIN_KEY);
-            const title = document.getElementById('lock-title');
-            const subtitle = document.getElementById('lock-subtitle');
-            const errorElement = document.getElementById('lock-error');
-
-            if (isSettingPin) {
-                if (!confirmPin) {
-                    confirmPin = enteredPin;
-                    enteredPin = "";
-                    updateDots();
-                    title.innerText = "Confirm Security PIN";
-                    subtitle.innerText = "Re-enter your 4-digit PIN to confirm";
-                } else {
-                    if (enteredPin === confirmPin) {
-                        localStorage.setItem(PIN_KEY, enteredPin);
-                        openDashboard();
-                    } else {
-                        errorElement.innerText = "PIN match nahi hua. Reset karke dubara karein.";
-                        confirmPin = "";
-                        enteredPin = "";
-                        updateDots();
-                        title.innerText = "Set Security PIN";
-                        subtitle.innerText = "Set a 4-digit PIN for first-time protection";
-                        setTimeout(() => { errorElement.innerText = ""; }, 2500);
-                    }
-                }
-            } else {
-                if (enteredPin === savedPin) {
-                    openDashboard();
-                } else {
-                    errorElement.innerText = "Galat PIN. Phir se enter karein.";
-                    enteredPin = "";
-                    updateDots();
-                    setTimeout(() => { errorElement.innerText = ""; }, 2000);
-                }
-            }
-        }
-
-        function openDashboard() {
-            document.getElementById('lock-screen').style.display = 'none';
-            switchTab('ledger', document.querySelector('[data-target="ledger"]'));
-        }
-
-        function resetPinStorage() {
-            localStorage.removeItem(PIN_KEY);
-            initPasscode();
-        }
-
-        function switchTab(id, btnElement) { 
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('text-amber-500', 'bg-white/5')); 
+            <div>
+                <h3 class="font-black text-white text-base uppercase tracking-wider">Admin Verification</h3>
+                <p class="text-[10px] text-slate-400 uppercase mt-0.5">Enter 4-Digit Security PIN</p>
+            </div>
             
-            const target = document.getElementById(id);
-            if (target) {
-                target.classList.add('active');
-                if (!target.querySelector('iframe')) {
-                    const iframe = document.createElement('iframe');
-                    iframe.src = target.getAttribute('data-src');
-                    target.appendChild(iframe);
-                }
-            }
-            if (btnElement) btnElement.classList.add('text-amber-500', 'bg-white/5');
-        }
+            <div>
+                <input type="password" id="adminPinInput" maxlength="4" placeholder="••••" class="w-full text-center text-2xl font-mono tracking-[0.5em] p-3 rounded-2xl bg-slate-950 border border-slate-800 text-emerald-400 outline-none focus:border-emerald-500">
+                <p id="pinErrorMsg" class="text-[10px] text-rose-400 font-bold mt-2 hidden">Incorrect Security PIN!</p>
+            </div>
 
-        function toggleModal(id, show) {
-            const m = document.getElementById(id);
-            if (m) m.classList.toggle('hidden', !show);
-        }
+            <div class="grid grid-cols-2 gap-2">
+                <button id="verifyPinBtn" type="button" class="bg-emerald-500 text-slate-950 py-2.5 rounded-xl font-black text-xs uppercase tracking-wider cursor-pointer">Verify</button>
+                <button id="cancelPinBtn" type="button" class="bg-slate-800 text-slate-400 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-        window.onload = function() {
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-            initPasscode();
-        };
-    </script>
-</body>
-</html>
+    <!-- ADMIN DASHBOARD MODAL -->
+    <div id="adminDashboardModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 p-4 overflow-y-auto hidden">
+        <div class="max-w-md mx-auto space-y-4 py-4">
+            
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <div>
+                    <span class="text-[9px] font-black text-emerald-400 tracking-widest uppercase">CONTROL CENTER</span>
+                    <h2 class="font-extrabold text-lg text-white">Admin Dashboard</h2>
+                </div>
+                <button id="closeAdminDashBtn" type="button" class="w-8 h-8 bg-slate-900 text-slate-400 border border-slate-800 rounded-xl flex items-center justify-center text-xs cursor-pointer">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
 
+            <!-- Stats Editor -->
+            <div class="glass-card p-4 rounded-2xl border border-slate-800 space-y-3">
+                <h4 class="text-xs font-black text-emerald-400 uppercase tracking-wider border-b border-slate-800/80 pb-2">
+                    <i class="fas fa-sliders-h mr-1"></i> Quick Metrics Manager
+                </h4>
+                
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="text-[9px] text-slate-400 block mb-1">Inflow (PKR)</label>
+                        <input type="number" id="admInflow" class="w-full p-2 text-xs bg-slate-950 border border-slate-800 text-emerald-400 rounded-xl font-mono">
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-slate-400 block mb-1">Outflow (PKR)</label>
+                        <input type="number" id="admOutflow" class="w-full p-2 text-xs bg-slate-950 border border-slate-800 text-rose-400 rounded-xl font-mono">
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-slate-400 block mb-1">Active Loans</label>
+                        <input type="number" id="admLoans" class="w-full p-2 text-xs bg-slate-950 border border-slate-800 text-slate-100 rounded-xl font-mono">
+                    </div>
+                </div>
+
+                <button id="saveAdminStatsBtn" type="button" class="w-full bg-emerald-500 text-slate-950 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider cursor-pointer">
+                    Save Changes
+                </button>
+            </div>
+
+            <!-- Loantaker List Manager -->
+            <div class="glass-card p-4 rounded-2xl border border-slate-800 space-y-3">
+                <h4 class="text-xs font-black text-sky-400 uppercase tracking-wider border-b border-slate-800/80 pb-2">
+                    <i class="fas fa-user-edit mr-1"></i> Add / Manage Loantakers
+                </h4>
+
+                <div class="space-y-2">
+                    <input type="text" id="ltName" placeholder="Loantaker Name" class="w-full p-2 text-xs bg-slate-950 border border-slate-800 text-slate-100 rounded-xl outline-none">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="number" id="ltAmount" placeholder="Amount (PKR)" class="w-full p-2 text-xs bg-slate-950 border border-slate-800 text-emerald-400 rounded-xl outline-none">
+                        <input type="text" id="ltDuration" placeholder="Duration (e.g. 6 Months)" class="w-full p-2 text-xs bg-slate-950 border border-slate-800 text-slate-300 rounded-xl outline-none">
+                    </div>
+                    <button id="addLoantakerBtn" type="button" class="w-full bg-sky-500 hover:bg-sky-600 text-slate-950 py-2 rounded-xl font-extrabold text-xs uppercase tracking-wider cursor-pointer">
+                        <i class="fas fa-plus mr-1"></i> Add Loantaker
+                    </button>
+                </div>
+
+                <div id="adminLoantakersList" class="space-y-1.5 pt-2 
