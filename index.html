@@ -7,6 +7,9 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2canvas library for direct JPG download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -98,10 +101,13 @@
             box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
         }
 
-        @media print {
-            body * { visibility: hidden; }
-            #printable-slip, #printable-slip * { visibility: visible; }
-            #printable-slip { position: absolute; left: 0; top: 0; width: 100%; }
+        /* A4 Half Size Proportion Styling (Approx Aspect Ratio & Clean Layout) */
+        #printable-slip {
+            width: 100%;
+            max-width: 480px; /* Half A4 width proportion */
+            margin: 0 auto;
+            background: #ffffff;
+            color: #1e293b;
         }
     </style>
 </head>
@@ -154,7 +160,6 @@
 
     <!-- Header Controls -->
     <header class="fixed top-4 right-4 z-[60] flex gap-2">
-        <!-- Paid Slip Generator Button -->
         <button type="button" onclick="openSlipModal()" title="Digital Paid Slip" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-emerald-400 hover:text-emerald-300">
             <i data-lucide="receipt" class="w-4 h-4"></i>
         </button>
@@ -173,14 +178,14 @@
         </button>
     </header>
 
-    <!-- DIGITAL PAID SLIP MODAL (LIGHT THEME FOR SLIP) -->
+    <!-- DIGITAL PAID SLIP MODAL (A4 Half Size & JPG Download) -->
     <div id="slip-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-        <div class="glass-panel p-6 rounded-3xl w-full max-w-md border border-white/10 text-slate-800 max-h-[90vh] overflow-y-auto">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-lg border border-white/10 text-slate-800 max-h-[92vh] overflow-y-auto">
             
             <!-- Modal Header -->
             <div class="flex justify-between items-center mb-4 text-white">
                 <h2 class="text-base font-bold flex items-center gap-2">
-                    <i data-lucide="receipt" class="text-amber-400 w-5 h-5"></i> Admin Paid Slip Generator
+                    <i data-lucide="receipt" class="text-emerald-400 w-5 h-5"></i> FTCF Digital Paid Receipt (JPG)
                 </h2>
                 <button type="button" onclick="toggleModal('slip-popup', false)" class="text-slate-400 hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -191,83 +196,92 @@
             <div id="slip-form-container" class="space-y-3 mb-4 text-xs text-left">
                 <div>
                     <label class="text-slate-300 block mb-1 font-medium">Member / Recipient Name:</label>
-                    <input type="text" id="slip-name" placeholder="e.g. Muhammad Ali" class="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500">
+                    <input type="text" id="slip-name" placeholder="e.g. Muhammad Bilal" class="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="text-slate-300 block mb-1 font-medium">Amount (PKR):</label>
-                        <input type="number" id="slip-amount" placeholder="e.g. 5000" class="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500">
+                        <input type="number" id="slip-amount" placeholder="e.g. 10000" class="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500">
                     </div>
                     <div>
                         <label class="text-slate-300 block mb-1 font-medium">Payment Type:</label>
-                        <select id="slip-type" class="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500">
-                            <option value="Loan (قرض حسنہ)">Loan (قرض حسنہ)</option>
-                            <option value="Financial Aid (مدی / امداد)">Financial Aid (امدادی رقم)</option>
-                            <option value="Welfare Expense (فلاحی خرچ)">Welfare Expense (فلاحی خرچ)</option>
-                            <option value="Other (متفرق)">Other (متفرق)</option>
+                        <select id="slip-type" class="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500 font-medium">
+                            <option value="Death Expense">Death Expense</option>
+                            <option value="Medical Loan">Medical Loan</option>
+                            <option value="Marriage Loan">Marriage Loan</option>
+                            <option value="Emergency">Emergency</option>
+                            <option value="Others">Others</option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <label class="text-slate-300 block mb-1 font-medium">Remarks / Description:</label>
-                    <input type="text" id="slip-remarks" placeholder="e.g. Mahana emergency fund payment" class="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500">
+                    <input type="text" id="slip-remarks" placeholder="e.g. Approved by committee council" class="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500">
                 </div>
-                <button type="button" onclick="generateLightSlip()" class="w-full py-2.5 bg-amber-500 text-black font-semibold rounded-xl text-xs mt-2 shadow-lg hover:bg-amber-400">
-                    Generate Light Theme Slip
+                <button type="button" onclick="generateReceiptCard()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs mt-2 shadow-lg transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="file-check" class="w-4 h-4"></i> Generate Professional Receipt
                 </button>
-    </div>
-      <!-- LIGHT THEME PRINTABLE SLIP PREVIEW (Hidden initially) -->
+            </div>
+
+            <!-- LIGHT THEME RECEIPT PREVIEW (A4 Half Proportion) -->
             <div id="slip-preview-container" class="hidden">
-                <div id="printable-slip" class="bg-white text-slate-900 p-5 rounded-2xl shadow-xl border border-slate-300 font-sans text-left relative">
-                    <!-- Slip Header -->
-                    <div class="text-center border-b border-slate-200 pb-3 mb-3">
-                        <h3 class="font-extrabold text-sm uppercase tracking-wider text-slate-900">Family Trust & Care Foundation</h3>
-                        <p class="text-[10px] text-slate-500 font-mono">Official Paid / Loan Disbursement Receipt</p>
+                <div id="printable-slip" class="bg-white text-slate-900 p-6 rounded-2xl shadow-2xl border border-slate-300 font-sans text-left relative">
+                    
+                    <!-- Watermark Logo Text Background effect -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+                        <span class="text-7xl font-black tracking-widest text-slate-900">FTCF</span>
+                    </div>
+
+                    <!-- Header -->
+                    <div class="text-center border-b-2 border-slate-900 pb-3 mb-4">
+                        <span class="bg-slate-900 text-white text-[9px] uppercase font-mono px-2.5 py-0.5 rounded-full tracking-wider">Official Disbursement Voucher</span>
+                        <h3 class="font-black text-base uppercase tracking-wider text-slate-900 mt-1">Family Trust & Care Foundation</h3>
+                        <p class="text-[10px] text-slate-500 font-mono">Sherwan Abbottabad | Community Welfare & Financial Aid</p>
                     </div>
 
                     <!-- Meta Data -->
-                    <div class="flex justify-between text-[11px] text-slate-600 mb-3 font-mono">
-                        <span>Slip ID: <strong id="lbl-slip-id" class="text-slate-900">FTCF-2026-001</strong></span>
+                    <div class="flex justify-between text-[11px] text-slate-700 mb-4 font-mono bg-slate-100 p-2 rounded-lg border border-slate-200">
+                        <span>Receipt ID: <strong id="lbl-slip-id" class="text-slate-900">FTCF-2026-9921</strong></span>
                         <span id="lbl-slip-date">Date: 2026-10-27</span>
                     </div>
 
                     <!-- Details Table -->
-                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2 mb-4 text-xs">
-                        <div class="flex justify-between border-b border-slate-200 pb-1.5">
-                            <span class="text-slate-500">Paid To:</span>
-                            <span id="lbl-slip-name" class="font-bold text-slate-900">-</span>
+                    <div class="space-y-2.5 mb-6 text-xs">
+                        <div class="flex justify-between border-b border-slate-200 pb-2">
+                            <span class="text-slate-500 font-medium">Paid To Member:</span>
+                            <span id="lbl-slip-name" class="font-bold text-slate-900 text-sm">-</span>
                         </div>
-                        <div class="flex justify-between border-b border-slate-200 pb-1.5">
-                            <span class="text-slate-500">Payment Purpose:</span>
-                            <span id="lbl-slip-type" class="font-semibold text-slate-800">-</span>
+                        <div class="flex justify-between border-b border-slate-200 pb-2">
+                            <span class="text-slate-500 font-medium">Expense Category:</span>
+                            <span id="lbl-slip-type" class="font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">-</span>
                         </div>
-                        <div class="flex justify-between border-b border-slate-200 pb-1.5">
-                            <span class="text-slate-500">Disbursed Amount:</span>
-                            <span id="lbl-slip-amount" class="font-black text-emerald-600 text-sm">-</span>
+                        <div class="flex justify-between border-b border-slate-200 pb-2">
+                            <span class="text-slate-500 font-medium">Disbursed Amount:</span>
+                            <span id="lbl-slip-amount" class="font-black text-emerald-700 text-base">-</span>
                         </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Remarks:</span>
-                            <span id="lbl-slip-remarks" class="text-slate-700 italic">-</span>
+                        <div class="flex justify-between pt-1">
+                            <span class="text-slate-500 font-medium">Remarks / Details:</span>
+                            <span id="lbl-slip-remarks" class="text-slate-800 italic text-right max-w-[60%]">-</span>
                         </div>
                     </div>
 
-                    <!-- Signatures -->
-                    <div class="pt-6 flex justify-between text-[10px] text-slate-500 font-mono">
+                    <!-- Signatures Section -->
+                    <div class="pt-8 mt-4 border-t border-slate-200 flex justify-between text-[11px] text-slate-600 font-mono">
                         <div class="text-center">
-                            <div class="border-t border-slate-400 w-28 pt-1">Authorized Signature</div>
+                            <div class="border-t border-slate-400 w-32 pt-1 font-semibold text-slate-800">Authorized Signature</div>
                         </div>
                         <div class="text-center">
-                            <div class="border-t border-slate-400 w-28 pt-1">Receiver Signature</div>
+                            <div class="border-t border-slate-400 w-32 pt-1 font-semibold text-slate-800">Receiver Signature</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
+                <!-- Action Buttons (Download JPG & New Slip) -->
                 <div class="flex gap-2 mt-4">
-                    <button type="button" onclick="window.print()" class="flex-1 py-2.5 bg-emerald-600 text-white font-medium rounded-xl text-xs flex items-center justify-center gap-1">
-                        <i data-lucide="printer" class="w-4 h-4"></i> Print / Save PDF
+                    <button type="button" onclick="downloadSlipAsJpg()" class="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all">
+                        <i data-lucide="download" class="w-4 h-4"></i> Download Receipt (JPG)
                     </button>
-                    <button type="button" onclick="resetSlipForm()" class="px-4 py-2.5 bg-slate-700 text-slate-200 font-medium rounded-xl text-xs">
+                    <button type="button" onclick="resetSlipForm()" class="px-4 py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-xl text-xs">
                         New Slip
                     </button>
                 </div>
@@ -275,8 +289,7 @@
 
         </div>
     </div>
-
-    <!-- AI Voice Report Modal -->
+       <!-- AI Voice Report Modal -->
     <div id="voice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
         <div class="glass-panel p-6 rounded-3xl w-full max-w-sm border border-white/10 text-center">
             <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -333,7 +346,7 @@
             </div>
             <h2 class="text-white text-base font-bold mb-2">System Notice</h2>
             <p class="text-slate-400 text-xs leading-relaxed mb-6">
-                پورٹل میں اب **Digital Light-Theme Paid Slip** کا فیچر شامل کر दिया गया है! اب کسی بھی ممبر کو لون یا پیمنٹ دیتے وقت فوری رسید جنरेट کی جا سکتی ہے۔
+                پورٹل میں اب **A4 Half-Size JPG Receipt Generator** aur 5 naye payment categories (Death Expense, Medical/Marriage Loan, Emergency, Others) shamil kar diye gaye hain!
             </p>
             <button type="button" onclick="toggleModal('notice-popup', false)" class="w-full py-3 bg-amber-500 text-black rounded-xl font-semibold text-sm">Acknowledge</button>
         </div>
@@ -477,7 +490,6 @@
             }
         }
 
-        // Paid Slip Protected by Master Key
         function openSlipModal() {
             const masterInput = prompt("Paid Slip generate karne ke liye Admin Master Key enter karein:");
             if (masterInput === MASTER_ADMIN_KEY) {
@@ -488,7 +500,7 @@
             }
         }
 
-        function generateLightSlip() {
+        function generateReceiptCard() {
             const name = document.getElementById('slip-name').value.trim();
             const amount = document.getElementById('slip-amount').value.trim();
             const type = document.getElementById('slip-type').value;
@@ -499,7 +511,6 @@
                 return;
             }
 
-            // Fill Light Theme Slip data
             const randomId = "FTCF-" + Math.floor(1000 + Math.random() * 9000);
             const currentDate = new Date().toISOString().split('T')[0];
 
@@ -510,10 +521,23 @@
             document.getElementById('lbl-slip-amount').innerText = "PKR " + Number(amount).toLocaleString();
             document.getElementById('lbl-slip-remarks').innerText = remarks;
 
-            // Hide Form, Show Light Theme Preview
             document.getElementById('slip-form-container').classList.add('hidden');
             document.getElementById('slip-preview-container').classList.remove('hidden');
             if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        // Direct JPG Image Download Function using html2canvas
+        function downloadSlipAsJpg() {
+            const slipElement = document.getElementById('printable-slip');
+            html2canvas(slipElement, { scale: 2, useCORS: true }).then(canvas => {
+                const imageURL = canvas.toDataURL('image/jpeg', 1.0);
+                const downloadLink = document.createElement('a');
+                downloadLink.href = imageURL;
+                downloadLink.download = 'FTCF-Paid-Receipt-' + Date.now() + '.jpg';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
         }
 
         function resetSlipForm() {
