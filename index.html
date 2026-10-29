@@ -7,7 +7,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- html2canvas library for direct JPG download -->
+    <!-- html2canvas library for high-res JPG download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <script>
@@ -101,13 +101,15 @@
             box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
         }
 
-        /* A4 Half Size Proportion Styling (Approx Aspect Ratio & Clean Layout) */
+        /* Next-Level Professional Receipt Card Layout */
         #printable-slip {
             width: 100%;
-            max-width: 480px; /* Half A4 width proportion */
+            max-width: 480px;
             margin: 0 auto;
             background: #ffffff;
-            color: #1e293b;
+            color: #0f172a;
+            border: 2px solid #0f172a;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -128,7 +130,6 @@
         <h2 id="lock-title" class="text-white text-base font-bold mb-1 relative z-10">Set Security PIN</h2>
         <p id="lock-subtitle" class="text-slate-400 text-xs mb-5 font-mono relative z-10">Choose a 4-digit PIN for portal protection</p>
 
-        <!-- PIN Dots Indicator -->
         <div class="flex gap-4 mb-6 relative z-10">
             <div class="pin-dot" id="dot-0"></div>
             <div class="pin-dot" id="dot-1"></div>
@@ -136,7 +137,6 @@
             <div class="pin-dot" id="dot-3"></div>
         </div>
 
-        <!-- Keypad -->
         <div class="grid grid-cols-3 gap-3 max-w-xs w-full mb-4 relative z-10">
             <button type="button" onclick="pressPin('1')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">1</button>
             <button type="button" onclick="pressPin('2')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">2</button>
@@ -178,21 +178,20 @@
         </button>
     </header>
 
-    <!-- DIGITAL PAID SLIP MODAL (A4 Half Size & JPG Download) -->
+    <!-- DIGITAL PAID SLIP MODAL -->
     <div id="slip-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
         <div class="glass-panel p-6 rounded-3xl w-full max-w-lg border border-white/10 text-slate-800 max-h-[92vh] overflow-y-auto">
             
-            <!-- Modal Header -->
             <div class="flex justify-between items-center mb-4 text-white">
                 <h2 class="text-base font-bold flex items-center gap-2">
-                    <i data-lucide="receipt" class="text-emerald-400 w-5 h-5"></i> FTCF Digital Paid Receipt (JPG)
+                    <i data-lucide="receipt" class="text-emerald-400 w-5 h-5"></i> FTCF Digital Paid Receipt
                 </h2>
                 <button type="button" onclick="toggleModal('slip-popup', false)" class="text-slate-400 hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <!-- Form to fill slip details -->
+            <!-- Form -->
             <div id="slip-form-container" class="space-y-3 mb-4 text-xs text-left">
                 <div>
                     <label class="text-slate-300 block mb-1 font-medium">Member / Recipient Name:</label>
@@ -219,64 +218,68 @@
                     <input type="text" id="slip-remarks" placeholder="e.g. Approved by committee council" class="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500">
                 </div>
                 <button type="button" onclick="generateReceiptCard()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs mt-2 shadow-lg transition-all flex items-center justify-center gap-2">
-                    <i data-lucide="file-check" class="w-4 h-4"></i> Generate Professional Receipt
+                    <i data-lucide="file-check" class="w-4 h-4"></i> Generate Pro Receipt
                 </button>
             </div>
 
-            <!-- LIGHT THEME RECEIPT PREVIEW (A4 Half Proportion) -->
+            <!-- NEW PREMIUM RECEIPT PREVIEW DESIGN -->
             <div id="slip-preview-container" class="hidden">
-                <div id="printable-slip" class="bg-white text-slate-900 p-6 rounded-2xl shadow-2xl border border-slate-300 font-sans text-left relative">
+                <div id="printable-slip" class="p-6 relative text-left font-sans">
                     
-                    <!-- Watermark Logo Text Background effect -->
-                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
-                        <span class="text-7xl font-black tracking-widest text-slate-900">FTCF</span>
+                    <!-- Top Ribbon / Branding Bar -->
+                    <div class="flex justify-between items-start border-b-2 border-slate-900 pb-4 mb-4">
+                        <div>
+                            <span class="text-[9px] font-mono font-bold tracking-widest bg-slate-900 text-white px-2 py-0.5 rounded uppercase">Official Voucher</span>
+                            <h3 class="font-extrabold text-base uppercase tracking-tight text-slate-900 mt-1">Family Trust & Care</h3>
+                            <p class="text-[10px] text-slate-600 font-medium">Sherwan Abbottabad</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs font-mono font-bold text-slate-900" id="lbl-slip-id">FTCF-8821</div>
+                            <div class="text-[10px] font-mono text-slate-500" id="lbl-slip-date">2026-10-27</div>
+                        </div>
                     </div>
 
-                    <!-- Header -->
-                    <div class="text-center border-b-2 border-slate-900 pb-3 mb-4">
-                        <span class="bg-slate-900 text-white text-[9px] uppercase font-mono px-2.5 py-0.5 rounded-full tracking-wider">Official Disbursement Voucher</span>
-                        <h3 class="font-black text-base uppercase tracking-wider text-slate-900 mt-1">Family Trust & Care Foundation</h3>
-                        <p class="text-[10px] text-slate-500 font-mono">Sherwan Abbottabad | Community Welfare & Financial Aid</p>
+                    <!-- Badge Highlight for Category -->
+                    <div class="mb-4 flex items-center justify-between bg-slate-100 p-3 rounded-xl border border-slate-200">
+                        <div>
+                            <span class="text-[10px] uppercase font-mono tracking-wider text-slate-500 block">Category</span>
+                            <span id="lbl-slip-type" class="text-xs font-bold text-slate-900">Medical Loan</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] uppercase font-mono tracking-wider text-slate-500 block">Status</span>
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">PAID / DISBURSED</span>
+                        </div>
                     </div>
 
-                    <!-- Meta Data -->
-                    <div class="flex justify-between text-[11px] text-slate-700 mb-4 font-mono bg-slate-100 p-2 rounded-lg border border-slate-200">
-                        <span>Receipt ID: <strong id="lbl-slip-id" class="text-slate-900">FTCF-2026-9921</strong></span>
-                        <span id="lbl-slip-date">Date: 2026-10-27</span>
-                    </div>
-
-                    <!-- Details Table -->
-                    <div class="space-y-2.5 mb-6 text-xs">
-                        <div class="flex justify-between border-b border-slate-200 pb-2">
-                            <span class="text-slate-500 font-medium">Paid To Member:</span>
+                    <!-- Main Info Grid -->
+                    <div class="space-y-2.5 mb-6 text-xs bg-white border border-slate-200 p-3.5 rounded-xl">
+                        <div class="flex justify-between border-b border-slate-100 pb-2">
+                            <span class="text-slate-500">Recipient Name:</span>
                             <span id="lbl-slip-name" class="font-bold text-slate-900 text-sm">-</span>
                         </div>
-                        <div class="flex justify-between border-b border-slate-200 pb-2">
-                            <span class="text-slate-500 font-medium">Expense Category:</span>
-                            <span id="lbl-slip-type" class="font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">-</span>
-                        </div>
-                        <div class="flex justify-between border-b border-slate-200 pb-2">
-                            <span class="text-slate-500 font-medium">Disbursed Amount:</span>
+                        <div class="flex justify-between border-b border-slate-100 pb-2">
+                            <span class="text-slate-500">Disbursed Amount:</span>
                             <span id="lbl-slip-amount" class="font-black text-emerald-700 text-base">-</span>
                         </div>
                         <div class="flex justify-between pt-1">
-                            <span class="text-slate-500 font-medium">Remarks / Details:</span>
-                            <span id="lbl-slip-remarks" class="text-slate-800 italic text-right max-w-[60%]">-</span>
+                            <span class="text-slate-500">Remarks:</span>
+                            <span id="lbl-slip-remarks" class="text-slate-700 italic text-right max-w-[60%]">-</span>
                         </div>
                     </div>
 
-                    <!-- Signatures Section -->
-                    <div class="pt-8 mt-4 border-t border-slate-200 flex justify-between text-[11px] text-slate-600 font-mono">
+                    <!-- Footer Signatures -->
+                    <div class="pt-6 mt-2 border-t border-dashed border-slate-300 flex justify-between text-[10px] text-slate-600 font-mono">
                         <div class="text-center">
-                            <div class="border-t border-slate-400 w-32 pt-1 font-semibold text-slate-800">Authorized Signature</div>
+                            <div class="border-t border-slate-900 w-32 pt-1 font-bold text-slate-900">Admin / Authorized</div>
                         </div>
                         <div class="text-center">
-                            <div class="border-t border-slate-400 w-32 pt-1 font-semibold text-slate-800">Receiver Signature</div>
+                            <div class="border-t border-slate-900 w-32 pt-1 font-bold text-slate-900">Receiver Signature</div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Action Buttons (Download JPG & New Slip) -->
+    </div>
+
+                  <!-- Action Buttons -->
                 <div class="flex gap-2 mt-4">
                     <button type="button" onclick="downloadSlipAsJpg()" class="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all">
                         <i data-lucide="download" class="w-4 h-4"></i> Download Receipt (JPG)
@@ -289,7 +292,8 @@
 
         </div>
     </div>
-       <!-- AI Voice Report Modal -->
+
+    <!-- AI Voice Report Modal -->
     <div id="voice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md">
         <div class="glass-panel p-6 rounded-3xl w-full max-w-sm border border-white/10 text-center">
             <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -346,7 +350,7 @@
             </div>
             <h2 class="text-white text-base font-bold mb-2">System Notice</h2>
             <p class="text-slate-400 text-xs leading-relaxed mb-6">
-                پورٹل میں اب **A4 Half-Size JPG Receipt Generator** aur 5 naye payment categories (Death Expense, Medical/Marriage Loan, Emergency, Others) shamil kar diye gaye hain!
+                Receipt ka design mazeed professional, clean aur bank-style voucher format mein update kar diya gaya hai!
             </p>
             <button type="button" onclick="toggleModal('notice-popup', false)" class="w-full py-3 bg-amber-500 text-black rounded-xl font-semibold text-sm">Acknowledge</button>
         </div>
@@ -526,7 +530,6 @@
             if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
-        // Direct JPG Image Download Function using html2canvas
         function downloadSlipAsJpg() {
             const slipElement = document.getElementById('printable-slip');
             html2canvas(slipElement, { scale: 2, useCORS: true }).then(canvas => {
